@@ -1,7 +1,10 @@
+import { TextFieldVariants } from '@mui/material';
 import './App.css';
 import CreatePopup from './components/post-create-update';
 
-function App() {
+export const MUI_INPUT_VARIANT: TextFieldVariants= "outlined";
+
+export default function App() {
   return (
     <div className="App">
         <CreatePopup />
@@ -9,5 +12,3 @@ function App() {
     </div>
   );
 }
-
-export default App;

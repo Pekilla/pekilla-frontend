@@ -5,6 +5,9 @@
 import { ReactElement } from "react";
 import { TextField } from "@mui/material";
 import { createRandomKey } from "../../../../util/RandomKeys";
+import { IconLabel } from "../../../shared/icon-label";
+import { faHashtag } from "@fortawesome/free-solid-svg-icons";
+import { MUI_INPUT_VARIANT } from "../../../../App";
 
 export type TagsError =
     "NONE" |
@@ -80,8 +83,10 @@ export function Tags(props: TagsProps): ReactElement {
     return (
         <>
             <TextField
-                label={"Tags"}
-                variant={"filled"}
+                label={
+                    <IconLabel iconProp={faHashtag} title="Tags" />
+                }
+                variant={MUI_INPUT_VARIANT}
                 onChange={onTypeEvent}
                 type="text"
                 error={props.error != "NONE"}
