@@ -2,28 +2,26 @@
  * FROM Opensell with Modification.
  */
 
+import { faHashtag } from "@fortawesome/free-solid-svg-icons";
+import { Chip, TextField } from "@mui/material";
 import { ReactElement } from "react";
-import { TextField } from "@mui/material";
+import { MUI_INPUT_VARIANT } from "../../../../App";
 import { createRandomKey } from "../../../../util/RandomKeys";
 import { IconLabel } from "../../../shared/icon-label";
-import { faHashtag } from "@fortawesome/free-solid-svg-icons";
-import { MUI_INPUT_VARIANT } from "../../../../App";
 
 export type TagsError =
     "NONE" |
     "Tag cannot be empty" |
     "Tag already exists"
-;
+    ;
 
 export default function TagPart({ label = "", onDoubleClick = () => { } }) {
     return (
-        <button
-            style={{ fontSize: "16px" }}
-            onDoubleClick={onDoubleClick}
-            type="button"
-        >
-            {label}
-        </button>
+        <Chip
+            sx={{ fontSize: "16px" }}
+            onDelete={onDoubleClick}
+            label={label}
+        />
     );
 }
 
@@ -46,7 +44,7 @@ export function Tags(props: TagsProps): ReactElement {
 
         // if error and error is not already their.
         if (addError !== "NONE") {
-            if(addError != props.error) props.setError(addError);
+            if (addError != props.error) props.setError(addError);
         } else {
             props.addTag(tag);
             if (props.error !== "NONE") props.setError("NONE");
