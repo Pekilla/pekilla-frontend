@@ -3,17 +3,12 @@
  */
 
 import { faHashtag } from "@fortawesome/free-solid-svg-icons";
-import { Chip, TextField } from "@mui/material";
-import { ReactElement } from "react";
+import { Autocomplete, Chip, TextField } from "@mui/material";
+import { Field, FieldArray } from "formik";
+import { ReactElement, useState } from "react";
 import { MUI_INPUT_VARIANT } from "../../../../App";
 import { createRandomKey } from "../../../../util/RandomKeys";
 import { IconLabel } from "../../../shared/icon-label";
-
-export type TagsError =
-    "NONE" |
-    "Tag cannot be empty" |
-    "Tag already exists"
-    ;
 
 export default function TagPart({ label = "", onDoubleClick = () => { } }) {
     return (
@@ -26,79 +21,63 @@ export default function TagPart({ label = "", onDoubleClick = () => { } }) {
 }
 
 interface TagsProps {
-    error: TagsError;
-    setError(error: TagsError): void;
+    error: string;
     tags: Array<string>;
-    deleteTag(tag: string): void;
-    addTag(tag: string): void;
 };
 
 
 export function Tags(props: TagsProps): ReactElement {
-    const addEvent = (e: any, tag: string): void => {
-        let addError: TagsError = "NONE";
+    const [tags, setTags] = useState<string[]>([]);
+    const [error, setError] = useState("");
 
-        // Check for error
-        if (!tag) addError = "Tag cannot be empty";
-        else if (props.tags.includes(tag)) addError = "Tag already exists";
-
-        // if error and error is not already their.
-        if (addError !== "NONE") {
-            if (addError != props.error) props.setError(addError);
-        } else {
-            props.addTag(tag);
-            if (props.error !== "NONE") props.setError("NONE");
-        }
-
-        e.target.value = "";
-    };
-
-    const onTypeEvent = (e: any): void => {
-        let nTarget = (e.target.value)
-            .toLowerCase()
-            .replaceAll(' ', '-')
-            .replaceAll('--', '-')
-            .trim()
-            ;
+    const handleChange = (e: any): void => {
+        let tmpTag = (e.target.value).toLowerCase().replaceAll(' ', '-').replaceAll('--', '-').trim();
 
         // To do not let a user but a - at index 0
-        if (nTarget[0] == '-' && nTarget.length == 1) {
+        if (tmpTag[0] == '-' && tmpTag.length == 1) {
             e.target.value = "";
         }
 
-        else e.target.value = nTarget;
+        else e.target.value = tmpTag;
+
+        if(tags.includes(e.target.value)) { 
+            if(!error) setError("Tag already exists.");
+        } else if(!!error) setError("");
     }
 
-
-    const deleteEvent = (tag: string): void => {
-        props.deleteTag(tag);
-
-        if (props.error != "NONE") {
-            props.setError("NONE");
+    const addEvent = (e: any, push: any): void => {
+        if (!props.error) {
+            push(e.target.value);
+            e.target.value = "";
         }
-    }
+    };
 
     return (
         <>
-            <TextField
-                label={
-                    <IconLabel iconProp={faHashtag} title="Tags" />
-                }
-                variant={MUI_INPUT_VARIANT}
-                onChange={onTypeEvent}
-                type="text"
-                error={props.error != "NONE"}
-                helperText={props.error == "NONE" ? "" : props.error}
-                onDoubleClick={(e: any) => addEvent(e, e.target.value)} name="tags"
+            <Autocomplete
+                multiple
+                options={[]}
+                freeSolo
+                onChange={(e, currentTags) => {
+                    if(tags != currentTags) setTags(currentTags);
+                    if(!!error) setError("")
+                }}
+                value={tags}
+                renderInput={(params) => (
+                    <TextField
+                        {...params}
+                        variant={MUI_INPUT_VARIANT}
+                        onChange={handleChange}
+                        error={!!error}
+                        helperText={error}
+                        label={
+                            <IconLabel iconProp={faHashtag} title="Tags" />
+                        }
+                        placeholder="Add a tag..."
+                    />
+                )}
             />
 
-            <div>
-                <br />
-
-                {props.tags?.map(value => (
-                    <TagPart label={value} onDoubleClick={() => deleteEvent(value)} key={createRandomKey()} />
-                ))}
-            </div>
         </>
     );
 }
