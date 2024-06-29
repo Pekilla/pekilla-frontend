@@ -1,5 +1,5 @@
 import { Autocomplete, Box, Button, Chip, Modal, TextField } from "@mui/material";
-import { Field, Form, Formik } from "formik";
+import { ErrorMessage, Field, Form, Formik } from "formik";
 import { FormEvent, useState } from "react";
 import * as yup from 'yup';
 import { createPost, updatePost } from "../../services/PostService";
@@ -32,7 +32,6 @@ export default function CreatePopup(props: CreatePopupProps) {
 
     };
 
-
     return (
         <>
             <Modal
@@ -45,9 +44,7 @@ export default function CreatePopup(props: CreatePopupProps) {
                         initialValues={{
                             title: "",
                             description: "",
-                            category: "",
                             tags: [],
-                            tagInput: ""
                         }}
                         validationSchema={
                             yup.object(
@@ -64,11 +61,9 @@ export default function CreatePopup(props: CreatePopupProps) {
                                         .max(5000, "Description cannot be more than 80 characters.")
                                         .min(10, "Description cannot be less than 10 characters.")
                                     ,
-                                    tags:
-                                        yup
-                                            .array()
-                                            .required("You need tags.")
-                                            .min(3, "You need at least 3 tags.")
+                                    tags : yup
+                                        .array()
+                                        .min(3, "Need to have at least 3 tags.")
                                 }
                             )
                         }
@@ -77,12 +72,11 @@ export default function CreatePopup(props: CreatePopupProps) {
                             alert(JSON.stringify(values));
                         }}
                     >
-                        {({ values, handleChange, errors, handleBlur, touched }) => (
+                        {({ values, setFieldValue, setFieldError, errors, touched }) => (
                             <Form>
                                 <h2>{props.isUpdate ? "Update" : "Create"} post</h2>
 
                                 <Field
-                                    required
                                     name="title"
                                     label="Title"
                                     component={CreateInput}
@@ -90,13 +84,11 @@ export default function CreatePopup(props: CreatePopupProps) {
                                 <br /><br /><br />
 
                                 <Field
-                                    required
                                     name="description"
                                     label="Description"
                                     component={CreateInput}
                                     isTextArea
                                 />
-
                                 <br /><br /><br />
 
                                 {/* Hide Category if it is update */}
@@ -110,11 +102,12 @@ export default function CreatePopup(props: CreatePopupProps) {
                                 }
 
                                 <Field
-                                    required
                                     name="tags"
                                     component={Tags}
+                                    error={<ErrorMessage name="tags" />}
                                     tags={values.tags}
-                                    error={errors.tags && touched.tags as any}
+                                    setError={(error: string) => setFieldError("tags", error)}
+                                    setTags={(tags: string[]) => setFieldValue("tags", tags)}
                                 />
 
                                 <Box sx={{ display: 'flex', justifyContent: 'space-between', width: "180px", float: "right" }}>
