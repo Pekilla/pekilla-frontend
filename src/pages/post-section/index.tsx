@@ -1,11 +1,9 @@
-import { useEffect, useState } from "react";
-import PostCardView from "../../components/post/card-view";
-import CreatePopup from "../../components/post/create-update-popup";
-import { Category } from "../../model/enums/Category";
-import { getAllPost } from "../../services/PostService";
-import { PostViewDTO } from "../../model/dto/PostViewDTO";
 import { Stack } from "@mui/material";
-import { PostDTO } from "../../model/dto/PostDTO";
+import { useEffect, useState } from "react";
+import CreatePopup from "../../components/post/create-update-popup";
+import PostView from "../../components/post/post-view";
+import { PostViewDTO } from "../../model/dto/PostViewDTO";
+import { getAllPost } from "../../services/PostService";
 import { createRandomKey } from "../../util/RandomKeys";
 
 export function PostSection() {
@@ -50,15 +48,14 @@ export function PostSection() {
                 updateDto={updateDto}
             />
             <button onClick={() => setIsOpen(true)}>Create</button>
-            <br /><br /><br />
 
-            <Stack justifyContent="center" alignItems="center">
+            <Stack spacing={2} justifyContent="center" alignItems="center">
                 {postArray?.map(
                     post => (
-                        <PostCardView
+                        <PostView
                             {...post}
                             key={createRandomKey()}
-                            update={(postViewDto) => {setPostPopup({isOpen : true, isUpdate : true, postViewDto}); console.log("OPENED")}}
+                            launchUpdate={(postViewDto) => setPostPopup({isOpen : true, isUpdate : true, postViewDto})}
                         />
                     )
                 )}

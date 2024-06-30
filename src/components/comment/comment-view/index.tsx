@@ -20,7 +20,7 @@ const CommentView = (comment : CommentDTO) => {
                         }
                     />
             </ListItem>
-            <Divider/>
+            <Divider />
         </>
     )
 }

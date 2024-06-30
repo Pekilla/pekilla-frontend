@@ -1,7 +1,6 @@
-import { error, log } from "console";
+import { AxiosError } from "axios";
 import http from "../http";
 import { CommentDTO } from "../model/dto/CommentDTO";
-import { AxiosError } from "axios";
 
 const REQUEST_MAPPING: string = "/comment";
 

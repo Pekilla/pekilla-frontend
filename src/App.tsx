@@ -1,11 +1,9 @@
 import { TextFieldVariants } from '@mui/material';
-import { useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
-import CreatePopup from './components/post/create-update-popup';
+import CommentSection from './pages/comment-section';
 import NotFound from './pages/not-found';
 import { PostSection } from './pages/post-section';
-import CommentSection from './pages/comment-section';
 
 export const MUI_INPUT_VARIANT: TextFieldVariants = "outlined";
 

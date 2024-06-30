@@ -26,7 +26,7 @@ export function CreateInput(props: CreateInputProps) {
             variant={MUI_INPUT_VARIANT}
             helperText={<ErrorMessage name={name} />}
             {...props.field}
-            sx={{ width: props.isTextArea ? "100%" : "350px" }}
+            sx={{ width: props.isTextArea ? "800px" : "350px" }}
         />
     )
 }
