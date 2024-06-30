@@ -1,9 +1,8 @@
 import { Avatar, Button, Divider, ListItem, ListItemAvatar, ListItemText } from "@mui/material";
 import React from "react";
 import { CommentDTO } from "../../../model/dto/CommentDTO";
-import { CommentViewDTO } from "../../../model/dto/CommentViewDTO";
 
-const CommentView = (comment:CommentViewDTO) => {
+const CommentView = (comment : CommentDTO) => {
     return (
         <>
             <ListItem alignItems="flex-start">
@@ -15,9 +14,9 @@ const CommentView = (comment:CommentViewDTO) => {
                     <ListItemText
                         primary={comment.username}
                         secondary={
-                            <React.Fragment>
+                            <>
                                 {comment.message}
-                            </React.Fragment>
+                            </>
                         }
                     />
             </ListItem>
