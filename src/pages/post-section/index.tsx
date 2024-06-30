@@ -5,11 +5,34 @@ import { Category } from "../../model/enums/Category";
 import { getAllPost } from "../../services/PostService";
 import { PostViewDTO } from "../../model/dto/PostViewDTO";
 import { Stack } from "@mui/material";
+import { PostDTO } from "../../model/dto/PostDTO";
+import { createRandomKey } from "../../util/RandomKeys";
 
 export function PostSection() {
-    const [isCreateOpen, setIsCreateOpen] = useState(false);
-    const [isUpdateOpen, setIsUpdateOpen] = useState(false);
     const [postArray, setPostArray] = useState<PostViewDTO[]>([]);
+    const [postPopup, setPostPopup] = useState<{isOpen: boolean, isUpdate: boolean, postViewDto?: PostViewDTO}>(
+        {
+            isOpen: false,
+            isUpdate : false,
+        }
+    );
+
+    const setIsOpen = (open: boolean) => {
+        setPostPopup({...postPopup, isOpen : open});
+    };
+
+    const reset = () => {
+        setPostPopup({isOpen: false, isUpdate: false, postViewDto: undefined});
+    };
+    
+    const updateDto = (currentDto: PostViewDTO, isCreate?: boolean) => {
+        if(isCreate) {
+            setPostArray([currentDto, ...postArray]);
+        } else {
+            // Add the new dto, and remove the old one by it id.
+            setPostArray([currentDto, ...postArray.filter(dto => dto.id != currentDto.id)]);
+        }
+    };
 
     useEffect(() => {
         getAllPost().then(res => {
@@ -19,11 +42,14 @@ export function PostSection() {
 
     return (
         <>
-            <CreatePopup isUpdate isOpen={isUpdateOpen} setIsOpen={setIsUpdateOpen} />
-            <CreatePopup isOpen={isCreateOpen} setIsOpen={setIsCreateOpen} />
-            <button onClick={() => setIsCreateOpen(true)}>Create</button>
-            <button onClick={() => setIsUpdateOpen(true)}>Update</button>
-
+            <CreatePopup
+                isUpdate={postPopup.isUpdate}
+                open={postPopup.isOpen}
+                reset={reset}
+                postViewDto={postPopup.postViewDto}
+                updateDto={updateDto}
+            />
+            <button onClick={() => setIsOpen(true)}>Create</button>
             <br /><br /><br />
 
             <Stack justifyContent="center" alignItems="center">
@@ -31,6 +57,8 @@ export function PostSection() {
                     post => (
                         <PostCardView
                             {...post}
+                            key={createRandomKey()}
+                            update={(postViewDto) => {setPostPopup({isOpen : true, isUpdate : true, postViewDto}); console.log("OPENED")}}
                         />
                     )
                 )}
