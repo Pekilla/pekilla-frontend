@@ -1,13 +1,13 @@
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Modal, Stack } from "@mui/material";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Stack } from "@mui/material";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { array, object, string } from 'yup';
 import { PostDTO } from "../../../model/dto/PostDTO";
+import { PostViewDTO } from "../../../model/dto/PostViewDTO";
 import { Category } from "../../../model/enums/Category";
 import { createPost, updatePost } from "../../../services/PostService";
 import CategorySelector from "./components/category-selector";
 import { CreateInput } from "./components/create-input";
 import { Tags, TagsErrors } from "./components/tags";
-import { PostViewDTO } from "../../../model/dto/PostViewDTO";
 
 const USER_ID: number = process.env.REACT_APP_USER_ID as any;
 

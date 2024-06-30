@@ -1,7 +1,6 @@
-import { error, log } from "console";
+import { AxiosError } from "axios";
 import http from "../http";
 import { CommentDTO } from "../model/dto/CommentDTO";
-import { AxiosError } from "axios";
 import { CommentViewDTO } from "../model/dto/CommentViewDTO";
 
 const REQUEST_MAPPING: string = "/comment";
@@ -15,7 +14,7 @@ export const getCommentById = async (commentId : number) => {
 }
 
 export const createComment = async (commentDto : CommentDTO) => {
-    http.post(`${REQUEST_MAPPING}/post/add`,  
+    http.post(`${REQUEST_MAPPING}/post/add`, undefined,
         { params: {
             content: commentDto.message,
             postId: commentDto.postId,

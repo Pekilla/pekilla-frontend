@@ -1,9 +1,9 @@
-import { Avatar, Divider, List, ListItem, ListItemAvatar, ListItemText, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
-import { CommentDTO } from "../../model/dto/CommentDTO";
+import { List } from "@mui/material";
+import React, { useEffect } from "react";
 import CommentView from "../../components/comment/comment-view";
 import { CommentViewDTO } from "../../model/dto/CommentViewDTO";
 import { getAllComments } from "../../services/CommentService";
+import { createRandomKey } from "../../util/RandomKeys";
 
 const CommentSection = () => {
 
@@ -19,7 +19,8 @@ const CommentSection = () => {
         <List>
             {
                 comments?.map(comment => (
-                    <CommentView 
+                    <CommentView
+                        key={createRandomKey()} 
                         {...comment}
                     />
                 ))
