@@ -79,7 +79,7 @@ export default function PostCardView(props: PostCardViewProps) {
                         <h2>{props.title}</h2>
 
                         <Stack direction="row" spacing={1}>
-                            {props.tags.map(tag => (
+                            {props.tags?.map(tag => (
                                 <Chip key={createRandomKey()} label={tag} />
                             ))}
                         </Stack>

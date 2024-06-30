@@ -53,7 +53,7 @@ export function PostSection() {
             <br /><br /><br />
 
             <Stack justifyContent="center" alignItems="center">
-                {postArray.map(
+                {postArray?.map(
                     post => (
                         <PostCardView
                             {...post}
