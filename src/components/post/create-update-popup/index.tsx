@@ -9,7 +9,6 @@ import { CreateInput } from "./components/create-input";
 import { Tags, TagsErrors } from "./components/tags";
 import { PostViewDTO } from "../../../model/dto/PostViewDTO";
 
-
 const USER_ID: number = process.env.REACT_APP_USER_ID as any;
 
 export interface CreatePopupProps {
