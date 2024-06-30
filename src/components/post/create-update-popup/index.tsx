@@ -82,7 +82,7 @@ export default function CreatePopup(props: CreatePopupProps) {
                             props.reset();
                         }}
                     >
-                        {({ values, setFieldValue }) => (
+                        {({ values, setFieldValue, dirty }) => (
                             <Form id="create-update-post">
                                 <Stack spacing={3}>
                                     <Field
@@ -91,12 +91,6 @@ export default function CreatePopup(props: CreatePopupProps) {
                                         component={CreateInput}
                                     />
 
-                                    <Field
-                                        name="description"
-                                        label="Description"
-                                        component={CreateInput}
-                                        isTextArea
-                                    />
                                     <Field
                                         name="description"
                                         label="Description"
