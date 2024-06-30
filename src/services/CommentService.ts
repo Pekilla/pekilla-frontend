@@ -2,15 +2,16 @@ import { error, log } from "console";
 import http from "../http";
 import { CommentDTO } from "../model/dto/CommentDTO";
 import { AxiosError } from "axios";
+import { CommentViewDTO } from "../model/dto/CommentViewDTO";
 
 const REQUEST_MAPPING: string = "/comment";
 
 export const getAllComments = async (postId : number) => {
-   return (await http.get<CommentDTO[]>(`${REQUEST_MAPPING}/post/${postId}/all`)).data
+   return await http.get<CommentViewDTO[]>(`${REQUEST_MAPPING}/post/${postId}/all`);
 }
 
-export const getCommenById = async (commentId : number) => {
-    return (await http.get<CommentDTO>(`${REQUEST_MAPPING}/${commentId}`))
+export const getCommentById = async (commentId : number) => {
+    return await http.get<CommentDTO>(`${REQUEST_MAPPING}/${commentId}`);
 }
 
 export const createComment = async (commentDto : CommentDTO) => {

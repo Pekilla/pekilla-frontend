@@ -5,6 +5,7 @@ import './App.css';
 import CreatePopup from './components/post/create-update-popup';
 import NotFound from './pages/not-found';
 import { PostSection } from './pages/post-section';
+import CommentSection from './pages/comment-section';
 
 export const MUI_INPUT_VARIANT: TextFieldVariants = "outlined";
 
@@ -15,6 +16,7 @@ export default function App() {
                 <Routes>
                     <Route path="/" />
                     <Route path="/trend" Component={PostSection} />
+                    <Route path='/comments' Component={CommentSection} />
                     <Route Component={NotFound} path="/*" />
                 </Routes>
             </BrowserRouter>
