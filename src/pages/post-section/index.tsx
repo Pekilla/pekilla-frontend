@@ -55,7 +55,7 @@ export function PostSection() {
                         <PostView
                             {...post}
                             key={createRandomKey()}
-                            update={(postViewDto) => {setPostPopup({isOpen : true, isUpdate : true, postViewDto}); console.log("OPENED")}}
+                            update={(postViewDto) => setPostPopup({isOpen : true, isUpdate : true, postViewDto})}
                         />
                     )
                 )}

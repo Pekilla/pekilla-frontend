@@ -9,6 +9,7 @@ import CategorySelector from "./components/category-selector";
 import { CreateInput } from "./components/create-input";
 import { Tags, TagsErrors } from "./components/tags";
 import Divider from '@mui/material/Divider';
+import { equals } from "../../../util/utils";
 
 const USER_ID: number = process.env.REACT_APP_USER_ID as any;
 
@@ -22,7 +23,16 @@ export interface CreatePopupProps {
     updateDto(postViewDto: PostViewDTO, isCreate?: boolean): void;
 }
 
+
 export default function CreatePopup(props: CreatePopupProps) {
+    const initialValues = {
+        id: props.postViewDto?.id,
+        title: props.postViewDto?.title ?? "",
+        description: props.postViewDto?.description ?? "",
+        tags: props.postViewDto?.tags ?? [],
+        category: props.postViewDto?.category ?? Category.OTHER
+    };
+
     return (
         <>
             <Dialog
@@ -39,13 +49,7 @@ export default function CreatePopup(props: CreatePopupProps) {
 
                 <DialogContent>
                     <Formik
-                        initialValues={{
-                            id: props.postViewDto?.id,
-                            title: props.postViewDto?.title ?? "",
-                            description: props.postViewDto?.description ?? "",
-                            tags: props.postViewDto?.tags ?? [],
-                            category: props.postViewDto?.category ?? Category.OTHER
-                        }}
+                        initialValues={initialValues}
                         validationSchema={
                             object(
                                 {
@@ -65,24 +69,25 @@ export default function CreatePopup(props: CreatePopupProps) {
                             )
                         }
                         onSubmit={async (values) => {
-                            console.log(values);
-
-                            if (props.isUpdate) {
-                                props.updateDto(
-                                    (await updatePost(values as PostDTO, USER_ID))?.data!
-                                );
-                            }
-
-                            else {
+                            // Create
+                            if (!props.isUpdate) {
                                 props.updateDto(
                                     (await createPost(values as PostDTO, USER_ID))?.data!,
                                     true
                                 )
                             }
+
+                            // Update
+                            else if (!equals(initialValues, values)) {
+                                props.updateDto(
+                                    (await updatePost(values as PostDTO, USER_ID))?.data!
+                                );
+                            }
+
                             props.reset();
                         }}
                     >
-                        {({ values, setFieldValue, dirty }) => (
+                        {({ values, setFieldValue }) => (
                             <Form id="create-update-post">
                                 <Stack spacing={3}>
                                     <Field
