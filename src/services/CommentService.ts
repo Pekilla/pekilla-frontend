@@ -14,7 +14,7 @@ export const getCommentById = async (commentId : number) => {
 }
 
 export const createComment = async (commentDto : CommentDTO) => {
-    http.post(`${REQUEST_MAPPING}/post/add`,  
+    http.post(`${REQUEST_MAPPING}/post/add`, undefined, 
         { params: {
             content: commentDto.message,
             postId: commentDto.postId,
