@@ -8,7 +8,8 @@ import { PostViewDTO } from "../../../model/dto/PostViewDTO";
 import { createRandomKey } from "../../../util/RandomKeys";
 
 export interface PostViewProps extends PostViewDTO {
-    update(postViewDto: PostViewDTO): void;
+    // To set and open the popup(CreatePopup) with the data of the PostView for an update.
+    launchUpdate(postViewDto: PostViewDTO): void;
 }
 
 export interface MenuOption {
@@ -22,7 +23,7 @@ export default function PostView(props: PostViewProps) {
     const open = Boolean(anchorEl);
 
     const MENU_OPTIONS: MenuOption[] = [
-        { name: "modify", action() { props.update(props) }, icon: <EditIcon /> },
+        { name: "modify", action() { props.launchUpdate(props) }, icon: <EditIcon /> },
         { name: "delete", action() { console.log("DELETE") }, icon: <DeleteIcon /> },
     ]
 
