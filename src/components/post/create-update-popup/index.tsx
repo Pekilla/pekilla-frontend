@@ -1,4 +1,4 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Stack } from "@mui/material";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Stack, SxProps } from "@mui/material";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { array, object, string } from 'yup';
 import { PostDTO } from "../../../model/dto/PostDTO";
@@ -8,6 +8,7 @@ import { createPost, updatePost } from "../../../services/PostService";
 import CategorySelector from "./components/category-selector";
 import { CreateInput } from "./components/create-input";
 import { Tags, TagsErrors } from "./components/tags";
+import Divider from '@mui/material/Divider';
 
 const USER_ID: number = process.env.REACT_APP_USER_ID as any;
 
@@ -34,10 +35,9 @@ export default function CreatePopup(props: CreatePopupProps) {
                 <DialogTitle variant="h5" sx={{ fontWeight: "bold" }}>
                     {props.isUpdate ? "Update" : "Create"} post
                 </DialogTitle>
+                <Divider />
 
                 <DialogContent>
-                    <br />
-
                     <Formik
                         initialValues={{
                             id: props.postViewDto?.id,
@@ -122,13 +122,12 @@ export default function CreatePopup(props: CreatePopupProps) {
                                         setTags={(tags: string[]) => setFieldValue("tags", tags)}
                                     />
                                 </Stack>
-
                             </Form>
                         )}
                     </Formik>
                 </DialogContent>
-                <br />
 
+                <Divider />
                 <DialogActions>
                     <Button variant="text" onClick={props.reset}>Cancel</Button>
                     <Button type="submit" variant="contained" form="create-update-post">{props.isUpdate ? "Update" : "Create"}</Button>
