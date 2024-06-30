@@ -5,13 +5,17 @@ import { AxiosError } from "axios";
 
 const REQUEST_MAPPING: string = "/comment";
 
-export const getAllComments = async (postId:number) => {
-    http.get<CommentDTO[]>(REQUEST_MAPPING + `/post/${postId}/all`)
+export const getAllComments = async (postId : number) => {
+   return (await http.get<CommentDTO[]>(`${REQUEST_MAPPING}/post/${postId}/all`)).data
+}
+
+export const getCommenById = async (commentId : number) => {
+    return (await http.get<CommentDTO>(`${REQUEST_MAPPING}/${commentId}`))
 }
 
 export const createComment = async (commentDto : CommentDTO) => {
-    http.post(REQUEST_MAPPING + `/post/add`, null, {params: 
-        {
+    http.post(`${REQUEST_MAPPING}/post/add`,  
+        { params: {
             content: commentDto.message,
             postId: commentDto.postId,
             userId: commentDto.userId

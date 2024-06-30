@@ -5,6 +5,10 @@ import { PostViewDTO } from "../model/dto/PostViewDTO";
 
 const REQUEST_MAPPING: string = "/post";
 
+export const getPostById = async (postId : number) => {
+    return (await http.get<PostDTO>(`${REQUEST_MAPPING}/${postId}`)).data
+}
+
 export async function createPost(postDTO: PostDTO, userId: number) {
     return http.post(REQUEST_MAPPING + "/create", postDTO, {params : {userId}})
         .catch((error: AxiosError) => {
