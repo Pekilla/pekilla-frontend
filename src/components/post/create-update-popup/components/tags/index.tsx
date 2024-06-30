@@ -4,25 +4,23 @@
 
 import { faHashtag } from "@fortawesome/free-solid-svg-icons";
 import { Autocomplete, TextField } from "@mui/material";
-import { ReactElement } from "react";
-import { MUI_INPUT_VARIANT } from "../../../../App";
-import { IconLabel } from "../../../shared/icon-label";
 import { ErrorMessage, FieldProps } from "formik";
+import { ReactElement } from "react";
+import { MUI_INPUT_VARIANT } from "../../../../../App";
+import { IconLabel } from "../../../../shared/icon-label";
 
 interface TagsProps extends FieldProps {
-    setError(error: string): void;
     tags: string[];
     setTags(tags: string[]): void;
 };
 
+export enum TagsErrors {
+    EXISTS = "Tag already exists",
+    SIZE = "Need to have at least 3 tags."
+}
+
+
 export function Tags(props: TagsProps): ReactElement {
-    const error = props.form.errors.tags;
-
-    const handleChange = (e: any): void => {
-        if (props.tags.includes(e.target.value)) props.setError("Tag already exists.");
-        else if (error == "Tag already exists.") props.setError("");
-    };
-
     return (
         <>
             <Autocomplete
@@ -31,7 +29,6 @@ export function Tags(props: TagsProps): ReactElement {
                 freeSolo
                 onChange={(e, currentTags) => {
                     if (props.tags != currentTags) props.setTags(currentTags);
-                    if (error == "Tag already exists.") props.setError("");
                 }}
                 value={props.tags}
                 renderInput={(params) => (
@@ -39,7 +36,7 @@ export function Tags(props: TagsProps): ReactElement {
                         {...params}
                         variant={MUI_INPUT_VARIANT}
                         {...props.field}
-                        onChange={handleChange}
+                        onChange={() => {}}
                         error={(props.form.errors["tags"] && Boolean(props.form.touched["tags"])) as boolean}
                         helperText={<ErrorMessage name="tags" />}
                         label={

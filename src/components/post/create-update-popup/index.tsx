@@ -2,34 +2,26 @@ import { Autocomplete, Box, Button, Chip, Modal, TextField } from "@mui/material
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { FormEvent, useState } from "react";
 import * as yup from 'yup';
-import { createPost, updatePost } from "../../services/PostService";
+import { createPost, updatePost } from "../../../services/PostService";
 import CategorySelector from "./components/category-selector";
 import { CreateInput } from "./components/create-input";
-import { Tags } from "./components/tags";
+import { Tags, TagsErrors } from "./components/tags";
+import { PostDTO } from "../../../model/dto/PostDTO";
+import { Category } from "../../../model/enums/Category";
 
+
+const USER_ID: number = process.env.REACT_APP_USER_ID as any;
 
 export interface CreatePopupProps {
     isUpdate?: boolean;
     isOpen: boolean;
     setIsOpen(isOpen: boolean): void;
+    postDto?: PostDTO;
 }
 
 export default function CreatePopup(props: CreatePopupProps) {
     const close = () => {
         props.setIsOpen(false);
-    };
-
-    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        let formData = new FormData(e.currentTarget);
-        formData.append("userId", process.env.REACT_APP_USER_ID + "");
-
-        if (props.isUpdate) {
-            updatePost(formData);
-        }
-        else createPost(formData);
-        console.log(Object.fromEntries(formData.entries as any));
-
     };
 
     return (
@@ -42,9 +34,11 @@ export default function CreatePopup(props: CreatePopupProps) {
                 <Box sx={{ background: "white", width: 800, padding: 3, borderRadius: "10px" }}>
                     <Formik
                         initialValues={{
-                            title: "",
-                            description: "",
-                            tags: [],
+                            id : props.postDto?.id,
+                            title: props.postDto?.title ?? "",
+                            description: props.postDto?.description ?? "",
+                            tags: props.postDto?.tags ?? [],
+                            category: props.postDto?.category ?? Category.OTHER
                         }}
                         validationSchema={
                             yup.object(
@@ -61,18 +55,22 @@ export default function CreatePopup(props: CreatePopupProps) {
                                         .max(5000, "Description cannot be more than 80 characters.")
                                         .min(10, "Description cannot be less than 10 characters.")
                                     ,
-                                    tags : yup
+                                    tags: yup
                                         .array()
-                                        .min(3, "Need to have at least 3 tags.")
+                                        .min(3, TagsErrors.SIZE)
                                 }
                             )
                         }
                         onSubmit={(values) => {
-                            console.log(values);
-                            alert(JSON.stringify(values));
+                            console.log(values)
+                            if (props.isUpdate) {
+                                updatePost(values as PostDTO, USER_ID);
+                            }
+
+                            else createPost(values as PostDTO, USER_ID);
                         }}
                     >
-                        {({ values, setFieldValue, setFieldError, errors, touched }) => (
+                        {({ values, setFieldValue }) => (
                             <Form>
                                 <h2>{props.isUpdate ? "Update" : "Create"} post</h2>
 
@@ -95,7 +93,10 @@ export default function CreatePopup(props: CreatePopupProps) {
                                 {props.isUpdate ?
                                     (<></>) : (
                                         <>
-                                            <CategorySelector />
+                                            <Field
+                                                name="category"
+                                                component={CategorySelector}
+                                            />
                                             <br /><br /><br />
                                         </>
                                     )
@@ -106,7 +107,6 @@ export default function CreatePopup(props: CreatePopupProps) {
                                     component={Tags}
                                     error={<ErrorMessage name="tags" />}
                                     tags={values.tags}
-                                    setError={(error: string) => setFieldError("tags", error)}
                                     setTags={(tags: string[]) => setFieldValue("tags", tags)}
                                 />
 
