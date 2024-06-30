@@ -1,23 +1,38 @@
-import { Avatar, Card, CardContent, CardHeader, Chip, IconButton, Menu, MenuItem, Stack } from "@mui/material";
-import { Link } from "react-router-dom";
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import { PostViewDTO } from "../../../model/dto/PostViewDTO";
+import { Avatar, Card, CardContent, CardHeader, Chip, IconButton, Menu, MenuItem, Stack, Typography, Icon } from "@mui/material";
 import { useState } from "react";
-import { PostDTO } from "../../../model/dto/PostDTO";
+import { Link } from "react-router-dom";
+import { PostViewDTO } from "../../../model/dto/PostViewDTO";
 import { createRandomKey } from "../../../util/RandomKeys";
 
 export interface PostCardViewProps extends PostViewDTO {
     update(postViewDto: PostViewDTO): void;
 }
 
-interface MenuOption {
+export interface MenuOption {
     action(): void;
     name: string;
+    icon: any;
+}
+
+export function IconHandler(props: { icon: any }) {
+    return (
+        <>
+            {props.icon}
+        </>
+    );
 }
 
 export default function PostCardView(props: PostCardViewProps) {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
+
+    const MENU_OPTIONS: MenuOption[] = [
+        { name: "modify", action() { props.update(props) }, icon: <EditIcon /> },
+        { name: "delete", action() { console.log("DELETE") }, icon: <DeleteIcon /> },
+    ]
 
     return (
         <Card variant="outlined" sx={{ width: "800px", backgroundColor: "whitesmoke" }}>
@@ -42,9 +57,16 @@ export default function PostCardView(props: PostCardViewProps) {
                             onClose={() => setAnchorEl(null)}
                             variant="menu"
                         >
-                            {[{name : "modify", action() { props.update(props) }} as MenuOption].map((option) => (
-                                <MenuItem key={option.name} onClick={() => {setAnchorEl(null); option.action();}}>{option.name}</MenuItem>
-                            ))}
+                            {MENU_OPTIONS.map((option) => {
+                                return (
+                                    <MenuItem key={option.name} onClick={() => { setAnchorEl(null); option.action(); }}>
+                                        <Stack direction={"row"} spacing={1}>
+                                            {option.icon}
+                                            <Typography variant="inherit">{option.name}</Typography>
+                                        </Stack>
+                                    </MenuItem>
+                                )
+                            })}
                         </Menu>
 
 
