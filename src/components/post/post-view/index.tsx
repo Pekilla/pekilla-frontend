@@ -1,13 +1,13 @@
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import { Avatar, Card, CardContent, CardHeader, Chip, IconButton, Menu, MenuItem, Stack, Typography, Icon } from "@mui/material";
+import { Avatar, Card, CardContent, CardHeader, Chip, IconButton, Menu, MenuItem, Stack, Typography } from "@mui/material";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { PostViewDTO } from "../../../model/dto/PostViewDTO";
 import { createRandomKey } from "../../../util/RandomKeys";
 
-export interface PostCardViewProps extends PostViewDTO {
+export interface PostViewProps extends PostViewDTO {
     update(postViewDto: PostViewDTO): void;
 }
 
@@ -17,15 +17,7 @@ export interface MenuOption {
     icon: any;
 }
 
-export function IconHandler(props: { icon: any }) {
-    return (
-        <>
-            {props.icon}
-        </>
-    );
-}
-
-export default function PostCardView(props: PostCardViewProps) {
+export default function PostView(props: PostViewProps) {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
 
@@ -68,11 +60,10 @@ export default function PostCardView(props: PostCardViewProps) {
                                 )
                             })}
                         </Menu>
-
-
                     </>
                 }
             />
+            
             <CardContent>
                 <Stack spacing={4}>
                     <Stack spacing={1}>

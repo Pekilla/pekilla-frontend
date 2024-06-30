@@ -28,11 +28,16 @@ export default function CreatePopup(props: CreatePopupProps) {
                 open={props.open}
                 onClose={props.reset}
                 maxWidth={false}
-                PaperProps={{ sx: { borderRadius: "10px", padding : "13px" } }}
+                PaperProps={{ sx: { borderRadius: "10px" } }}
+                title="Update"
             >
-                <DialogTitle variant="h5" sx={{fontWeight : "bold"}}>{props.isUpdate ? "Update" : "Create"} post</DialogTitle>
+                <DialogTitle variant="h5" sx={{ fontWeight: "bold" }}>
+                    {props.isUpdate ? "Update" : "Create"} post
+                </DialogTitle>
 
                 <DialogContent>
+                    <br />
+
                     <Formik
                         initialValues={{
                             id: props.postViewDto?.id,
@@ -79,14 +84,19 @@ export default function CreatePopup(props: CreatePopupProps) {
                     >
                         {({ values, setFieldValue }) => (
                             <Form id="create-update-post">
-                                <Stack spacing={4}>
-
+                                <Stack spacing={3}>
                                     <Field
                                         name="title"
                                         label="Title"
                                         component={CreateInput}
                                     />
 
+                                    <Field
+                                        name="description"
+                                        label="Description"
+                                        component={CreateInput}
+                                        isTextArea
+                                    />
                                     <Field
                                         name="description"
                                         label="Description"
@@ -117,6 +127,7 @@ export default function CreatePopup(props: CreatePopupProps) {
                         )}
                     </Formik>
                 </DialogContent>
+                <br />
 
                 <DialogActions>
                     <Button variant="text" onClick={props.reset}>Cancel</Button>
