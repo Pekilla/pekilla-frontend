@@ -1,4 +1,4 @@
-import { Stack } from "@mui/material";
+import { Button, Stack } from "@mui/material";
 import { useEffect, useState } from "react";
 import CreatePopup from "../../components/post/create-update-popup";
 import PostView from "../../components/post/post-view";
@@ -47,7 +47,8 @@ export function PostSection() {
                 postViewDto={postPopup.postViewDto}
                 updateDto={updateDto}
             />
-            <button onClick={() => setIsOpen(true)}>Create</button>
+            
+            <Button variant="contained" onClick={() => setIsOpen(true)}>Create</Button>
 
             <Stack spacing={2} justifyContent="center" alignItems="center">
                 {postArray?.map(

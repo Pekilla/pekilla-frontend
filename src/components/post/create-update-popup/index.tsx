@@ -1,15 +1,15 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Stack, SxProps } from "@mui/material";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Stack } from "@mui/material";
+import Divider from '@mui/material/Divider';
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { array, object, string } from 'yup';
 import { PostDTO } from "../../../model/dto/PostDTO";
 import { PostViewDTO } from "../../../model/dto/PostViewDTO";
 import { Category } from "../../../model/enums/Category";
 import { createPost, updatePost } from "../../../services/PostService";
+import { equals } from "../../../util/utils";
 import CategorySelector from "./components/category-selector";
 import { CreateInput } from "./components/create-input";
 import { Tags, TagsErrors } from "./components/tags";
-import Divider from '@mui/material/Divider';
-import { equals } from "../../../util/utils";
 
 const USER_ID: number = process.env.REACT_APP_USER_ID as any;
 
@@ -131,7 +131,7 @@ export default function CreatePopup(props: CreatePopupProps) {
                     <Button variant="text" onClick={props.reset}>Cancel</Button>
                     <Button type="submit" variant="contained" form="create-update-post">{props.isUpdate ? "Update" : "Create"}</Button>
                 </DialogActions>
-            </Dialog >
+            </Dialog>
         </>
     );
 }
