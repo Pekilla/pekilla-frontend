@@ -28,7 +28,7 @@ export function PostSection() {
             setPostArray([currentDto, ...postArray]);
         } else {
             // Add the new dto, and remove the old one by it id.
-            setPostArray([currentDto, ...postArray.filter(dto => dto.id != currentDto.id)]);
+            setPostArray([currentDto, ...postArray.filter(dto => dto.id !== currentDto.id)]);
         }
     };
 

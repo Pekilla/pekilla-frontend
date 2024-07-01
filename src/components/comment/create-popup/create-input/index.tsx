@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Button, Divider, Fab, Stack, TextField, Typography } from "@mui/material";
+import { Button, Divider, Stack, Typography } from "@mui/material";
 import { Field, Form, Formik } from "formik";
 import { CommentDTO } from "../../../../model/dto/CommentDTO";
 import { createComment } from "../../../../services/CommentService";
