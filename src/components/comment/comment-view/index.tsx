@@ -1,8 +1,9 @@
 import { Avatar, Button, Divider, ListItem, ListItemAvatar, ListItemText } from "@mui/material";
 import React from "react";
 import { CommentDTO } from "../../../model/dto/CommentDTO";
+import { CommentViewDTO } from "../../../model/dto/CommentViewDTO";
 
-const CommentView = (comment : CommentDTO) => {
+const CommentView = (comment : CommentViewDTO) => {
     return (
         <>
             <ListItem alignItems="flex-start">
