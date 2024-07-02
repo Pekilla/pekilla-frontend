@@ -3,7 +3,6 @@ import React, { useEffect } from "react";
 import CommentView from "../../components/comment/comment-view";
 import { getAllComments } from "../../services/CommentService";
 import { createRandomKey } from "../../util/RandomKeys";
-import { CommentDTO } from "../../model/dto/CommentDTO";
 
 import CreateCommentPopup from "../../components/comment/create-popup";
 import { CommentViewDTO } from "../../model/dto/CommentViewDTO";
@@ -14,9 +13,7 @@ const CommentSection = () => {
 
     const [commentPopup, setCommentPopup] = React.useState(false);
 
-    const handlePopup = () => {
-        setCommentPopup(!commentPopup);
-    }
+    const handlePopup = () => setCommentPopup(!commentPopup);
 
     useEffect(() => {
         getAllComments(1).then(res => {
@@ -27,10 +24,10 @@ const CommentSection = () => {
     return (
         <>
             <Button variant="contained"
-                onClick={() => handlePopup()} >create</Button>
+                onClick={handlePopup}>create</Button>
             <Modal
                 open={commentPopup}
-                onClose={() => handlePopup()}>
+                onClose={handlePopup}>
                 <CreateCommentPopup/>
             </Modal>
         
