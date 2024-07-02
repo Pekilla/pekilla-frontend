@@ -9,8 +9,11 @@ export const getPostById = async (postId : number) => {
     return (await http.get<PostDTO>(`${REQUEST_MAPPING}/${postId}`)).data
 }
 
-export const deletePost = async (postId? : number) => {
-    http.delete(`${REQUEST_MAPPING}/${postId}`)
+export const deletePost = async (postId : number, removeCallback: any) => {
+    return http.delete(`${REQUEST_MAPPING}/${postId}`)
+    .then(res => {
+        if(res?.data) removeCallback(postId);
+    })
     .catch((error : AxiosError) => {
         console.log((error.response?.data as any).message);
     });

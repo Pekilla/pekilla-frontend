@@ -11,6 +11,7 @@ import { deletePost } from '../../../services/PostService';
 export interface PostViewProps extends PostViewDTO {
     // To set and open the popup(CreatePopup) with the data of the PostView for an update.
     launchUpdate(postViewDto: PostViewDTO): void;
+    removePostFromUi(id: number): void;
 }
 
 export interface MenuOption {
@@ -25,7 +26,7 @@ export default function PostView(props: PostViewProps) {
 
     const MENU_OPTIONS: MenuOption[] = [
         { name: "modify", action() { props.launchUpdate(props) }, icon: <EditIcon /> },
-        { name: "delete", action() { deletePost(props.id) }, icon: <DeleteIcon /> },
+        { name: "delete", action() { deletePost(props.id!, props.removePostFromUi) }, icon: <DeleteIcon /> },
     ]
 
     return (

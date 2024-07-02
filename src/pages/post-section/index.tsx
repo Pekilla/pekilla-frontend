@@ -53,8 +53,10 @@ export function PostSection() {
             <Stack spacing={2} justifyContent="center" alignItems="center">
                 {postArray?.map(
                     post => (
+                        
                         <PostView
                             {...post}
+                            removePostFromUi={(postId) => setPostArray(postArray.filter(post => post.id !== postId))}
                             key={createRandomKey()}
                             launchUpdate={(postViewDto) => setPostPopup({isOpen : true, isUpdate : true, postViewDto})}
                         />
