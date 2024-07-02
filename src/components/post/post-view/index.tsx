@@ -6,6 +6,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { PostViewDTO } from "../../../model/dto/PostViewDTO";
 import { createRandomKey } from "../../../util/RandomKeys";
+import { deletePost } from '../../../services/PostService';
 
 export interface PostViewProps extends PostViewDTO {
     // To set and open the popup(CreatePopup) with the data of the PostView for an update.
@@ -24,7 +25,7 @@ export default function PostView(props: PostViewProps) {
 
     const MENU_OPTIONS: MenuOption[] = [
         { name: "modify", action() { props.launchUpdate(props) }, icon: <EditIcon /> },
-        { name: "delete", action() { console.log("DELETE") }, icon: <DeleteIcon /> },
+        { name: "delete", action() { deletePost(props.id) }, icon: <DeleteIcon /> },
     ]
 
     return (
