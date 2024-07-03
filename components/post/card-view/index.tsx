@@ -1,3 +1,5 @@
+"use client"
+
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
@@ -10,7 +12,7 @@ import React from 'react';
 import Link from 'next/link';
 
 export interface PostCardViewProps extends PostViewDTO {
-    update(postViewDto: PostViewDTO): void;
+    update?(postViewDto: PostViewDTO): void;
 }
 
 export interface MenuOption {
@@ -32,7 +34,7 @@ export default function PostCardView(props: PostCardViewProps) {
     const open = Boolean(anchorEl);
 
     const MENU_OPTIONS: MenuOption[] = [
-        { name: "modify", action() { props.update(props) }, icon: <EditIcon /> },
+        { name: "modify", action() { props.update?.(props) }, icon: <EditIcon /> },
         { name: "delete", action() { console.log("DELETE") }, icon: <DeleteIcon /> },
     ]
 

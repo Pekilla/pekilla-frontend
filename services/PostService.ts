@@ -1,7 +1,7 @@
-import { AxiosError, AxiosPromise, AxiosResponse } from "axios";
+import { PostDTO } from "@models/dto/PostDTO";
+import { PostViewDTO } from "@models/dto/PostViewDTO";
+import { AxiosError, AxiosResponse } from "axios";
 import http from "../http";
-import { PostDTO } from "../model/dto/PostDTO";
-import { PostViewDTO } from "../model/dto/PostViewDTO";
 
 const REQUEST_MAPPING: string = "/post";
 
@@ -35,4 +35,8 @@ export async function updatePost(postDTO: PostDTO, userId: number): Promise<void
 
 export function getAllPost() {
     return http.get<PostViewDTO[]>(REQUEST_MAPPING + "/all");
+}
+
+export function getAllPostsThatContain(input: string) {
+    return http.get<PostViewDTO[]>(REQUEST_MAPPING + `/all/containing/${input}`);
 }
