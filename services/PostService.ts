@@ -19,15 +19,15 @@ export const deletePost = async (postId : number, removeCallback: any) => {
     });
 }
 
-export async function createPost(postDTO: PostDTO, userId: number) {
-    return http.post(REQUEST_MAPPING + "/create", postDTO, {params : {userId}})
+export async function createPost(postDTO: PostDTO) {
+    return http.post(REQUEST_MAPPING + "/create", postDTO)
         .catch((error: AxiosError) => {
             console.log((error.response?.data as any).message);
         });;
 }
 
-export async function updatePost(postDTO: PostDTO, userId: number): Promise<void | AxiosResponse<PostViewDTO, any>> {
-    return http.post(REQUEST_MAPPING + "/update", postDTO, {params : {userId}})
+export async function updatePost(postDTO: PostDTO): Promise<void | AxiosResponse<PostViewDTO, any>> {
+    return http.post(REQUEST_MAPPING + "/update", postDTO)
         .catch((error: AxiosError) => {
             console.log((error.response?.data as any).message);
         });

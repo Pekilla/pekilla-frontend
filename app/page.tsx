@@ -2,7 +2,7 @@
 
 import { Stack, TextField, Typography } from "@mui/material";
 import Image from "next/image";
-import { useRouter, redirect, RedirectType } from 'next/navigation'
+import { useRouter } from 'next/navigation';
 
 const Input = () => {
 	const router = useRouter();
@@ -30,7 +30,7 @@ export default function Home() {
 				<Input />
 			</Stack>
 
-			<Image src="/old-computers.webp" alt="background" width={612} height={408} />
+			<Image src="/old-computers.webp" alt="background" width={612} height={408} priority={true} />
 		</Stack>
 	);
 }

@@ -8,6 +8,8 @@ import { Autocomplete, TextField } from "@mui/material";
 import { ErrorMessage, FieldProps } from "formik";
 import { ReactElement } from "react";
 import { MUI_INPUT_VARIANT } from "@utils/utils";
+import IconLabel from "@/components/shared/IconLabel";
+import TagIcon from '@mui/icons-material/Tag';
 
 interface TagsProps extends FieldProps {
     tags: string[];
@@ -40,7 +42,7 @@ export function Tags(props: TagsProps): ReactElement {
                         error={(props.form.errors["tags"] && Boolean(props.form.touched["tags"])) as boolean}
                         helperText={<ErrorMessage name="tags" />}
                         label={
-                            <>Tags</>
+                            <IconLabel label="Tags" icon={<TagIcon />} />
                         }
                         placeholder="Add a tag..."
                     />

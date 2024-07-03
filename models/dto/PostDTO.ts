@@ -10,4 +10,5 @@ export interface PostDTO {
     description: string;
     tags: string[];
     category: Category;
+    userId: number;
 };

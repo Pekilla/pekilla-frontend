@@ -70,10 +70,13 @@ export default function CreatePopup(props: CreatePopupProps) {
                             )
                         }
                         onSubmit={async (values) => {
+                            // Add USER_ID
+                            (values as any)["userId"] = USER_ID;
+                            
                             // Create
                             if (!props.isUpdate) {
                                 props.updateDto(
-                                    (await createPost(values as PostDTO, USER_ID))?.data!,
+                                    (await createPost(values as PostDTO))?.data!,
                                     true
                                 )
                             }
@@ -81,7 +84,7 @@ export default function CreatePopup(props: CreatePopupProps) {
                             // Update
                             else if (!equals(initialValues, values)) {
                                 props.updateDto(
-                                    (await updatePost(values as PostDTO, USER_ID))?.data!
+                                    (await updatePost(values as PostDTO))?.data!
                                 );
                             }
 
