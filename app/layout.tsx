@@ -1,8 +1,10 @@
+import config from "@/config.json";
+import { Button, Link as MuiLink, Stack } from "@mui/material";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
-import { Button, Stack, TextField, Typography, Link as MuiLink } from "@mui/material";
 import Link from "next/link";
+import "./globals.css";
+import { AppContextProvider } from "@/context/AppContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -34,7 +36,9 @@ export default function RootLayout({
 					</Stack>
 				</nav>
 
-				{children}
+				<AppContextProvider>
+					{children}
+				</AppContextProvider>
 			</body>
 		</html>
 	);

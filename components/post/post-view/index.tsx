@@ -1,17 +1,21 @@
+"use client"
+
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { Avatar, Card, CardContent, CardHeader, Chip, IconButton, Menu, MenuItem, Stack, Typography } from "@mui/material";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { PostViewDTO } from "@models/dto/PostViewDTO";
 import { createRandomKey } from "@utils/RandomKeys";
 import { deletePost } from '@services/PostService';
 import Link from 'next/link';
+import FlagIcon from '@mui/icons-material/Flag';
+import { PekillaContext } from '@/context/AppContext';
 
 export interface PostViewProps extends PostViewDTO {
     // To set and open the popup(CreatePopup) with the data of the PostView for an update.
-    launchUpdate(postViewDto: PostViewDTO): void;
-    removePostFromUi(id: number): void;
+    launchUpdate?(postViewDto: PostViewDTO): void;
+    removePostFromUi?(id: number): void;
 }
 
 export interface MenuOption {
@@ -21,12 +25,15 @@ export interface MenuOption {
 }
 
 export default function PostView(props: PostViewProps) {
+    const { userId } = useContext(PekillaContext);
+
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
 
-    const MENU_OPTIONS: MenuOption[] = [
-        { name: "modify", action() { props.launchUpdate(props) }, icon: <EditIcon /> },
-        { name: "delete", action() { deletePost(props.id!, props.removePostFromUi) }, icon: <DeleteIcon /> },
+    const MENU_OPTIONS: Array<MenuOption | undefined> = [
+        props.userId == userId ? { name: "modify", action() { props.launchUpdate?.(props) }, icon: <EditIcon /> } : undefined,
+        props.userId == userId ? { name: "delete", action() { deletePost(props.id!, props.removePostFromUi) }, icon: <DeleteIcon /> } : undefined,
+        props.userId == userId ? undefined : { name: "report", action() { alert("Feature not implemented yet!") }, icon: <FlagIcon /> }
     ]
 
     return (
@@ -54,19 +61,21 @@ export default function PostView(props: PostViewProps) {
                         >
                             {MENU_OPTIONS.map((option) => {
                                 return (
-                                    <MenuItem key={option.name} onClick={() => { setAnchorEl(null); option.action(); }}>
-                                        <Stack direction={"row"} spacing={1}>
-                                            {option.icon}
-                                            <Typography variant="inherit">{option.name}</Typography>
-                                        </Stack>
-                                    </MenuItem>
+                                    option ? (
+                                        <MenuItem key={option.name} onClick={() => { setAnchorEl(null); option.action(); }}>
+                                            <Stack direction={"row"} spacing={1}>
+                                                {option.icon}
+                                                <Typography variant="inherit">{option.name}</Typography>
+                                            </Stack>
+                                        </MenuItem>
+                                    ) : null
                                 )
                             })}
                         </Menu>
                     </>
                 }
             />
-            
+
             <CardContent>
                 <Stack spacing={4}>
                     <Stack spacing={1}>

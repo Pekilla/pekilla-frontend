@@ -1,5 +1,6 @@
-import PostCardView from "@/components/post/card-view";
+import PostView from "@/components/post/post-view";
 import { getAllPostsThatContain } from "@/services/PostService";
+import { createRandomKey } from "@/utils/RandomKeys";
 import { Stack, Typography } from "@mui/material";
 import Image from "next/image";
 
@@ -23,7 +24,8 @@ export default async function PostSearch({ params }: PostSearchProps) {
                 ) : (
                     <>
                         {postViewDtos.map(post => (
-                            <PostCardView
+                            <PostView
+                                key={createRandomKey()}
                                 {...post}
                             />
                         ))}

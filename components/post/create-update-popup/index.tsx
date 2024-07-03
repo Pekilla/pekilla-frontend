@@ -10,9 +10,8 @@ import { equals } from "@utils/utils";
 import CategorySelector from "./components/category-selector";
 import { CreateInput } from "./components/create-input";
 import { Tags, TagsErrors } from "./components/tags";
-import config from "@/config.json";
-
-const USER_ID: number = config.id;
+import { useContext } from "react";
+import { PekillaContext } from "@/context/AppContext";
 
 export interface CreatePopupProps {
     isUpdate?: boolean;
@@ -26,6 +25,8 @@ export interface CreatePopupProps {
 
 
 export default function CreatePopup(props: CreatePopupProps) {
+    const { userId } = useContext(PekillaContext);
+    
     const initialValues = {
         id: props.postViewDto?.id,
         title: props.postViewDto?.title ?? "",
@@ -70,8 +71,8 @@ export default function CreatePopup(props: CreatePopupProps) {
                             )
                         }
                         onSubmit={async (values) => {
-                            // Add USER_ID
-                            (values as any)["userId"] = USER_ID;
+                            // Add userId
+                            (values as any)["userId"] = userId;
                             
                             // Create
                             if (!props.isUpdate) {

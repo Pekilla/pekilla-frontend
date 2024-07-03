@@ -4,15 +4,17 @@ import { CommentDTO } from "@models/dto/CommentDTO";
 import { createComment } from "@services/CommentService";
 import { object, string } from "yup";
 import { CreateInput } from "../../../post/create-update-popup/components/create-input";
+import { useContext } from "react";
+import { PekillaContext } from "@/context/AppContext";
 
-const USER_ID: number = process.env.REACT_APP_USER_ID as any
 
 const CreateCommentPopupContent = () => {
+    const { userId } = useContext(PekillaContext);
 
     const comment : CommentDTO = {
         message: "",
         postId: 1,
-        userId: USER_ID
+        userId
     }
     
     const fields = {
