@@ -1,15 +1,14 @@
-import { Button, Divider, Stack, Typography } from "@mui/material";
-import { Field, Form, Formik } from "formik";
+import { usePekillaContext } from "@/app/contexts/PekillaContext";
 import { CommentDTO } from "@models/dto/CommentDTO";
+import { Button, Divider, Stack, Typography } from "@mui/material";
 import { createComment } from "@services/CommentService";
+import { Field, Form, Formik } from "formik";
 import { object, string } from "yup";
 import { CreateInput } from "../../../post/create-update-popup/components/create-input";
-import { useContext } from "react";
-import { PekillaContext } from "@/context/AppContext";
 
 
 const CreateCommentPopupContent = () => {
-    const { userId } = useContext(PekillaContext);
+    const { userId } = usePekillaContext();
 
     const comment : CommentDTO = {
         message: "",

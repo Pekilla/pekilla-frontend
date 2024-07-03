@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Link from "next/link";
 import "./globals.css";
-import { AppContextProvider } from "@/context/AppContext";
+import { PekillaContextProvider } from "@/app/contexts/PekillaContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -36,9 +36,9 @@ export default function RootLayout({
 					</Stack>
 				</nav>
 
-				<AppContextProvider>
+				<PekillaContextProvider>
 					{children}
-				</AppContextProvider>
+				</PekillaContextProvider>
 			</body>
 		</html>
 	);

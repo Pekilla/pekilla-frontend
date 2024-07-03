@@ -10,7 +10,7 @@ import { createRandomKey } from "@utils/RandomKeys";
 import { deletePost } from '@services/PostService';
 import Link from 'next/link';
 import FlagIcon from '@mui/icons-material/Flag';
-import { PekillaContext } from '@/context/AppContext';
+import { usePekillaContext } from '@/app/contexts/PekillaContext';
 
 export interface PostViewProps extends PostViewDTO {
     // To set and open the popup(CreatePopup) with the data of the PostView for an update.
@@ -25,7 +25,7 @@ export interface MenuOption {
 }
 
 export default function PostView(props: PostViewProps) {
-    const { userId } = useContext(PekillaContext);
+    const { userId } = usePekillaContext();
 
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);

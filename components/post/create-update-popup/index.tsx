@@ -11,7 +11,7 @@ import CategorySelector from "./components/category-selector";
 import { CreateInput } from "./components/create-input";
 import { Tags, TagsErrors } from "./components/tags";
 import { useContext } from "react";
-import { PekillaContext } from "@/context/AppContext";
+import { usePekillaContext } from "@/app/contexts/PekillaContext";
 
 export interface CreatePopupProps {
     isUpdate?: boolean;
@@ -25,7 +25,7 @@ export interface CreatePopupProps {
 
 
 export default function CreatePopup(props: CreatePopupProps) {
-    const { userId } = useContext(PekillaContext);
+    const { userId } = usePekillaContext();
     
     const initialValues = {
         id: props.postViewDto?.id,

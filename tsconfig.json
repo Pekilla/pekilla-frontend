@@ -23,6 +23,7 @@
       "@models/*": ["./models/*"],
       "@utils/*": ["./utils/*"],
       "@services/*": ["./services/*"],
+      "@contexts/*": ["./app/contexts/*"],
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
