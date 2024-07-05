@@ -3,11 +3,7 @@ import { PostViewDTO } from "@models/dto/PostViewDTO";
 import { AxiosError, AxiosResponse } from "axios";
 import http from "../http";
 
-const REQUEST_MAPPING: string = "/post";
-
-export const getPostById = async (postId : number) => {
-    return (await http.get<PostDTO>(`${REQUEST_MAPPING}/${postId}`)).data
-}
+const REQUEST_MAPPING: string = "/posts";
 
 export const deletePost = async (postId : number, removeCallback: any) => {
     return http.delete(`${REQUEST_MAPPING}/${postId}`)
@@ -35,6 +31,10 @@ export async function updatePost(postDTO: PostDTO): Promise<void | AxiosResponse
 
 export function getAllPost() {
     return http.get<PostViewDTO[]>(REQUEST_MAPPING + "/all");
+}
+
+export const getPostById = async (postId : number) => {
+    return (await http.get<PostViewDTO>(`${REQUEST_MAPPING}/${postId}`)).data;
 }
 
 export function getAllPostsThatContain(input: string) {

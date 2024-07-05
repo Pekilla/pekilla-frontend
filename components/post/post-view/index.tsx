@@ -37,60 +37,62 @@ export default function PostView(props: PostViewProps) {
     ]
 
     return (
-        <Card variant="outlined" sx={{ width: "800px" }}>
-            <CardHeader
-                avatar={
-                    <Avatar src="https://cdn-icons-png.freepik.com/512/149/149071.png" />
-                }
-                title={
-                    <Stack spacing={0.4}>
-                        <p><Link href={`/category/${props.category?.toLowerCase()}`}>{props.category}</Link> • {props.addedDate?.toString()}</p>
-                        <Link href={`/user/${props.userLink}`}>{props.username}</Link>
-                    </Stack>
-                }
-                action={
-                    <>
-                        <IconButton onClick={(e) => setAnchorEl(e.currentTarget)}>
-                            <MoreHorizIcon />
-                        </IconButton>
-                        <Menu
-                            anchorEl={anchorEl}
-                            open={open}
-                            onClose={() => setAnchorEl(null)}
-                            variant="menu"
-                        >
-                            {MENU_OPTIONS.map((option) => {
-                                return (
-                                    option ? (
-                                        <MenuItem key={option.name} onClick={() => { setAnchorEl(null); option.action(); }}>
-                                            <Stack direction={"row"} spacing={1}>
-                                                {option.icon}
-                                                <Typography variant="inherit">{option.name}</Typography>
-                                            </Stack>
-                                        </MenuItem>
-                                    ) : null
-                                )
-                            })}
-                        </Menu>
-                    </>
-                }
-            />
-
-            <CardContent>
-                <Stack spacing={4}>
-                    <Stack spacing={1}>
-                        <h2>{props.title}</h2>
-
-                        <Stack direction="row" spacing={1}>
-                            {props.tags?.map(tag => (
-                                <Chip key={createRandomKey()} label={tag} />
-                            ))}
+        <Link href={`/post/${props.id}`}>
+            <Card variant="outlined" sx={{ width: "800px" }}>
+                <CardHeader
+                    avatar={
+                        <Avatar src="https://cdn-icons-png.freepik.com/512/149/149071.png" />
+                    }
+                    title={
+                        <Stack spacing={0.4}>
+                            <p><Link href={`/category/${props.category?.toLowerCase()}`}>{props.category}</Link> • {props.addedDate?.toString()}</p>
+                            <Link href={`/user/${props.userLink}`}>{props.username}</Link>
                         </Stack>
-                    </Stack>
+                    }
+                    action={
+                        <>
+                            <IconButton onClick={(e) => setAnchorEl(e.currentTarget)}>
+                                <MoreHorizIcon />
+                            </IconButton>
+                            <Menu
+                                anchorEl={anchorEl}
+                                open={open}
+                                onClose={() => setAnchorEl(null)}
+                                variant="menu"
+                            >
+                                {MENU_OPTIONS.map((option) => {
+                                    return (
+                                        option ? (
+                                            <MenuItem key={option.name} onClick={() => { setAnchorEl(null); option.action(); }}>
+                                                <Stack direction={"row"} spacing={1}>
+                                                    {option.icon}
+                                                    <Typography variant="inherit">{option.name}</Typography>
+                                                </Stack>
+                                            </MenuItem>
+                                        ) : null
+                                    )
+                                })}
+                            </Menu>
+                        </>
+                    }
+                />
 
-                    <p>{props.description}</p>
-                </Stack>
-            </CardContent>
-        </Card>
+                <CardContent>
+                    <Stack spacing={4}>
+                        <Stack spacing={1}>
+                            <h2>{props.title}</h2>
+
+                            <Stack direction="row" spacing={1}>
+                                {props.tags?.map(tag => (
+                                    <Chip key={createRandomKey()} label={tag} />
+                                ))}
+                            </Stack>
+                        </Stack>
+
+                        <p>{props.description}</p>
+                    </Stack>
+                </CardContent>
+            </Card>
+        </Link>
     );
 }

@@ -5,7 +5,7 @@ import { Category } from "../enums/Category";
  */
 
 export interface PostDTO {
-    id?: number;
+    id: number;
     title: string;
     description: string;
     tags: string[];
