@@ -8,7 +8,7 @@ export default /* HomeSearchBar */ () => {
 
 	const handleNavigate = (e: any) => {
 		e.preventDefault();
-		router.push(`/posts/${new FormData(e.currentTarget as any).get("search")}`);
+		router.push(`/posts/search?content=${new FormData(e.currentTarget as any).get("search")}`);
 	}
 
 	return(
