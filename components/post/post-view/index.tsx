@@ -1,5 +1,6 @@
 "use client";
 
+
 import { usePekillaContext } from '@/app/contexts/PekillaContext';
 import { PostViewDTO } from "@models/dto/PostViewDTO";
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -39,17 +40,16 @@ export default function PostView(props: PostViewProps) {
     ]
     
     return (
-        <Link href={`/post/${props.id}`}>
             <Card variant="outlined" sx={{ width: "800px" }}>
                 <CardHeader
                     avatar={
                         <Avatar src="https://cdn-icons-png.freepik.com/512/149/149071.png" />
                     }
                     title={
-                        <Stack spacing={0.4}>
-                            <p><Link href={`/category/${props.category?.toLowerCase()}`}>{props.category}</Link> • {props.addedDate?.toString()}</p>
-                            <Link href={`/user/${props.userLink}`}>{props.username}</Link>
-                        </Stack>
+                            <Stack spacing={0.4}>
+                                <p><MuiLink component={Link} href={`/category/${props.category?.toLowerCase()}`}>{props.category}</MuiLink> • {props.addedDate?.toString()}</p>
+                                <MuiLink color={isOwnerOfPost ? orange[400] : undefined} component={Link} style={{}} href={`/user/${props.userLink}`}>{isOwnerOfPost ? "You" : props.username}</MuiLink>
+                            </Stack>
                     }
                     action={
                         <>
@@ -82,7 +82,9 @@ export default function PostView(props: PostViewProps) {
                 <CardContent>
                     <Stack spacing={4}>
                         <Stack spacing={1}>
-                            <h2>{props.title}</h2>
+                            <Link href={`/posts/${props.id}`}>
+                                <h2>{props.title}</h2>
+                            </Link>
 
                             <Stack direction="row" spacing={1}>
                                 {props.tags?.map(tag => (
@@ -95,6 +97,5 @@ export default function PostView(props: PostViewProps) {
                     </Stack>
                 </CardContent>
             </Card>
-        </Link>
     );
 }
