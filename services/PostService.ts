@@ -5,6 +5,10 @@ import http from "../http";
 
 const REQUEST_MAPPING: string = "/posts";
 
+export const getPostById = async (postId : number) => {
+    return (await http.get<PostDTO>(`${REQUEST_MAPPING}/${postId}`)).data
+}
+
 export const deletePost = async (postId : number, removeCallback: any) => {
     return http.delete(`${REQUEST_MAPPING}/${postId}`)
     .then(res => {
@@ -29,14 +33,10 @@ export async function updatePost(postDTO: PostDTO): Promise<void | AxiosResponse
         });
 }
 
-export function getAllPost() {
-    return http.get<PostViewDTO[]>(REQUEST_MAPPING + "/all");
+export async function searchPosts(content?: string, category?: string, tags?: string[]) {
+    return http.get<PostViewDTO[]>(REQUEST_MAPPING + `/search`, {params : {content, category, tags}, paramsSerializer : {indexes : null}});
 }
 
-export const getPostById = async (postId : number) => {
-    return (await http.get<PostViewDTO>(`${REQUEST_MAPPING}/${postId}`)).data;
-}
-
-export function getAllPostsThatContain(input: string) {
-    return http.get<PostViewDTO[]>(REQUEST_MAPPING + `/all/containing/${input}`);
+export async function getAllPost() {
+    return searchPosts();
 }

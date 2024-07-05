@@ -3,12 +3,12 @@
 import { TextField } from "@mui/material";
 import { useRouter } from "next/navigation";
 
-export default /* HomeSearchBar */ () => {
+export default function HomeSearchBar() {
 	const router = useRouter();
 
 	const handleNavigate = (e: any) => {
 		e.preventDefault();
-		router.push(`/posts/${new FormData(e.currentTarget as any).get("search")}`);
+		router.push(`/posts/search?content=${encodeURIComponent(new FormData(e.currentTarget).get("search") as string)}`);
 	}
 
 	return(
