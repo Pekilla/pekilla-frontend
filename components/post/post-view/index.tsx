@@ -40,7 +40,7 @@ export default function PostView(props: PostViewProps) {
     ]
     
     return (
-            <Card variant="outlined" sx={{ width: "800px" }}>
+            <Card variant="outlined">
                 <CardHeader
                     avatar={
                         <Avatar src="https://cdn-icons-png.freepik.com/512/149/149071.png" />
@@ -60,8 +60,8 @@ export default function PostView(props: PostViewProps) {
                                 anchorEl={anchorEl}
                                 open={open}
                                 onClose={() => setAnchorEl(null)}
-                                variant="menu"
-                            >
+                                variant="menu">
+
                                 {MENU_OPTIONS.map((option) => {
                                     return (
                                         option ? (
@@ -82,9 +82,11 @@ export default function PostView(props: PostViewProps) {
                 <CardContent>
                     <Stack spacing={4}>
                         <Stack spacing={1}>
-                            <Link href={`/posts/${props.id}`}>
-                                <h2>{props.title}</h2>
-                            </Link>
+                            <MuiLink href={`/posts/${props.id}`} underline='none'>
+                                <Typography fontSize={30} fontWeight={700}>
+                                    {props.title}
+                                </Typography>
+                            </MuiLink>
 
                             <Stack direction="row" spacing={1}>
                                 {props.tags?.map(tag => (

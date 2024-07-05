@@ -1,6 +1,6 @@
 "use client"
 
-import { Button, Stack } from "@mui/material";
+import { Button, Container, Stack } from "@mui/material";
 import { useEffect, useState } from "react";
 import CreatePopup from "@components/post/create-update-popup";
 import PostView from "@components/post/post-view";
@@ -41,7 +41,7 @@ export function PostSection() {
     }, []);
 
     return (
-        <>
+        <Container>
             <CreatePopup
                 isUpdate={postPopup.isUpdate}
                 open={postPopup.isOpen}
@@ -52,7 +52,7 @@ export function PostSection() {
             
             <Button variant="contained" onClick={() => setIsOpen(true)}>Create</Button>
 
-            <Stack spacing={2} justifyContent="center" alignItems="center">
+            <Stack spacing={2}>
                 {postArray?.map(
                     post => (
                         <PostView
@@ -64,6 +64,6 @@ export function PostSection() {
                     )
                 )}
             </Stack>
-        </>
+        </Container>
     );
 }

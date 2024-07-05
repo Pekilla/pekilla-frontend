@@ -6,7 +6,7 @@ import http from "../http";
 const REQUEST_MAPPING: string = "/posts";
 
 export const getPostById = async (postId : number) => {
-    return (await http.get<PostDTO>(`${REQUEST_MAPPING}/${postId}`)).data
+    return (await http.get<PostViewDTO>(`${REQUEST_MAPPING}/${postId}`)).data
 }
 
 export const deletePost = async (postId : number, removeCallback: any) => {
