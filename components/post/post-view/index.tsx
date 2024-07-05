@@ -43,7 +43,7 @@ export default function PostView(props: PostViewProps) {
             <Card variant="outlined">
                 <CardHeader
                     avatar={
-                        <Avatar src="https://cdn-icons-png.freepik.com/512/149/149071.png" />
+                        <Avatar>{props.username.charAt(0)}</Avatar>
                     }
                     title={
                             <Stack spacing={0.4}>

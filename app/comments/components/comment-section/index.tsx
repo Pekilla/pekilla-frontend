@@ -30,7 +30,7 @@ const CommentSection = (params : any) => {
             <Modal
                 open={commentPopup}
                 onClose={handlePopup}>
-                <CreateCommentPopup/>
+                <CreateCommentPopup postId={params.id}/>
             </Modal>
         
             <List>

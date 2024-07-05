@@ -9,12 +9,6 @@ const SpecificPostPage = async ({params} : any) => {
 
     const post = await getPostById(params.id);
 
-    const boxStyle = {
-        p:2, 
-        border: '1px solid black',
-        
-    }
-
     return (
         <Container>
             {/* The post */}
