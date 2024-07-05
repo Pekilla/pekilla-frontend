@@ -3,7 +3,7 @@ import { PostViewDTO } from "@models/dto/PostViewDTO";
 import { AxiosError, AxiosResponse } from "axios";
 import http from "../http";
 
-const REQUEST_MAPPING: string = "/post";
+const REQUEST_MAPPING: string = "/posts";
 
 export const getPostById = async (postId : number) => {
     return (await http.get<PostDTO>(`${REQUEST_MAPPING}/${postId}`)).data

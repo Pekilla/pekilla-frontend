@@ -2,8 +2,8 @@
 
 import config from "@/config.json";
 import { CssBaseline, ThemeProvider, useMediaQuery } from "@mui/material";
-import { createContext, useContext } from "react";
 import { createTheme } from "@mui/material/styles";
+import { createContext, useContext } from "react";
 
 export const PekillaContext = createContext({
     userId: config.id
