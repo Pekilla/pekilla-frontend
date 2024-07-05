@@ -14,14 +14,14 @@ const CreateCommentPopupContent = () => {
         message: "",
         postId: 1,
         userId
-    }
+    };
     
     const fields = {
         message: string()
             .required("Message is required")
             .min(3, "Comment should be atleast 3 chars long")
             .max(1000, "1000 chars limit has been exceeded.")
-    }
+    };
 
     return (
         <>

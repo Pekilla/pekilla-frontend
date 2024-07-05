@@ -37,7 +37,7 @@ export default function PostView(props: PostViewProps) {
     ]
 
     return (
-        <Card variant="outlined" sx={{ width: "800px", backgroundColor: "whitesmoke" }}>
+        <Card variant="outlined" sx={{ width: "800px" }}>
             <CardHeader
                 avatar={
                     <Avatar src="https://cdn-icons-png.freepik.com/512/149/149071.png" />

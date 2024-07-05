@@ -3,7 +3,6 @@ import { FieldProps } from 'formik';
 import { CATEGORIES } from '@models/enums/Category';
 import { createRandomKey } from '@utils/RandomKeys';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
-import { MUI_INPUT_VARIANT } from '@/utils/utils';
 import IconLabel from '@/components/shared/IconLabel';
 
 export default function CategorySelector(props: FieldProps) {
@@ -13,7 +12,6 @@ export default function CategorySelector(props: FieldProps) {
                 label={
                     <IconLabel label="Category" icon={<FormatListBulletedIcon />} />
                 }
-                variant={MUI_INPUT_VARIANT}
                 sx={{
                     width: 200
                 }}

@@ -7,7 +7,6 @@
 import { Autocomplete, TextField } from "@mui/material";
 import { ErrorMessage, FieldProps } from "formik";
 import { ReactElement } from "react";
-import { MUI_INPUT_VARIANT } from "@utils/utils";
 import IconLabel from "@/components/shared/IconLabel";
 import TagIcon from '@mui/icons-material/Tag';
 
@@ -36,7 +35,6 @@ export function Tags(props: TagsProps): ReactElement {
                 renderInput={(params) => (
                     <TextField
                         {...params}
-                        variant={MUI_INPUT_VARIANT}
                         {...props.field}
                         onChange={() => {}}
                         error={(props.form.errors["tags"] && Boolean(props.form.touched["tags"])) as boolean}
