@@ -1,16 +1,17 @@
-"use client"
+"use client";
 
+import { usePekillaContext } from '@/app/contexts/PekillaContext';
+import { PostViewDTO } from "@models/dto/PostViewDTO";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import { Avatar, Card, CardContent, CardHeader, Chip, IconButton, Menu, MenuItem, Stack, Typography } from "@mui/material";
-import { useContext, useState } from "react";
-import { PostViewDTO } from "@models/dto/PostViewDTO";
-import { createRandomKey } from "@utils/RandomKeys";
-import { deletePost } from '@services/PostService';
-import Link from 'next/link';
 import FlagIcon from '@mui/icons-material/Flag';
-import { usePekillaContext } from '@/app/contexts/PekillaContext';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import { Avatar, Card, CardContent, CardHeader, Chip, IconButton, Menu, MenuItem, Link as MuiLink, Stack, Typography } from "@mui/material";
+import { orange } from '@mui/material/colors';
+import { deletePost } from '@services/PostService';
+import { createRandomKey } from "@utils/RandomKeys";
+import Link from 'next/link';
+import { useState } from "react";
 
 export interface PostViewProps extends PostViewDTO {
     // To set and open the popup(CreatePopup) with the data of the PostView for an update.
@@ -26,16 +27,17 @@ export interface MenuOption {
 
 export default function PostView(props: PostViewProps) {
     const { userId } = usePekillaContext();
-
+    
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
-
+    const isOwnerOfPost = props.userId == userId;
+    
     const MENU_OPTIONS: Array<MenuOption | undefined> = [
-        props.userId == userId ? { name: "modify", action() { props.launchUpdate?.(props) }, icon: <EditIcon /> } : undefined,
-        props.userId == userId ? { name: "delete", action() { deletePost(props.id!, props.removePostFromUi) }, icon: <DeleteIcon /> } : undefined,
-        props.userId == userId ? undefined : { name: "report", action() { alert("Feature not implemented yet!") }, icon: <FlagIcon /> }
+        isOwnerOfPost ? { name: "modify", action() { props.launchUpdate?.(props) }, icon: <EditIcon /> } : undefined,
+        isOwnerOfPost ? { name: "delete", action() { deletePost(props.id!, props.removePostFromUi) }, icon: <DeleteIcon /> } : undefined,
+        isOwnerOfPost ? undefined : { name: "report", action() { alert("Feature not implemented yet!") }, icon: <FlagIcon /> }
     ]
-
+    
     return (
         <Card variant="outlined" sx={{ width: "800px" }}>
             <CardHeader
@@ -44,8 +46,8 @@ export default function PostView(props: PostViewProps) {
                 }
                 title={
                     <Stack spacing={0.4}>
-                        <p><Link href={`/category/${props.category?.toLowerCase()}`}>{props.category}</Link> • {props.addedDate?.toString()}</p>
-                        <Link href={`/user/${props.userLink}`}>{props.username}</Link>
+                        <p><MuiLink component={Link} href={`/category/${props.category?.toLowerCase()}`}>{props.category}</MuiLink> • {props.addedDate?.toString()}</p>
+                        <MuiLink color={isOwnerOfPost ? orange[400] : undefined} component={Link} style={{}} href={`/user/${props.userLink}`}>{isOwnerOfPost ? "You" : props.username}</MuiLink>
                     </Stack>
                 }
                 action={

@@ -31,6 +31,11 @@ export function PekillaContextProvider(props: { children: any }) {
                 defaultProps: {
                     variant: "outlined"
                 }
+            },
+            MuiLink : {
+                defaultProps : {
+                    underline : "hover"
+                }
             }
         }
     });

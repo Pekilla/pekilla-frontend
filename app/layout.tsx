@@ -24,9 +24,9 @@ export default function RootLayout({
 					<nav style={{ padding: "15px" }}>
 						<Stack direction="row" justifyContent="space-between" flexWrap="wrap">
 							<Stack spacing={2} direction="row">
-								<MuiLink href="/" component={Link} underline="hover">Home</MuiLink>
-								<MuiLink href="/posts" component={Link} underline="hover">Trend</MuiLink>
-								<MuiLink href="/comments" component={Link} underline="hover">Community</MuiLink>
+								<MuiLink href="/" component={Link}>Home</MuiLink>
+								<MuiLink href="/posts" component={Link}>Trend</MuiLink>
+								<MuiLink href="/comments" component={Link}>Community</MuiLink>
 							</Stack>
 
 							<Stack spacing={2} direction="row">
