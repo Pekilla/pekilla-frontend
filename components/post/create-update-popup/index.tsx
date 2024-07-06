@@ -29,7 +29,7 @@ export default function CreatePopup(props: CreatePopupProps) {
         title: props.postViewDto?.title ?? "",
         description: props.postViewDto?.description ?? "",
         tags: props.postViewDto?.tags ?? [],
-        category: props.postViewDto?.category ?? Category.OTHER
+        category: props.postViewDto?.category ?? ""
     };
 
     return (
@@ -58,10 +58,12 @@ export default function CreatePopup(props: CreatePopupProps) {
                                         .min(10, "Title cannot be less than 10 characters.")
                                     ,
                                     description: string()
-                                        .required("Description is required")
+                                        .required("Description is required.")
                                         .max(5000, "Description cannot be more than 80 characters.")
                                         .min(10, "Description cannot be less than 10 characters.")
                                     ,
+                                    category: string()
+                                        .required("Category is required."),
                                     tags: array()
                                         .min(3, "Tags cannot be less than 3.")
                                 }
@@ -86,36 +88,34 @@ export default function CreatePopup(props: CreatePopupProps) {
                             props.reset();
                         }}
                     >
-                        {({ values, setFieldValue }) => (
-                            <Form id="create-update-post">
-                                <Stack spacing={3}>
-                                    <Field
-                                        name="title"
-                                        label="Title"
-                                        component={CreateInput}
-                                    />
+                        <Form id="create-update-post">
+                            <Stack spacing={3}>
+                                <Field
+                                    name="title"
+                                    label="Title"
+                                    component={CreateInput}
+                                />
 
-                                    <Field
-                                        name="description"
-                                        label="Description"
-                                        component={CreateInput}
-                                        isTextArea
-                                    />
+                                <Field
+                                    name="description"
+                                    label="Description"
+                                    component={CreateInput}
+                                    isTextArea
+                                />
 
-                                    {/* Hide Category if it is update */}
-                                    {isUpdate ?
-                                        (<></>) : (
-                                            <Field
-                                                name="category"
-                                                component={CategorySelector}
-                                            />
-                                        )
-                                    }
+                                {/* Hide Category if it is update */}
+                                {isUpdate ?
+                                    (<></>) : (
+                                        <Field
+                                            name="category"
+                                            component={CategorySelector}
+                                        />
+                                    )
+                                }
 
-                                    <Field name="tags" component={Tags} />
-                                </Stack>
-                            </Form>
-                        )}
+                                <Field name="tags" component={Tags} />
+                            </Stack>
+                        </Form>
                     </Formik>
                 </DialogContent>
 

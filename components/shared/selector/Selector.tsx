@@ -1,6 +1,6 @@
 import IconLabel from '@/components/shared/IconLabel';
 import { TextField } from '@mui/material';
-import { FieldProps } from 'formik';
+import { ErrorMessage, FieldProps } from 'formik';
 import { ReactNode } from 'react';
 
 type SelectorProps = {
@@ -10,6 +10,9 @@ type SelectorProps = {
 };
 
 export function Selector(props: SelectorProps & FieldProps) {
+    const { name } = props.field;
+    const { errors, touched } = props.form;
+
     return (
         <>
             <TextField
@@ -21,6 +24,8 @@ export function Selector(props: SelectorProps & FieldProps) {
                     width: 200
                 }}
                 select
+                helperText={<ErrorMessage name={name} />}
+                error={!!errors[name] && touched[name] as boolean}
             >
                 {props.children}
             </TextField>
