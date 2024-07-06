@@ -1,17 +1,17 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Stack } from "@mui/material";
-import Divider from '@mui/material/Divider';
-import { ErrorMessage, Field, Form, Formik } from "formik";
-import { array, object, string } from 'yup';
+import { usePekillaContext } from "@components/PekillaContext";
 import { PostDTO } from "@models/dto/PostDTO";
 import { PostViewDTO } from "@models/dto/PostViewDTO";
 import { Category } from "@models/enums/Category";
-import { createPost, updatePost } from "../../../services/PostService";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Stack } from "@mui/material";
+import Divider from '@mui/material/Divider';
 import { equals } from "@utils/utils";
+import { ErrorMessage, Field, Form, Formik } from "formik";
+import { useRouter } from "next/navigation";
+import { array, object, string } from 'yup';
+import { createPost, updatePost } from "../../../services/PostService";
 import CategorySelector from "./components/category-selector";
 import { CreateInput } from "./components/create-input";
-import { Tags, TagsErrors } from "./components/tags";
-import { usePekillaContext } from "@components/PekillaContext";
-import { useRouter } from "next/navigation";
+import { Tags } from "./components/tags";
 
 export interface CreatePopupProps {
     open: boolean;
@@ -63,7 +63,7 @@ export default function CreatePopup(props: CreatePopupProps) {
                                         .min(10, "Description cannot be less than 10 characters.")
                                     ,
                                     tags: array()
-                                        .min(3, TagsErrors.SIZE)
+                                        .min(3, "Tags cannot be less than 3.")
                                 }
                             )
                         }
@@ -112,13 +112,7 @@ export default function CreatePopup(props: CreatePopupProps) {
                                         )
                                     }
 
-                                    <Field
-                                        name="tags"
-                                        component={Tags}
-                                        error={<ErrorMessage name="tags" />}
-                                        tags={values.tags}
-                                        setTags={(tags: string[]) => setFieldValue("tags", tags)}
-                                    />
+                                    <Field name="tags" component={Tags} />
                                 </Stack>
                             </Form>
                         )}

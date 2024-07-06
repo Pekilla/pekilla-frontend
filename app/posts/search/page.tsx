@@ -1,4 +1,5 @@
 import { PostSection } from "@/components/post/post-section";
+import SearchFilters from "@/components/post/search-filters";
 import { searchPosts } from "@/services/PostService";
 import { Stack, Typography } from "@mui/material";
 import Image from "next/image";
@@ -17,6 +18,7 @@ export default async function PostSearch({ searchParams }: PostSearchProps) {
 
     return (
         <>
+            {/* <SearchFilters /> */}
             {
                 postViewDtos.length == 0 ?
                     (

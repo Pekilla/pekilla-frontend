@@ -4,49 +4,38 @@
  * FROM Opensell with Modification.
  */
 
+import IconLabel from "@/components/shared/IconLabel";
+import TagIcon from '@mui/icons-material/Tag';
 import { Autocomplete, TextField } from "@mui/material";
 import { ErrorMessage, FieldProps } from "formik";
 import { ReactElement } from "react";
-import IconLabel from "@/components/shared/IconLabel";
-import TagIcon from '@mui/icons-material/Tag';
 
-interface TagsProps extends FieldProps {
-    tags: string[];
-    setTags(tags: string[]): void;
-};
+export function Tags(props: FieldProps): ReactElement {
+    const { name, value } = props.field;
+    const { setFieldValue, errors, touched } = props.form;
 
-export enum TagsErrors {
-    EXISTS = "Tag already exists",
-    SIZE = "Need to have at least 3 tags."
-}
-
-
-export function Tags(props: TagsProps): ReactElement {
     return (
-        <>
-            <Autocomplete
-                multiple
-                options={[]}
-                freeSolo
-                onChange={(e, currentTags) => {
-                    if (props.tags != currentTags) props.setTags(currentTags);
-                }}
-                value={props.tags}
-                renderInput={(params) => (
-                    <TextField
-                        {...params}
-                        {...props.field}
-                        onChange={() => {}}
-                        error={(props.form.errors["tags"] && Boolean(props.form.touched["tags"])) as boolean}
-                        helperText={<ErrorMessage name="tags" />}
-                        label={
-                            <IconLabel label="Tags" icon={<TagIcon />} />
-                        }
-                        placeholder="Add a tag..."
-                    />
-                )}
-            />
-
-        </>
+        <Autocomplete
+            multiple
+            options={[]}
+            freeSolo
+            onChange={(e, currentTags) => {
+                if (value != currentTags) setFieldValue(name, currentTags);
+            }}
+            value={value}
+            renderInput={(params) => (
+                <TextField
+                    {...params}
+                    {...props.field}
+                    onChange={() => { }}
+                    error={(errors[name] && Boolean(touched[name])) as boolean}
+                    helperText={<ErrorMessage name={name} />}
+                    label={
+                        <IconLabel label="Tags" icon={<TagIcon />} />
+                    }
+                    placeholder="Add a tag..."
+                />
+            )}
+        />
     );
 }
