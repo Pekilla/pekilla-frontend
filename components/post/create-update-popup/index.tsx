@@ -10,7 +10,7 @@ import { equals } from "@utils/utils";
 import CategorySelector from "./components/category-selector";
 import { CreateInput } from "./components/create-input";
 import { Tags, TagsErrors } from "./components/tags";
-import { usePekillaContext } from "@/app/contexts/PekillaContext";
+import { usePekillaContext } from "@components/PekillaContext";
 import { useRouter } from "next/navigation";
 
 export interface CreatePopupProps {

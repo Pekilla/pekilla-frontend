@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import config from "@/config.json";
 import { CssBaseline, ThemeProvider, useMediaQuery } from "@mui/material";

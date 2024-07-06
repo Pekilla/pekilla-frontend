@@ -1,7 +1,7 @@
 "use client";
 
 
-import { usePekillaContext } from '@/app/contexts/PekillaContext';
+import { usePekillaContext } from '@components/PekillaContext';
 import { PostViewDTO } from "@models/dto/PostViewDTO";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';

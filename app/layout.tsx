@@ -1,4 +1,4 @@
-import { PekillaContextProvider } from "@/app/contexts/PekillaContext";
+import { PekillaContextProvider } from "@components/PekillaContext";
 import { Button, Link as MuiLink, Stack } from "@mui/material";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 /**
  * FROM Opensell with Modification.

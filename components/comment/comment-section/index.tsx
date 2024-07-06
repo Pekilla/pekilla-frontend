@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import CommentView from "@components/comment/comment-view";
 import { Button, List, Modal, Stack, TextField, Typography } from "@mui/material";
@@ -12,21 +12,20 @@ import { Field, Form, Formik } from "formik";
 import { object, string } from "yup";
 import { CommentDTO } from "@/models/dto/CommentDTO";
 import { CreateInput } from "@/components/post/create-update-popup/components/create-input";
+import { usePekillaContext } from "@/components/PekillaContext";
 
 const CommentSection = (params : any) => {
+
+    const { userId } = usePekillaContext();
 
     let [comments, setComments] = React.useState<CommentViewDTO[]>();
 
     const comment : CommentDTO = {
         message: "",
         postId: params.postId,
-        userId: params.userId, 
+        userId 
     };
     
-    const fields = {
-        
-    };
-
     useEffect(() => {
         getAllComments(params.postId).then(res => {
             setComments(res.data);

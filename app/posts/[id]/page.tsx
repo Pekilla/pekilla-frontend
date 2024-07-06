@@ -1,13 +1,12 @@
-import CommentSection from "@/app/comments/components/comment-section";
+import CommentSection from "@/components/comment/comment-section";
+import { usePekillaContext } from "@/components/PekillaContext";
 import PostView from "@/components/post/post-view";
 import { getPostById } from "@/services/PostService";
-import { createRandomKey } from "@/utils/RandomKeys";
-import { Avatar, Box, Card, Chip, Container, Stack, Typography } from "@mui/material";
-import { Montserrat } from "next/font/google";
+import { Container } from "@mui/material";
 
 const SpecificPostPage = async ({params} : any) => {
-
     const post = await getPostById(params.id);
+
 
     return (
         <Container>
@@ -16,7 +15,7 @@ const SpecificPostPage = async ({params} : any) => {
 
             {/* The Comment Section */}
 
-            <CommentSection userId={post.id} postId={post.id}/>
+            <CommentSection postId={post.id}/>
         </Container>
     );
 }
