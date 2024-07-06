@@ -19,6 +19,7 @@ const CommentSection = (params : any) => {
     const { userId } = usePekillaContext();
 
     let [comments, setComments] = React.useState<CommentViewDTO[]>();
+    
 
     const comment : CommentDTO = {
         message: "",
@@ -39,7 +40,10 @@ const CommentSection = (params : any) => {
                 <Typography my={1}>Leave a comment</Typography>
 
                 <Formik
-                    onSubmit={(values) => createComment(values)}
+                    onSubmit={(values) => {
+                        createComment(values);
+                        values.message = "";
+                    }}
                     initialValues={comment}
                     validationSchema={object({
                         message: string()
