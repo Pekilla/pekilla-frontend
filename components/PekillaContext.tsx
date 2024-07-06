@@ -36,6 +36,11 @@ export function PekillaContextProvider(props: { children: any }) {
                 defaultProps : {
                     underline : "hover"
                 }
+            },
+            MuiButton : {
+                defaultProps : {
+                    variant : "contained"
+                }
             }
         }
     });

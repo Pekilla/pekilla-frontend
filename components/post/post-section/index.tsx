@@ -6,21 +6,29 @@ import { PostViewDTO } from "@models/dto/PostViewDTO";
 import { Button, Container, Stack } from "@mui/material";
 import { createRandomKey } from "@utils/RandomKeys";
 import { useState } from "react";
+import SearchFilters from "../search-filters";
 
 export function PostSection(props: { postArray: PostViewDTO[] }) {
     const [popupState, setPopupState] = useState<{ open: boolean, postViewDto?: PostViewDTO }>({ open: false });
 
     return (
-        <Container>
+        <Container component={Stack} spacing={5}>
+            <SearchFilters />
+
+
             <CreatePopup
                 open={popupState.open}
                 reset={() => setPopupState({ open: false })}
                 postViewDto={popupState.postViewDto}
             />
 
-            <Button variant="contained" onClick={() => setPopupState({ open: true })}>Create</Button>
 
             <Stack spacing={2}>
+                <Stack direction="row" justifyContent="space-between">
+                    <h2>Search Results</h2>
+                    <Button onClick={() => setPopupState({ open: true })}>Create</Button>
+                </Stack>
+
                 {props.postArray?.map(post => (
                     <PostView
                         {...post}

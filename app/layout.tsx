@@ -31,7 +31,7 @@ export default function RootLayout({
 
 							<Stack spacing={2} direction="row">
 								<Button variant="outlined">Sign up</Button>
-								<Button variant="contained">Get Started</Button>
+								<Button>Get Started</Button>
 							</Stack>
 						</Stack>
 					</nav>

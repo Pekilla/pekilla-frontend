@@ -55,8 +55,7 @@ const CommentSection = (params : any) => {
                                 component={CreateInput}
                             />
                             <Button 
-                                type="submit"
-                                variant="contained">
+                                type="submit">
                                 Publish
                             </Button>
                         </Stack>

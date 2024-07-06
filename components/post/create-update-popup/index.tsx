@@ -122,7 +122,7 @@ export default function CreatePopup(props: CreatePopupProps) {
                 <Divider />
                 <DialogActions>
                     <Button variant="text" onClick={props.reset}>Cancel</Button>
-                    <Button type="submit" variant="contained" form="create-update-post">{isUpdate ? "Update" : "Create"}</Button>
+                    <Button type="submit" form="create-update-post">{isUpdate ? "Update" : "Create"}</Button>
                 </DialogActions>
             </Dialog>
         </>
