@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import CreatePopup from "@components/post/create-update-popup";
 import PostView from "@components/post/post-view";

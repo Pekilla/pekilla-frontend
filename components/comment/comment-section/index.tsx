@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import CommentView from "@components/comment/comment-view";
 import { Button, List, Modal } from "@mui/material";

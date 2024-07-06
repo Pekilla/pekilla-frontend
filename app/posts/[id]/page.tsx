@@ -1,12 +1,9 @@
-import CommentSection from "@/app/comments/components/comment-section";
+import CommentSection from "@/components/comment/comment-section";
 import PostView from "@/components/post/post-view";
 import { getPostById } from "@/services/PostService";
-import { createRandomKey } from "@/utils/RandomKeys";
-import { Avatar, Box, Card, Chip, Container, Stack, Typography } from "@mui/material";
-import { Montserrat } from "next/font/google";
+import { Container } from "@mui/material";
 
 const SpecificPostPage = async ({params} : any) => {
-
     const post = await getPostById(params.id);
 
     return (
@@ -15,7 +12,6 @@ const SpecificPostPage = async ({params} : any) => {
             <PostView {...post}/>
 
             {/* The Comment Section */}
-
             <CommentSection id={post.id}/>
         </Container>
     );

@@ -3,7 +3,7 @@ import { Field, Form, Formik } from "formik";
 import { createComment } from "@/services/CommentService";
 import { object, string } from "yup";
 import { CommentDTO } from "@/models/dto/CommentDTO";
-import { usePekillaContext } from "@/app/contexts/PekillaContext";
+import { usePekillaContext } from "@components/PekillaContext";
 import { CreateInput } from "@/components/post/create-update-popup/components/create-input";
 
 const CreateCommentPopup = (params : any) => {

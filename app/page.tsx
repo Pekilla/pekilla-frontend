@@ -1,6 +1,6 @@
 import { Stack, Typography } from "@mui/material";
 import Image from "next/image";
-import HomeSearchBar from "./components/HomeSearchBar";
+import HomeSearchBar from "../components/home/HomeSearchBar";
 
 export default function Home() {
 	return (
