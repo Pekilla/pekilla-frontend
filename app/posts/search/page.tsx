@@ -19,7 +19,7 @@ export default async function PostSearch({ searchParams }: PostSearchProps) {
     return (
         <>
             <Container component={Stack} spacing={5}>
-                <SearchFilters {...searchParams} />
+                <SearchFilters />
                 
                 {
                     postViewDtos.length == 0 ?

@@ -7,20 +7,18 @@ import { Field, Form, Formik } from "formik";
 import { CreateInput } from "../create-update-popup/components/create-input";
 import { Tags } from "../create-update-popup/components/tags";
 import SortedSelector from "./components/sorted-selector";
+import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
-type SearchFiltersProps = {
-    content?: string;
-    category?: string;
-    sortedBy?: number;
-    tags?: string[];
-}
+export default function SearchFilters() {
+    const params = useSearchParams();
+    const router = useRouter();
 
-export default function SearchFilters(props: SearchFiltersProps) {
     const initialValues = {
-        content: props.content ?? "",
-        category: props.category ?? "",
-        sortedBy: props.sortedBy ?? 0,
-        tags: props.tags ? getAListFromParam(props.tags) : []
+        content: params.get("content") ?? "",
+        category: params.get("category") ?? "",
+        sortedBy: params.get("sortedBy") ?? 0,
+        tags: params.get("tags") ? getAListFromParam(params.get("tags")) : []
     };
 
     return (
