@@ -9,7 +9,7 @@ import React, { useEffect } from "react";
 import CreateCommentPopup from "@components/comment/create-popup";
 import { CommentViewDTO } from "@models/dto/CommentViewDTO";
 
-const CommentSection = () => {
+const CommentSection = (params : any) => {
 
     let [comments, setComments] = React.useState<CommentViewDTO[]>();
 
@@ -18,7 +18,7 @@ const CommentSection = () => {
     const handlePopup = () => setCommentPopup(!commentPopup);
 
     useEffect(() => {
-        getAllComments(1).then(res => {
+        getAllComments(params.id).then(res => {
             setComments(res.data);
         });
     }, []);
@@ -30,7 +30,7 @@ const CommentSection = () => {
             <Modal
                 open={commentPopup}
                 onClose={handlePopup}>
-                <CreateCommentPopup/>
+                <CreateCommentPopup postId={params.id}/>
             </Modal>
         
             <List>

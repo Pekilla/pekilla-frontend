@@ -1,5 +1,6 @@
 "use client";
 
+
 import { usePekillaContext } from '@/app/contexts/PekillaContext';
 import { PostViewDTO } from "@models/dto/PostViewDTO";
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -43,60 +44,64 @@ export default function PostView(props: PostViewProps) {
     ]
     
     return (
-        <Card variant="outlined" sx={{ width: "800px" }}>
-            <CardHeader
-                avatar={
-                    <Avatar src="https://cdn-icons-png.freepik.com/512/149/149071.png" />
-                }
-                title={
-                    <Stack spacing={0.4}>
-                        <p><MuiLink component={Link} href={`/category/${props.category?.toLowerCase()}`}>{props.category}</MuiLink> • {props.addedDate as any}</p>
-                        <MuiLink color={isOwnerOfPost ? orange[400] : undefined} component={Link} style={{}} href={`/user/${props.userLink}`}>{isOwnerOfPost ? "You" : props.username}</MuiLink>
-                    </Stack>
-                }
-                action={
-                    <>
-                        <IconButton onClick={(e) => setAnchorEl(e.currentTarget)}>
-                            <MoreHorizIcon />
-                        </IconButton>
-                        <Menu
-                            anchorEl={anchorEl}
-                            open={open}
-                            onClose={() => setAnchorEl(null)}
-                            variant="menu"
-                        >
-                            {MENU_OPTIONS.map((option) => {
-                                return (
-                                    option ? (
-                                        <MenuItem key={option.name} onClick={() => { setAnchorEl(null); option.action(); }}>
-                                            <Stack direction={"row"} spacing={1}>
-                                                {option.icon}
-                                                <Typography variant="inherit">{option.name}</Typography>
-                                            </Stack>
-                                        </MenuItem>
-                                    ) : null
-                                )
-                            })}
-                        </Menu>
-                    </>
-                }
-            />
+            <Card variant="outlined">
+                <CardHeader
+                    avatar={
+                        <Avatar>{props.username.charAt(0)}</Avatar>
+                    }
+                    title={
+                            <Stack spacing={0.4}>
+                                <p><MuiLink component={Link} href={`/category/${props.category?.toLowerCase()}`}>{props.category}</MuiLink> • {props.addedDate as any}</p>
+                                <MuiLink color={isOwnerOfPost ? orange[400] : undefined} component={Link} style={{}} href={`/user/${props.userLink}`}>{isOwnerOfPost ? "You" : props.username}</MuiLink>
+                            </Stack>
+                    }
+                    action={
+                        <>
+                            <IconButton onClick={(e) => setAnchorEl(e.currentTarget)}>
+                                <MoreHorizIcon />
+                            </IconButton>
+                            <Menu
+                                anchorEl={anchorEl}
+                                open={open}
+                                onClose={() => setAnchorEl(null)}
+                                variant="menu">
 
-            <CardContent>
-                <Stack spacing={4}>
-                    <Stack spacing={1}>
-                        <h2>{props.title}</h2>
+                                {MENU_OPTIONS.map((option) => {
+                                    return (
+                                        option ? (
+                                            <MenuItem key={option.name} onClick={() => { setAnchorEl(null); option.action(); }}>
+                                                <Stack direction={"row"} spacing={1}>
+                                                    {option.icon}
+                                                    <Typography variant="inherit">{option.name}</Typography>
+                                                </Stack>
+                                            </MenuItem>
+                                        ) : null
+                                    )
+                                })}
+                            </Menu>
+                        </>
+                    }
+                />
 
-                        <Stack direction="row" spacing={1}>
-                            {props.tags?.map(tag => (
-                                <Chip key={createRandomKey()} label={tag} />
-                            ))}
+                <CardContent>
+                    <Stack spacing={4}>
+                        <Stack spacing={1}>
+                            <MuiLink href={`/posts/${props.id}`} underline='none'>
+                                <Typography fontSize={30} fontWeight={700}>
+                                    {props.title}
+                                </Typography>
+                            </MuiLink>
+
+                            <Stack direction="row" spacing={1}>
+                                {props.tags?.map(tag => (
+                                    <Chip key={createRandomKey()} label={tag} />
+                                ))}
+                            </Stack>
                         </Stack>
-                    </Stack>
 
-                    <p>{props.description}</p>
-                </Stack>
-            </CardContent>
-        </Card>
+                        <p>{props.description}</p>
+                    </Stack>
+                </CardContent>
+            </Card>
     );
 }

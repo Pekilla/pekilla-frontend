@@ -3,7 +3,7 @@
 import CreatePopup from "@components/post/create-update-popup";
 import PostView from "@components/post/post-view";
 import { PostViewDTO } from "@models/dto/PostViewDTO";
-import { Button, Stack } from "@mui/material";
+import { Button, Container, Stack } from "@mui/material";
 import { createRandomKey } from "@utils/RandomKeys";
 import { useState } from "react";
 
@@ -11,7 +11,7 @@ export function PostSection(props: { postArray: PostViewDTO[] }) {
     const [popupState, setPopupState] = useState<{ open: boolean, postViewDto?: PostViewDTO }>({ open: false });
 
     return (
-        <>
+        <Container>
             <CreatePopup
                 open={popupState.open}
                 reset={() => setPopupState({ open: false })}
@@ -20,7 +20,7 @@ export function PostSection(props: { postArray: PostViewDTO[] }) {
 
             <Button variant="contained" onClick={() => setPopupState({ open: true })}>Create</Button>
 
-            <Stack spacing={2} justifyContent="center" alignItems="center">
+            <Stack spacing={2}>
                 {props.postArray?.map(post => (
                     <PostView
                         {...post}
@@ -29,6 +29,6 @@ export function PostSection(props: { postArray: PostViewDTO[] }) {
                     />
                 ))}
             </Stack>
-        </>
+        </Container>
     );
 }

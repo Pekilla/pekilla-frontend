@@ -6,9 +6,7 @@ const CommentView = (comment : CommentViewDTO) => {
         <>
             <ListItem alignItems="flex-start">
                     <ListItemAvatar>
-                        <Avatar 
-                            alt="UserProfilePicture" 
-                            src="https://cdn-icons-png.freepik.com/512/149/149071.png" />
+                        <Avatar>{comment.username.charAt(0)}</Avatar>
                     </ListItemAvatar>
                     <ListItemText
                         primary={comment.username}
