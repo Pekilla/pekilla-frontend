@@ -2,7 +2,7 @@
 
 import { Field, Form, Formik } from "formik";
 import { CreateInput } from "../create-update-popup/components/create-input";
-import CategorySelector from "../create-update-popup/components/category-selector";
+import CategorySelector from "@components/shared/selector/CategorySelector";
 import { Tags } from "../create-update-popup/components/tags";
 
 export default function SearchFilters() {

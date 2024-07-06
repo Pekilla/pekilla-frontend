@@ -9,7 +9,7 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useRouter } from "next/navigation";
 import { array, object, string } from 'yup';
 import { createPost, updatePost } from "../../../services/PostService";
-import CategorySelector from "./components/category-selector";
+import CategorySelector from "@components/shared/selector/CategorySelector";
 import { CreateInput } from "./components/create-input";
 import { Tags } from "./components/tags";
 
@@ -38,7 +38,7 @@ export default function CreatePopup(props: CreatePopupProps) {
                 open={props.open}
                 onClose={props.reset}
                 maxWidth={false}
-                PaperProps={{ sx: { borderRadius: "10px" } }}
+                fullScreen
                 title="Update"
             >
                 <DialogTitle variant="h5" sx={{ fontWeight: "bold" }}>
