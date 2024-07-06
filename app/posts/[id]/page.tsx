@@ -16,7 +16,7 @@ const SpecificPostPage = async ({params} : any) => {
 
             {/* The Comment Section */}
 
-            <CommentSection id={post.id}/>
+            <CommentSection userId={post.id} postId={post.id}/>
         </Container>
     );
 }

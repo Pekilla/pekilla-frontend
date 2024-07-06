@@ -20,11 +20,10 @@ export function CreateInput(props: CreateInputProps) {
             label={props.label}
             error={!!errors[name] && touched[name] as boolean}
             multiline={props.isTextArea}
-            rows={props.isTextArea ? 10 : undefined}
+            rows={props.isTextArea ? 5 : undefined}
             type={props.type ?? "text"}
             helperText={<ErrorMessage name={name} />}
             {...props.field}
-            sx={{ width: props.isTextArea ? "800px" : "350px" }}
         />
     )
 }

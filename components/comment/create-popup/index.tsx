@@ -34,29 +34,7 @@ const CreateCommentPopup = (params : any) => {
             sx={style}>
             <Typography variant="h5">Add a comment</Typography>
             <Divider sx={{padding: "5px"}}/>
-            <Formik
-                onSubmit={(values) => createComment(values)}
-                initialValues={comment}
-                validationSchema={object(fields)}>
-                <Form> 
-                    <Stack>
-                        {/* 
-                            Actually using the CreatePost input component but 
-                            should prolly use a textarea instead.
-                        */}
-                        <Field
-                            name="message"
-                            label="message"
-                            component={CreateInput}
-                        />
-                        <Button 
-                            type="submit"
-                            variant="contained">
-                            Publish
-                        </Button>
-                    </Stack>
-                </Form>
-            </Formik>
+            
         </Box>
     )
 }

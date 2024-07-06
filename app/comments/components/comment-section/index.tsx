@@ -1,38 +1,72 @@
 "use client"
 
 import CommentView from "@components/comment/comment-view";
-import { Button, List, Modal } from "@mui/material";
-import { getAllComments } from "@services/CommentService";
+import { Button, List, Modal, Stack, TextField, Typography } from "@mui/material";
+import { createComment, getAllComments } from "@services/CommentService";
 import { createRandomKey } from "@utils/RandomKeys";
 import React, { useEffect } from "react";
 
 import CreateCommentPopup from "@components/comment/create-popup";
 import { CommentViewDTO } from "@models/dto/CommentViewDTO";
 
+import { Field, Form, Formik } from "formik";
+import { object, string } from "yup";
+import { CommentDTO } from "@/models/dto/CommentDTO";
+import { CreateInput } from "@/components/post/create-update-popup/components/create-input";
+
 const CommentSection = (params : any) => {
 
     let [comments, setComments] = React.useState<CommentViewDTO[]>();
 
-    const [commentPopup, setCommentPopup] = React.useState(false);
-
-    const handlePopup = () => setCommentPopup(!commentPopup);
+    const comment : CommentDTO = {
+        message: "",
+        postId: params.postId,
+        userId: params.userId, 
+    };
+    
+    const fields = {
+        
+    };
 
     useEffect(() => {
-        getAllComments(params.id).then(res => {
+        getAllComments(params.postId).then(res => {
             setComments(res.data);
         });
     }, []);
+
     
     return (
         <>
-            <Button variant="contained"
-                onClick={handlePopup}>create</Button>
-            <Modal
-                open={commentPopup}
-                onClose={handlePopup}>
-                <CreateCommentPopup postId={params.id}/>
-            </Modal>
-        
+            <Stack my={2}>
+                <Typography my={1}>Leave a comment</Typography>
+
+                <Formik
+                    onSubmit={(values) => createComment(values)}
+                    initialValues={comment}
+                    validationSchema={object({
+                        message: string()
+                            .required("Message is required")
+                            .min(3, "Comment should be atleast 3 chars long")
+                            .max(1000, "1000 chars limit has been exceeded.")
+                    })}>
+                    <Form> 
+                        <Stack>
+                            <Field
+                                name="message"
+                                isTextArea="true"
+                                component={CreateInput}
+                            />
+                            <Button 
+                                type="submit"
+                                variant="contained">
+                                Publish
+                            </Button>
+                        </Stack>
+                    </Form>
+                </Formik>
+            </Stack>
+
+            
             <List>
                 {
                     comments?.map(comment => (
