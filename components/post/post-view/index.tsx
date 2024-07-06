@@ -11,14 +11,17 @@ import { orange } from '@mui/material/colors';
 import { deletePost } from '@services/PostService';
 import { createRandomKey } from "@utils/RandomKeys";
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useState } from "react";
 
 export interface PostViewProps extends PostViewDTO {
     // To set and open the popup(CreatePopup) with the data of the PostView for an update.
     launchUpdate?(postViewDto: PostViewDTO): void;
-    removePostFromUi?(id: number): void;
 }
 
+/**
+ * Interface for the options of the menu that the user see when he click the three dots.
+ */
 export interface MenuOption {
     action(): void;
     name: string;
@@ -27,14 +30,15 @@ export interface MenuOption {
 
 export default function PostView(props: PostViewProps) {
     const { userId } = usePekillaContext();
-    
+    const router = useRouter();
+
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
     const isOwnerOfPost = props.userId == userId;
     
     const MENU_OPTIONS: Array<MenuOption | undefined> = [
         isOwnerOfPost ? { name: "modify", action() { props.launchUpdate?.(props) }, icon: <EditIcon /> } : undefined,
-        isOwnerOfPost ? { name: "delete", action() { deletePost(props.id!, props.removePostFromUi) }, icon: <DeleteIcon /> } : undefined,
+        isOwnerOfPost ? { name: "delete", action() { deletePost(props.id!).then(() => router.refresh()) }, icon: <DeleteIcon /> } : undefined,
         isOwnerOfPost ? undefined : { name: "report", action() { alert("Feature not implemented yet!") }, icon: <FlagIcon /> }
     ]
     
@@ -46,7 +50,7 @@ export default function PostView(props: PostViewProps) {
                 }
                 title={
                     <Stack spacing={0.4}>
-                        <p><MuiLink component={Link} href={`/category/${props.category?.toLowerCase()}`}>{props.category}</MuiLink> • {props.addedDate?.toString()}</p>
+                        <p><MuiLink component={Link} href={`/category/${props.category?.toLowerCase()}`}>{props.category}</MuiLink> • {props.addedDate as any}</p>
                         <MuiLink color={isOwnerOfPost ? orange[400] : undefined} component={Link} style={{}} href={`/user/${props.userLink}`}>{isOwnerOfPost ? "You" : props.username}</MuiLink>
                     </Stack>
                 }

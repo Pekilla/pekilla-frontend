@@ -10,23 +10,20 @@ import { equals } from "@utils/utils";
 import CategorySelector from "./components/category-selector";
 import { CreateInput } from "./components/create-input";
 import { Tags, TagsErrors } from "./components/tags";
-import { useContext } from "react";
 import { usePekillaContext } from "@/app/contexts/PekillaContext";
+import { useRouter } from "next/navigation";
 
 export interface CreatePopupProps {
-    isUpdate?: boolean;
     open: boolean;
     postViewDto?: PostViewDTO;
     reset(): void;
-
-    // Function to add a new DTO to the UI list.
-    updateDto(postViewDto: PostViewDTO, isCreate?: boolean): void;
 }
-
 
 export default function CreatePopup(props: CreatePopupProps) {
     const { userId } = usePekillaContext();
-    
+    const router = useRouter();
+    const isUpdate = props.postViewDto != undefined;
+
     const initialValues = {
         id: props.postViewDto?.id,
         title: props.postViewDto?.title ?? "",
@@ -45,7 +42,7 @@ export default function CreatePopup(props: CreatePopupProps) {
                 title="Update"
             >
                 <DialogTitle variant="h5" sx={{ fontWeight: "bold" }}>
-                    {props.isUpdate ? "Update" : "Create"} post
+                    {isUpdate ? "Update" : "Create"} post
                 </DialogTitle>
                 <Divider />
 
@@ -73,20 +70,17 @@ export default function CreatePopup(props: CreatePopupProps) {
                         onSubmit={async (values) => {
                             // Add userId
                             (values as any)["userId"] = userId;
-                            
+
                             // Create
-                            if (!props.isUpdate) {
-                                props.updateDto(
-                                    (await createPost(values as PostDTO))?.data!,
-                                    true
-                                )
+                            if (!isUpdate) {
+                                await createPost(values as PostDTO);
+                                router.refresh();
                             }
 
                             // Update
                             else if (!equals(initialValues, values)) {
-                                props.updateDto(
-                                    (await updatePost(values as PostDTO))?.data!
-                                );
+                                await updatePost(values as PostDTO);
+                                router.refresh();
                             }
 
                             props.reset();
@@ -109,7 +103,7 @@ export default function CreatePopup(props: CreatePopupProps) {
                                     />
 
                                     {/* Hide Category if it is update */}
-                                    {props.isUpdate ?
+                                    {isUpdate ?
                                         (<></>) : (
                                             <Field
                                                 name="category"
@@ -134,7 +128,7 @@ export default function CreatePopup(props: CreatePopupProps) {
                 <Divider />
                 <DialogActions>
                     <Button variant="text" onClick={props.reset}>Cancel</Button>
-                    <Button type="submit" variant="contained" form="create-update-post">{props.isUpdate ? "Update" : "Create"}</Button>
+                    <Button type="submit" variant="contained" form="create-update-post">{isUpdate ? "Update" : "Create"}</Button>
                 </DialogActions>
             </Dialog>
         </>
