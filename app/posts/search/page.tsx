@@ -1,6 +1,7 @@
 import { PostSection } from "@/components/post/post-section";
+import SearchFilters from "@/components/post/search-filters";
 import { searchPosts } from "@/services/PostService";
-import { Stack, Typography } from "@mui/material";
+import { Container, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import { Suspense } from "react";
 
@@ -17,21 +18,24 @@ export default async function PostSearch({ searchParams }: PostSearchProps) {
 
     return (
         <>
-            {
-                postViewDtos.length == 0 ?
-                    (
-                        <Stack display="flex" justifyContent="center" alignItems="center" spacing={2}>
+            <Container component={Stack} spacing={5}>
+                <SearchFilters {...searchParams} />
+                
+                {
+                    postViewDtos.length == 0 ?
+                        (
+                            <Stack spacing={2}>
+                                <Typography textAlign="center" variant="h4" fontFamily="monospace">No post were found</Typography>
+                                <Image src="/not-found.webp" alt="not-found" width={1238.4} height={826.56} />
+                            </Stack>
+                        ) : (
+                            <Suspense fallback={<p>Loading...</p>}>
+                                <PostSection postArray={postViewDtos} />
+                            </Suspense>
 
-                            <Typography variant="h4" fontFamily="monospace">No post were found</Typography>
-                            <Image src="/not-found.webp" alt="not-found" width={1238.4} height={826.56} />
-                        </Stack>
-                    ) : (
-                        <Suspense fallback={<p>Loading...</p>}>
-                            <PostSection postArray={postViewDtos} />
-                        </Suspense>
-
-                    )
-            }
+                        )
+                }
+            </Container>
         </>
 
     );

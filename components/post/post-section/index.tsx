@@ -12,10 +12,7 @@ export function PostSection(props: { postArray: PostViewDTO[] }) {
     const [popupState, setPopupState] = useState<{ open: boolean, postViewDto?: PostViewDTO }>({ open: false });
 
     return (
-        <Container component={Stack} spacing={5}>
-            <SearchFilters />
-
-
+        <>
             <CreatePopup
                 open={popupState.open}
                 reset={() => setPopupState({ open: false })}
@@ -37,6 +34,6 @@ export function PostSection(props: { postArray: PostViewDTO[] }) {
                     />
                 ))}
             </Stack>
-        </Container>
+        </>
     );
 }

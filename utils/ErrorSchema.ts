@@ -1,4 +1,4 @@
-import { NumberSchema, StringSchema } from "yup";
+import { StringSchema } from "yup";
 
 export function notEmptyWithMaxAndMinLength(max: number, min: number, label?: string) {
     return new StringSchema()

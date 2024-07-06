@@ -1,16 +1,16 @@
 "use client";
 
+import { getAListFromParam } from "@/utils/utils";
+import CategorySelector from "@components/shared/selector/CategorySelector";
+import { Button, Stack } from "@mui/material";
 import { Field, Form, Formik } from "formik";
 import { CreateInput } from "../create-update-popup/components/create-input";
-import CategorySelector from "@components/shared/selector/CategorySelector";
 import { Tags } from "../create-update-popup/components/tags";
-import { Category } from "@/models/enums/Category";
 import SortedSelector from "./components/sorted-selector";
-import { Button, Container, Stack } from "@mui/material";
 
 type SearchFiltersProps = {
     content?: string;
-    category?: Category;
+    category?: string;
     sortedBy?: number;
     tags?: string[];
 }
@@ -20,7 +20,7 @@ export default function SearchFilters(props: SearchFiltersProps) {
         content: props.content ?? "",
         category: props.category ?? "",
         sortedBy: props.sortedBy ?? 0,
-        tags: props.tags ?? []
+        tags: props.tags ? getAListFromParam(props.tags) : []
     };
 
     return (
