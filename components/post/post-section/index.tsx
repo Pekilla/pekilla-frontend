@@ -3,10 +3,9 @@
 import CreatePopup from "@components/post/create-update-popup";
 import PostView from "@components/post/post-view";
 import { PostViewDTO } from "@models/dto/PostViewDTO";
-import { Button, Container, Stack } from "@mui/material";
+import { Button, Stack, Typography } from "@mui/material";
 import { createRandomKey } from "@utils/RandomKeys";
 import { useState } from "react";
-import SearchFilters from "../search-filters";
 
 export function PostSection(props: { postArray: PostViewDTO[] }) {
     const [popupState, setPopupState] = useState<{ open: boolean, postViewDto?: PostViewDTO }>({ open: false });
@@ -26,13 +25,22 @@ export function PostSection(props: { postArray: PostViewDTO[] }) {
                     <Button onClick={() => setPopupState({ open: true })}>Create</Button>
                 </Stack>
 
-                {props.postArray?.map(post => (
-                    <PostView
-                        {...post}
-                        key={createRandomKey()}
-                        launchUpdate={(postViewDto) => setPopupState({ open: true, postViewDto })}
-                    />
-                ))}
+                {
+                    props.postArray.length == 0 ?
+                        (
+                            <Typography textAlign="center" variant="h5">No post were found</Typography>
+                        ) : (
+                            <>
+                                {props.postArray?.map(post => (
+                                    <PostView
+                                        {...post}
+                                        key={createRandomKey()}
+                                        launchUpdate={(postViewDto) => setPopupState({ open: true, postViewDto })}
+                                    />
+                                ))}
+                            </>
+                        )
+                }
             </Stack>
         </>
     );
