@@ -38,4 +38,4 @@ export async function getAllPost() {
 
 export const getAllComments = async (postId : number) => {
     return await http.get<CommentViewDTO[]>(`${REQUEST_MAPPING}/${postId}/comments`);
- }
+}
