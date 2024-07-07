@@ -2,7 +2,6 @@ import { PostSection } from "@/components/post/post-section";
 import SearchFilters from "@/components/post/search-filters";
 import { searchPosts } from "@/services/PostService";
 import { Container, Stack, Typography } from "@mui/material";
-import Image from "next/image";
 import { Suspense } from "react";
 
 export interface PostSearchProps {
@@ -18,15 +17,15 @@ export default async function PostSearch({ searchParams }: PostSearchProps) {
     console.log(searchParams);
 
     return (
-        <>
-            <Container component={Stack} spacing={5}>
-                <SearchFilters />
+        <Container component={Stack} spacing={5}>
+            {/* <p>{JSON.stringify(searchParams)}</p> */}
 
-                <Suspense fallback={<p>Loading...</p>}>
-                    <PostSection postArray={postViewDtos} />
-                </Suspense>
-            </Container>
-        </>
+            <SearchFilters />
 
+            <Suspense fallback={<p>Loading...</p>}>
+                <PostSection postArray={postViewDtos} />
+            </Suspense>
+
+        </Container>
     );
 }
