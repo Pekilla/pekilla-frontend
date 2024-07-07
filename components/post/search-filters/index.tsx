@@ -79,7 +79,7 @@ function SearchFilters(props: { params: ReadonlyURLSearchParams }) {
             <Stack direction="row" spacing={2}>
                 <Field name="content" component={CreateInput} label="Content" />
                 <Field name="category" component={CategorySelector} />
-                <Field name="sortedBy" component={SortedSelector} />
+                {/* <Field name="sortedBy" component={SortedSelector} /> */}
             </Stack>
 
             <Field name="tags" component={Tags} label="Tags" />
