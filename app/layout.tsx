@@ -26,7 +26,7 @@ export default function RootLayout({
 							<Stack spacing={2} direction="row">
 								<MuiLink href="/" component={Link}>Home</MuiLink>
 								<MuiLink href="/posts/search" component={Link}>Trend</MuiLink>
-								<MuiLink href="/comments" component={Link}>Community</MuiLink>
+								<MuiLink href="/categories" component={Link}>Explore</MuiLink>
 							</Stack>
 
 							<Stack spacing={2} direction="row">
