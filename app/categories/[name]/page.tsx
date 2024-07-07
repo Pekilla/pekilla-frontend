@@ -1,14 +1,13 @@
-import { Avatar, Box, Card, CardMedia, Container, Divider, Paper, Stack, Typography } from "@mui/material";
+import { Avatar, Box, Button, Card, CardMedia, Container, Divider, Paper, Skeleton, Stack, Typography } from "@mui/material";
 
 export default function CategoryPage() {
 
     const containerStyle = {
-        width: 128,
-        height: 128,
+        width: 150, height: 150,
     }
 
     const bannerStyle = {
-        height: 300,
+        height: 250,
         backgroundImage: "url('https://images-ext-1.discordapp.net/external/-AYFgaaFCTDgYkeFlJjtwFK79woW647ech2hlPPXlDk/%3Fw%3D650/https/www.indiewire.com/wp-content/uploads/2016/08/big-totoro-e1538413562225.jpeg?format=webp')",
         backgroundPosition: "center",
         backgroundSize: "cover"
@@ -16,17 +15,22 @@ export default function CategoryPage() {
 
     return (
         <>
-            <Box 
-                sx={bannerStyle}
-            />
-            <Container>
-                <Stack direction="row" mb={5}>
+            <Box sx={bannerStyle}/>
+            <Container >
+                <Stack direction="row" alignItems="end"  my={5}>
                     <Avatar 
                         sx={containerStyle}
-                        variant="square">A</Avatar>
-                    <Typography   fontSize={50}>Anime</Typography>
+                        variant="square">
+                        A
+                    </Avatar>
+                    <Typography ml={2} variant="h2">Anime</Typography>
                 </Stack>
                 <Divider/>
+
+                {
+                    /* All comments posted by the  */
+                }
+
             </Container>
         </>
     )    
