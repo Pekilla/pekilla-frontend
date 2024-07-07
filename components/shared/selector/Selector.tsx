@@ -1,5 +1,5 @@
 import IconLabel from '@/components/shared/IconLabel';
-import { TextField } from '@mui/material';
+import { MenuItem, TextField } from '@mui/material';
 import { ErrorMessage, FieldProps } from 'formik';
 import { ReactNode } from 'react';
 
@@ -27,7 +27,7 @@ export function Selector(props: SelectorProps & FieldProps) {
                 helperText={<ErrorMessage name={name} />}
                 error={!!errors[name] && touched[name] as boolean}
             >
-                {props.children}
+                {props.children ? props.children : <MenuItem />}
             </TextField>
         </>
     );

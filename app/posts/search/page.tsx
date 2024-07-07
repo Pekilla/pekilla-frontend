@@ -14,7 +14,7 @@ export interface PostSearchProps {
 }
 
 export default async function PostSearch({ searchParams }: PostSearchProps) {
-    const postViewDtos = (await searchPosts(searchParams.content, searchParams.category, searchParams.tags)).data;
+    const postViewDtos = (await searchPosts(searchParams?.content, searchParams?.category, searchParams?.tags)).data;
     console.log(searchParams);
 
     return (
