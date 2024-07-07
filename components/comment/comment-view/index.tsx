@@ -1,5 +1,6 @@
 import { CommentViewDTO } from "@models/dto/CommentViewDTO";
 import { Avatar, Divider, ListItem, ListItemAvatar, ListItemText, Typography } from "@mui/material";
+import React from "react";
 
 const CommentView = (comment : CommentViewDTO) => {
     return (
@@ -12,9 +13,8 @@ const CommentView = (comment : CommentViewDTO) => {
                         primary={comment.username}
                         secondary={
                             <>
-                                <Typography>
-                                    {comment.message}
-                                </Typography>
+                                {comment.message}
+                                <br />
                                 {comment.addedDate}
                             </>
                         }
