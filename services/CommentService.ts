@@ -8,6 +8,10 @@ export const getCommentById = async (commentId : number) => {
     return await http.get<CommentDTO>(`${REQUEST_MAPPING}/${commentId}`);
 }
 
+export const deleteComment = async (commentId : number) => {
+    http.delete(`${REQUEST_MAPPING}/${commentId}`);
+}
+
 export const createComment = async (commentDto : CommentDTO) => {
     http.post(REQUEST_MAPPING, undefined, 
         { params: {

@@ -1,6 +1,7 @@
 import { UserDTO } from "./UserDTO";
 
 export interface CommentViewDTO extends UserDTO{
-    message : string;
+    id        : number
+    message   : string;
     addedDate : Date;
 };
