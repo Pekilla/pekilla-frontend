@@ -1,6 +1,6 @@
 "use client";
 
-
+import { MenuOption, MenuOptionItem } from '@/components/shared/menu-option-item';
 import { usePekillaContext } from '@components/PekillaContext';
 import { PostViewDTO } from "@models/dto/PostViewDTO";
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -18,26 +18,6 @@ import { useState } from "react";
 export interface PostViewProps extends PostViewDTO {
     // To set and open the popup(CreatePopup) with the data of the PostView for an update.
     launchUpdate?(postViewDto: PostViewDTO): void;
-}
-
-/**
- * Interface for the options of the menu that the user see when he click the three dots.
- */
-export interface MenuOption {
-    action(): void;
-    name: string;
-    icon: any;
-}
-
-export function MenuOptionItem(props: { icon: any, name: string, onClick: any }) {
-    return (
-        <MenuItem key={props.name} onClick={props.onClick}>
-            <Stack direction={"row"} spacing={1}>
-                {props.icon}
-                <Typography variant="inherit">{props.name}</Typography>
-            </Stack>
-        </MenuItem>
-    );
 }
 
 export default function PostView(props: PostViewProps) {
@@ -77,10 +57,8 @@ export default function PostView(props: PostViewProps) {
                             onClose={() => setAnchorEl(null)}
                             variant="menu">
 
-                            {MENU_OPTIONS.map((option) => (
-                                option ? (
-                                    <MenuOptionItem {...option} onClick={() => { setAnchorEl(null); option.action(); }} />
-                                ) : null
+                            {MENU_OPTIONS.filter(e => e != undefined).map((option) => (
+                                <MenuOptionItem {...option} basicAction={() => setAnchorEl(null)} />
                             ))}
                         </Menu>
                     </>

@@ -1,21 +1,16 @@
-'use client';
+"use client";
 
 import { CommentViewDTO } from "@models/dto/CommentViewDTO";
-import { Avatar, Divider, IconButton, ListItem, ListItemAvatar, ListItemText, Menu, MenuItem, SpeedDial, SpeedDialAction, Stack, Typography } from "@mui/material";
-import React, { useState } from "react";
-import { MenuOption, MenuOptionItem } from "@/components/post/post-view";
-
+import { Avatar, Divider, IconButton, ListItem, ListItemAvatar, ListItemText, Menu } from "@mui/material";
+import { useState } from "react";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-
 import { deleteComment } from "@/services/CommentService";
-import { useRouter } from "next/navigation";
-import { Selector } from "@/components/shared/selector/Selector";
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import { createRandomKey } from "@/utils/RandomKeys";
+import { useRouter } from "next/navigation";
+import { MenuOption, MenuOptionItem } from "@/components/shared/menu-option-item";
 
 const CommentView = (comment: CommentViewDTO) => {
-
     const router = useRouter();
 
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -24,12 +19,11 @@ const CommentView = (comment: CommentViewDTO) => {
     const options: MenuOption[] = [
         { icon: <DeleteIcon />, name: "delete", action() { deleteComment(comment.id) } },
         { icon: <EditIcon />, name: "edit", action() { console.log("NOT IMPLEMENTED") } }
-    ]
+    ];
 
     return (
         <>
             <ListItem alignItems="flex-start">
-
                 <ListItemAvatar>
                     <Avatar>{comment.username.charAt(0)}</Avatar>
                 </ListItemAvatar>
@@ -54,10 +48,9 @@ const CommentView = (comment: CommentViewDTO) => {
                     anchorEl={anchorEl}
                     variant="menu"
                     onClose={() => setAnchorEl(null)}>
-
                     {
                         options.map((option) => (
-                            <MenuOptionItem {...option} onClick={() => { option.action(), router.refresh() }} />
+                            <MenuOptionItem {...option} basicAction={router.refresh} />
                         ))
                     }
                 </Menu>
@@ -67,4 +60,4 @@ const CommentView = (comment: CommentViewDTO) => {
         </>
     )
 }
-export default CommentView; 
+export default CommentView;
