@@ -1,12 +1,12 @@
 import { getNames } from "@/services/CategoryService";
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
-import { MenuItem } from "@mui/material";
+import { Divider, MenuItem } from "@mui/material";
 import { FieldProps } from "formik";
 import { useEffect, useState } from "react";
 import { Selector } from "./Selector";
 
 
-export default function CategorySelector(props: FieldProps) {
+export default function CategorySelector(props: { isFilter?: boolean } & FieldProps) {
     const [allCategories, setAllCategories] = useState<string[]>();
 
     useEffect(() => {
@@ -15,6 +15,10 @@ export default function CategorySelector(props: FieldProps) {
 
     return (
         <Selector label="Category" {...props} icon={<FormatListBulletedIcon />}>
+            {/* Duplicate because get error when using fragment. */}
+            {props.isFilter ? (<MenuItem value="">ALL</MenuItem>) : null}
+            {props.isFilter ? (<Divider />) : null}
+            
             {allCategories?.map((category: string) => (
                 <MenuItem key={category} value={category}>{category}</MenuItem>
             ))}

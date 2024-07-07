@@ -45,7 +45,6 @@ export default function SearchForm() {
 }
 
 function SearchFilters(props: { params: ReadonlyURLSearchParams }) {
-    const pathname = usePathname();
     const router = useRouter();
     const formikContext = useFormikContext<any>();
     const [lastValues, setLastValues] = useState(formikContext.values);
@@ -55,20 +54,18 @@ function SearchFilters(props: { params: ReadonlyURLSearchParams }) {
     }, [props.params]);
 
     const reset = () => {
-        if (props.params.size != 0) {
-            router.push(`${pathname}`);
-        } else {
-            formikContext.setValues(searchParamDefaults);
-        }
-
+        router.push("?content=");
         setLastValues(searchParamDefaults);
-        formikContext.resetForm();
+        formikContext.setValues(searchParamDefaults);
     };
 
     const submit = () => {
-        router.push(`?${qs.stringify(formikContext.values, { arrayFormat: "repeat", filter : filterFunc})}`);
+        let query = qs.stringify(formikContext.values, { arrayFormat: "repeat", filter : filterFunc});
+        
+        if(query.length == 0) router.push("?content=");
+        else router.push(`?${query}`);
+
         setLastValues(formikContext.values);
-        formikContext.resetForm();
     };
 
     return (
@@ -77,15 +74,15 @@ function SearchFilters(props: { params: ReadonlyURLSearchParams }) {
 
             <Stack direction="row" spacing={2}>
                 <Field name="content" component={CreateInput} label="Content" />
-                <Field name="category" component={CategorySelector} />
+                <Field name="category" component={CategorySelector} isFilter />
                 {/* <Field name="sortedBy" component={SortedSelector} /> */}
             </Stack>
 
             <Field name="tags" component={Tags} label="Tags" />
 
             <Stack direction="row" justifyContent="space-between">
-                <Button disabled={equals(searchParamDefaults, formikContext.values)} onClick={() => { reset(); }}>Clear filter</Button>
-                <Button disabled={equals(lastValues, formikContext.values)} onClick={submit}>Apply filter</Button>
+                <Button disabled={(props.params.size == 0 || props.params.get("content") == "") && equals(searchParamDefaults, formikContext.values)} onClick={() => { reset(); }}>Clear filter</Button>
+                <Button disabled={equals(lastValues, formikContext.values) || (equals(searchParamDefaults, formikContext.values) && formikContext.values.category == lastValues.category)} onClick={submit}>Apply filter</Button>
             </Stack>
         </Stack>
     );
