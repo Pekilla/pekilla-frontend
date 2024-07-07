@@ -1,4 +1,4 @@
-import CommentTextArea from "@/components/comment/comment-section";
+import CommentTextArea from "@/components/comment/comment-textarea";
 import CommentView from "@/components/comment/comment-view";
 import PostView from "@/components/post/post-view";
 import { getAllComments, getPostById } from "@/services/PostService";
