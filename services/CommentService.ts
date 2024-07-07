@@ -3,7 +3,7 @@ import http from "../http";
 import { CommentDTO } from "@models/dto/CommentDTO";
 import { CommentViewDTO } from "@models/dto/CommentViewDTO";
 
-const REQUEST_MAPPING: string = "/comment";
+const REQUEST_MAPPING: string = "/api/comments";
 
 export const getAllComments = async (postId : number) => {
    return await http.get<CommentViewDTO[]>(`${REQUEST_MAPPING}/post/${postId}/all`);
