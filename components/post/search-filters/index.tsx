@@ -1,6 +1,5 @@
 "use client";
 
-import { CATEGORIES, Category } from "@/models/enums/Category";
 import { equals, filterFunc } from "@/utils/utils";
 import CategorySelector from "@components/shared/selector/CategorySelector";
 import { Button, Stack } from "@mui/material";
@@ -22,7 +21,7 @@ const searchParamDefaults = {
 function getParams(params: URLSearchParams) {
     return {
         content: params.get("content") ?? searchParamDefaults.content,
-        category: CATEGORIES.find((e: Category) => e == params.get("category") as string) ?? searchParamDefaults.category,
+        category: params.get("category") ?? searchParamDefaults.category,
         sortedBy: params.get("sortedBy") ?? searchParamDefaults.sortedBy,
         tags: params.getAll("tags") ?? searchParamDefaults.tags
     };
