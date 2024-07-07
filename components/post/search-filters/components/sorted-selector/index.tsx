@@ -12,7 +12,7 @@ export default function SortedSelector(props: FieldProps) {
     return (
         <Selector label="Sorted by" {...props} icon={<FilterListIcon />}>
             {SORT_TYPE.map((sortType, index) => (
-                <MenuItem key={sortType} value={index}>{sortType}</MenuItem>
+                <MenuItem key={sortType} value={index+""}>{sortType}</MenuItem>
             ))}
         </Selector>
     );

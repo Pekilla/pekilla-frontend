@@ -3,7 +3,7 @@ import { PostViewDTO } from "@models/dto/PostViewDTO";
 import { AxiosError, AxiosResponse } from "axios";
 import http from "../http";
 
-const REQUEST_MAPPING: string = "/posts";
+const REQUEST_MAPPING: string = "/api/posts";
 
 export const getPostById = async (postId : number) => {
     return (await http.get<PostViewDTO>(`${REQUEST_MAPPING}/${postId}`)).data
@@ -14,14 +14,14 @@ export const deletePost = async (postId : number) => {
 }
 
 export async function createPost(postDTO: PostDTO) {
-    return http.post(REQUEST_MAPPING + "/create", postDTO)
+    return http.post(REQUEST_MAPPING, postDTO)
         .catch((error: AxiosError) => {
             console.log((error.response?.data as any).message);
         });;
 }
 
 export async function updatePost(postDTO: PostDTO): Promise<void | AxiosResponse<PostViewDTO, any>> {
-    return http.post(REQUEST_MAPPING + "/update", postDTO)
+    return http.patch(REQUEST_MAPPING, postDTO)
         .catch((error: AxiosError) => {
             console.log((error.response?.data as any).message);
         });
