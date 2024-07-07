@@ -2,11 +2,12 @@ import { PostDTO } from "@models/dto/PostDTO";
 import { PostViewDTO } from "@models/dto/PostViewDTO";
 import { AxiosError, AxiosResponse } from "axios";
 import http from "../http";
+import { CommentViewDTO } from "@/models/dto/CommentViewDTO";
 
 const REQUEST_MAPPING: string = "/api/posts";
 
 export const getPostById = async (postId : number) => {
-    return (await http.get<PostViewDTO>(`${REQUEST_MAPPING}/${postId}`)).data
+    return http.get<PostViewDTO>(`${REQUEST_MAPPING}/${postId}`)
 }
 
 export const deletePost = async (postId : number) => {
@@ -34,3 +35,7 @@ export async function searchPosts(content?: string, category?: string, tags?: st
 export async function getAllPost() {
     return searchPosts();
 }
+
+export const getAllComments = async (postId : number) => {
+    return await http.get<CommentViewDTO[]>(`${REQUEST_MAPPING}/${postId}/comments`);
+ }
