@@ -15,6 +15,7 @@ export interface PostSearchProps {
 
 export default async function PostSearch({ searchParams }: PostSearchProps) {
     const postViewDtos = (await searchPosts(searchParams.content, searchParams.category, searchParams.tags)).data;
+    console.log(searchParams);
 
     return (
         <>
@@ -26,7 +27,7 @@ export default async function PostSearch({ searchParams }: PostSearchProps) {
                         (
                             <Stack spacing={2}>
                                 <Typography textAlign="center" variant="h4" fontFamily="monospace">No post were found</Typography>
-                                <Image src="/not-found.webp" alt="not-found" width={1238.4} height={826.56} />
+                                <Image src="/not-found.webp" alt="not-found" width={1238.4} height={826.56} priority />
                             </Stack>
                         ) : (
                             <Suspense fallback={<p>Loading...</p>}>
