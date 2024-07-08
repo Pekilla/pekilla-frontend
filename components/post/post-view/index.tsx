@@ -1,5 +1,6 @@
 "use client";
 
+import EntityDateLabel from '@/components/shared/EntityDateLabel';
 import { MenuOption, MenuOptionItem } from '@/components/shared/menu-option-item';
 import { usePekillaContext } from '@components/PekillaContext';
 import { PostViewDTO } from "@models/dto/PostViewDTO";
@@ -7,11 +8,9 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import FlagIcon from '@mui/icons-material/Flag';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import { Avatar, Card, CardContent, CardHeader, Chip, IconButton, Menu, MenuItem, Link as MuiLink, Stack, Typography } from "@mui/material";
-import { orange } from '@mui/material/colors';
+import { Avatar, Card, CardContent, CardHeader, Chip, IconButton, Menu, Link as MuiLink, Stack, Typography } from "@mui/material";
 import { deletePost } from '@services/PostService';
 import { createRandomKey } from "@utils/RandomKeys";
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from "react";
 
@@ -43,8 +42,16 @@ export default function PostView(props: PostViewProps) {
                 }
                 title={
                     <Stack spacing={0.4}>
-                        <p><MuiLink component={Link} href={`/categories/${props.category?.toLowerCase()}`}>{props.category}</MuiLink> • {props.addedDate as any}</p>
-                        <MuiLink color={isOwnerOfPost ? orange[400] : undefined} component={Link} style={{}} href={`/users/${props.username}`}>{isOwnerOfPost ? "You" : props.username}</MuiLink>
+                        <EntityDateLabel
+                            username={props.category}
+                            date={props.addedDate}
+                            isCategory
+                        />
+
+                        <EntityDateLabel
+                            username={props.username}
+                            isYou={isOwnerOfPost}
+                        />
                     </Stack>
                 }
                 action={
@@ -59,9 +66,9 @@ export default function PostView(props: PostViewProps) {
                             variant="menu">
 
                             {MENU_OPTIONS.filter(e => e != undefined).map((option) => (
-                                <MenuOptionItem 
+                                <MenuOptionItem
                                     key={createRandomKey()}
-                                    {...option} 
+                                    {...option}
                                     basicAction={() => setAnchorEl(null)} />
                             ))}
                         </Menu>

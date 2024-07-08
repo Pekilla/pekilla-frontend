@@ -62,7 +62,7 @@ export function PekillaContextProvider(props: { children: any }) {
             MuiLink : {
                 defaultProps : {
                     color: "inherit",
-                    underline : "none"
+                    underline : "hover"
                 }
             },
             MuiButton : {

@@ -1,18 +1,21 @@
 "use client";
 
+import EntityDateLabel from "@/components/shared/EntityDateLabel";
+import { MenuOption, MenuOptionItem } from "@/components/shared/menu-option-item";
+import { deleteComment } from "@/services/CommentService";
+import { createRandomKey } from "@/utils/RandomKeys";
 import { CommentViewDTO } from "@models/dto/CommentViewDTO";
-import { Avatar, Divider, IconButton, ListItem, ListItemAvatar, ListItemText, Menu } from "@mui/material";
-import { useState } from "react";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import { deleteComment } from "@/services/CommentService";
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import { Avatar, Divider, IconButton, ListItem, ListItemAvatar, ListItemText, Menu } from "@mui/material";
 import { useRouter } from "next/navigation";
-import { MenuOption, MenuOptionItem } from "@/components/shared/menu-option-item";
-import { createRandomKey } from "@/utils/RandomKeys";
+import { useState } from "react";
 
 const CommentView = (comment: CommentViewDTO) => {
     const router = useRouter();
+
+    const isOwnerOfComment = false;
 
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
@@ -29,14 +32,14 @@ const CommentView = (comment: CommentViewDTO) => {
                     <Avatar>{comment.username.charAt(0)}</Avatar>
                 </ListItemAvatar>
                 <ListItemText
-                    primary={comment.username}
-                    secondary={
-                        <>
-                            {comment.message}
-                            <br />
-                            {comment.addedDate}
-                        </>
+                    primary={
+                        <EntityDateLabel
+                            username={comment.username}
+                            isYou={isOwnerOfComment}
+                            date={comment.addedDate}
+                        />
                     }
+                    secondary={comment.message}
                 />
 
                 {/* Comment options */}
@@ -53,12 +56,11 @@ const CommentView = (comment: CommentViewDTO) => {
                         options.map((option) => (
                             <MenuOptionItem
                                 key={createRandomKey()}
-                                {...option} 
+                                {...option}
                                 basicAction={router.refresh} />
                         ))
                     }
                 </Menu>
-
             </ListItem>
             <Divider />
         </>
