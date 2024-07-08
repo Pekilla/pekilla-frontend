@@ -25,7 +25,7 @@ export default function EntityDateLabel(props: EntityDateLabelProps) {
             <MuiLink
                 color={isYou ? orange[500] : undefined}
                 component={Link}
-                href={`${props.isCategory ? "/categories/" : "/users/"} ${props.username}`}>
+                href={`${props.isCategory ? "/categories/" : "/users/"}${props.username}`}>
                 {isYou ? "You" : props.username}
             </MuiLink> {props.date ? <>• {props.date as any}</> : <></>}
         </p>
