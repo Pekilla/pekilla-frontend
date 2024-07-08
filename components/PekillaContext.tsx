@@ -47,14 +47,10 @@ export function PekillaContextProvider(props: { children: any }) {
             },
         },
         components: {
-            MuiTypography: {
-                defaultProps: {
-                }
-            },
             MuiInputBase: {
                 defaultProps: {
                     sx: {
-                        borderRadius: 5
+                        borderRadius: 2
                     }
                 }
             },
@@ -100,6 +96,13 @@ export function PekillaContextProvider(props: { children: any }) {
                     }
                 }
             },
+            MuiChip : {
+                defaultProps : {
+                    sx : {
+                        fontWeight: 500,
+                    }
+                }
+            }
         }
     });
 
