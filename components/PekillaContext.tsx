@@ -125,6 +125,11 @@ export function PekillaContextProvider(props: { children: any }) {
                         variant : "outlined"
                     }
                 }
+            },
+            MuiCircularProgress : {
+                defaultProps : {
+                    color: 'primary'
+                }
             }
         }
     });

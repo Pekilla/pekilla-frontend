@@ -1,9 +1,11 @@
 'use client';
 
+import { CircularProgress } from "@mui/material";
+
 export default function LoadingSpecificPost() {
     return (
         <>
-            <h1>Loading ....</h1>
+            <CircularProgress />
         </>
     )
 }
