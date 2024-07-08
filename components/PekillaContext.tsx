@@ -1,5 +1,10 @@
 "use client";
 
+import '@fontsource/montserrat/300.css';
+import '@fontsource/montserrat/400.css';
+import '@fontsource/montserrat/500.css';
+import '@fontsource/montserrat/700.css';
+
 import config from "@/config.json";
 import { CssBaseline, ThemeProvider, useMediaQuery } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
@@ -23,10 +28,36 @@ export function PekillaContextProvider(props: { children: any }) {
     const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
 
     const theme = createTheme({
+        typography: {
+            fontFamily: [
+                'montserrat'
+            ].join(','),
+        },
         palette: {
             mode: prefersDarkMode ? "dark" : "light",
+            primary: {
+                main: '#ff4081',
+                dark: '#d81b60',
+                light: '#000000'
+            },
+            secondary: {
+                main: '#000000',
+                dark: '#000000',
+                light: '#ffffff'
+            },
         },
         components: {
+            MuiTypography: {
+                defaultProps: {
+                }
+            },
+            MuiInputBase: {
+                defaultProps: {
+                    sx: {
+                        borderRadius: 5
+                    }
+                }
+            },
             MuiTextField: {
                 defaultProps: {
                     variant: "outlined"
@@ -34,14 +65,41 @@ export function PekillaContextProvider(props: { children: any }) {
             },
             MuiLink : {
                 defaultProps : {
-                    underline : "hover"
+                    color: "inherit",
+                    underline : "none"
                 }
             },
             MuiButton : {
                 defaultProps : {
-                    variant : "contained"
+                    variant : "contained",
+                    sx: {
+                        fontWeight: 700,
+                        textTransform: "none",
+                        boxShadow: "none",
+                    }
                 }
-            }
+            },
+            MuiButtonBase: {
+                defaultProps : {
+                    disableRipple: true
+                }
+            },
+            MuiAvatar : {
+                defaultProps : {
+                    sx : {
+                        borderRadius : 2
+                    },
+                    variant: "square"
+                }
+            },
+            MuiCard : {
+                defaultProps : {
+                    variant: "outlined",
+                    sx: {
+                        borderRadius: 4
+                    }
+                }
+            },
         }
     });
 

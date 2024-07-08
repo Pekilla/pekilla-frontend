@@ -2,14 +2,15 @@
 
 import { equals, filterFunc } from "@/utils/utils";
 import CategorySelector from "@components/shared/selector/CategorySelector";
-import { Button, Stack } from "@mui/material";
+import { Button, Stack, Typography } from "@mui/material";
 import { Field, Form, Formik, useFormikContext } from "formik";
 import { ReadonlyURLSearchParams, usePathname, useRouter, useSearchParams } from "next/navigation";
 import qs from "qs";
 import { useEffect, useState } from "react";
 import { CreateInput } from "../create-update-popup/components/create-input";
 import { Tags } from "../create-update-popup/components/tags";
-import SortedSelector from "./components/sorted-selector";
+import ClearIcon from '@mui/icons-material/Clear';
+import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 
 const searchParamDefaults = {
     content : "",
@@ -70,7 +71,10 @@ function SearchFilters(props: { params: ReadonlyURLSearchParams }) {
 
     return (
         <Stack spacing={2}>
-            <h2>Filters</h2>
+            <h1>
+                Filters 
+                <AutoAwesomeIcon color="primary"/>
+            </h1>
 
             <Stack direction="row" spacing={2}>
                 <Field name="content" component={CreateInput} label="Content" />
@@ -81,7 +85,7 @@ function SearchFilters(props: { params: ReadonlyURLSearchParams }) {
             <Field name="tags" component={Tags} label="Tags" />
 
             <Stack direction="row" justifyContent="space-between">
-                <Button disabled={(props.params.size == 0 || props.params.get("content") == "") && equals(searchParamDefaults, formikContext.values)} onClick={() => { reset(); }}>Clear filter</Button>
+                <Button disabled={(props.params.size == 0 || props.params.get("content") == "") && equals(searchParamDefaults, formikContext.values)} onClick={() => { reset(); }} endIcon={<ClearIcon/>}>Clear filter</Button>
                 <Button disabled={equals(lastValues, formikContext.values) || (equals(searchParamDefaults, formikContext.values) && formikContext.values.category == lastValues.category)} onClick={submit}>Apply filter</Button>
             </Stack>
         </Stack>

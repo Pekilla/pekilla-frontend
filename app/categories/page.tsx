@@ -9,7 +9,7 @@ export default async function ExplorePage() {
     
     return (
         <Container>
-            <Typography my={8} variant="h2" textAlign={"center"} fontWeight={700}>Explore many communities</Typography>
+            <Typography my={8} variant="h2" textAlign={"center"} fontWeight={700}>Explore many communities </Typography>
 
             {/* All categories will be shown here */}
 

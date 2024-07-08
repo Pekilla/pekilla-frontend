@@ -8,6 +8,7 @@ import { createComment } from "@services/CommentService";
 import { Field, Form, Formik } from "formik";
 import { useRouter } from "next/navigation";
 import { object, string } from "yup";
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 const CommentTextArea = (props: {postId: number}) => {
     const { userId } = usePekillaContext();
@@ -36,15 +37,17 @@ const CommentTextArea = (props: {postId: number}) => {
                         .max(1000, "1000 chars limit has been exceeded.")
                 })}>
                 <Form>
-                    <Stack>
+                    <Stack gap={2}>
                         <Field
                             name="message"
                             isTextArea="true"
                             component={CreateInput}
                         />
-                        <Button
+                        <Button 
                             type="submit"
-                            variant="contained">
+                            variant="contained"
+                            endIcon={<ArrowForwardIosIcon fontSize="small"/>}
+                            >
                             Publish
                         </Button>
                     </Stack>

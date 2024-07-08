@@ -15,6 +15,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from "react";
 
+
 export interface PostViewProps extends PostViewDTO {
     // To set and open the popup(CreatePopup) with the data of the PostView for an update.
     launchUpdate?(postViewDto: PostViewDTO): void;
@@ -35,7 +36,7 @@ export default function PostView(props: PostViewProps) {
     ]
 
     return (
-        <Card variant="outlined">
+        <Card>
             <CardHeader
                 avatar={
                     <Avatar>{props.username.charAt(0)}</Avatar>
