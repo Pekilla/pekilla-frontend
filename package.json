@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@fontsource/montserrat": "^5.0.18",
+    "@fontsource/space-grotesk": "^5.0.18",
     "@types/qs": "^6.9.15",
     "axios": "^1.7.2",
     "formik": "^2.4.6",

@@ -1,11 +1,11 @@
 import { PekillaContextProvider } from "@components/PekillaContext";
-import { Button, Link as MuiLink, Stack } from "@mui/material";
+import { Button, Card, Container, Link as MuiLink, Stack, Typography } from "@mui/material";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Space_Grotesk } from "next/font/google";
 import Link from "next/link";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const grotesk = Space_Grotesk({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
 	title: "Pekilla",
@@ -20,20 +20,22 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<PekillaContextProvider>				
-				<body className={inter.className}>
+				<body className={grotesk.className}>
 					<nav style={{ padding: "15px" }}>
-						<Stack direction="row" justifyContent="space-between" flexWrap="wrap">
-							<Stack spacing={2} direction="row">
-								<MuiLink href="/" component={Link}>Home</MuiLink>
-								<MuiLink href="/posts/search" component={Link}>Trend</MuiLink>
-								<MuiLink href="/categories" component={Link}>Explore</MuiLink>
-							</Stack>
+						<Container>
+							<Stack direction="row" justifyContent="space-between" p={2} flexWrap="wrap">
+								<Stack spacing={2} direction="row">
+									<MuiLink href="/" component={Link}>Home</MuiLink>
+									<MuiLink href="/posts/search" component={Link}>Trend</MuiLink>
+									<MuiLink href="/categories" component={Link}>Explore</MuiLink>
+								</Stack>
 
-							<Stack spacing={2} direction="row">
-								<Button variant="outlined">Sign up</Button>
-								<Button>Get Started</Button>
+								<Stack spacing={2} direction="row">
+									<Button variant="outlined">Sign up</Button>
+									<Button>Get Started</Button>
+								</Stack>
 							</Stack>
-						</Stack>
+						</Container>
 					</nav>
 
 					{children}
