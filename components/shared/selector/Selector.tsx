@@ -21,7 +21,7 @@ export function Selector(props: SelectorProps & FieldProps) {
                     <IconLabel label={props.label} icon={props.icon} />
                 }
                 sx={{
-                    width: 200
+                    width: 200,
                 }}
                 select
                 helperText={<ErrorMessage name={name} />}
