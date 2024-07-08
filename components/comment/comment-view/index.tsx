@@ -9,6 +9,7 @@ import { deleteComment } from "@/services/CommentService";
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { useRouter } from "next/navigation";
 import { MenuOption, MenuOptionItem } from "@/components/shared/menu-option-item";
+import { createRandomKey } from "@/utils/RandomKeys";
 
 const CommentView = (comment: CommentViewDTO) => {
     const router = useRouter();
@@ -51,7 +52,9 @@ const CommentView = (comment: CommentViewDTO) => {
                     {
                         options.map((option) => (
                             <MenuOptionItem
-                                {...option} basicAction={router.refresh} />
+                                key={createRandomKey()}
+                                {...option} 
+                                basicAction={router.refresh} />
                         ))
                     }
                 </Menu>

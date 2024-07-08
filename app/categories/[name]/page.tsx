@@ -1,6 +1,10 @@
+import PostView from "@/components/post/post-view";
+import { PostViewDTO } from "@/models/dto/PostViewDTO";
+import { searchPosts } from "@/services/PostService";
+import { createRandomKey } from "@/utils/RandomKeys";
 import { Avatar, Box, Button, Card, CardMedia, Container, Divider, Paper, Skeleton, Stack, Typography } from "@mui/material";
 
-export default function CategoryPage({params} : any) {
+export default async function CategoryPage({params} : any) {
 
     const containerStyle = {
         width: 150, height: 150,
@@ -12,6 +16,8 @@ export default function CategoryPage({params} : any) {
         backgroundPosition: "center",
         backgroundSize: "cover"
     }
+
+    const postsFromCategory : PostViewDTO[] = (await searchPosts("",params.name,[])).data;
 
     return (
         <>
@@ -29,9 +35,16 @@ export default function CategoryPage({params} : any) {
                 </Stack>
                 <Divider/>
 
-                {
-                    /* All comments posted by the  */
-                }
+                <Stack gap={5}>
+                    {
+                        /* All post in this category  */
+                        postsFromCategory.map(post => 
+                            <PostView  
+                                key={createRandomKey()}
+                                {...post}/>
+                        )
+                    }
+                </Stack>
 
             </Container>
         </>

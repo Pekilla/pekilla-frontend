@@ -58,7 +58,10 @@ export default function PostView(props: PostViewProps) {
                             variant="menu">
 
                             {MENU_OPTIONS.filter(e => e != undefined).map((option) => (
-                                <MenuOptionItem {...option} basicAction={() => setAnchorEl(null)} />
+                                <MenuOptionItem 
+                                    key={createRandomKey()}
+                                    {...option} 
+                                    basicAction={() => setAnchorEl(null)} />
                             ))}
                         </Menu>
                     </>
