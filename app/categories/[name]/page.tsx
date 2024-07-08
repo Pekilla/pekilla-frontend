@@ -1,6 +1,6 @@
 import { Avatar, Box, Button, Card, CardMedia, Container, Divider, Paper, Skeleton, Stack, Typography } from "@mui/material";
 
-export default function CategoryPage() {
+export default function CategoryPage({params} : any) {
 
     const containerStyle = {
         width: 150, height: 150,
@@ -21,9 +21,11 @@ export default function CategoryPage() {
                     <Avatar 
                         sx={containerStyle}
                         variant="square">
-                        A
+                        
                     </Avatar>
-                    <Typography ml={2} variant="h2">Anime</Typography>
+                    <Typography ml={2} variant="h2">
+                        {params.name}
+                    </Typography>
                 </Stack>
                 <Divider/>
 

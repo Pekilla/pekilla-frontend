@@ -50,7 +50,8 @@ const CommentView = (comment: CommentViewDTO) => {
                     onClose={() => setAnchorEl(null)}>
                     {
                         options.map((option) => (
-                            <MenuOptionItem {...option} basicAction={router.refresh} />
+                            <MenuOptionItem
+                                {...option} basicAction={router.refresh} />
                         ))
                     }
                 </Menu>
