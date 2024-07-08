@@ -1,4 +1,4 @@
-import { AccountInfo, AccountInfoItem, Profil } from "@/components/setting/account-info-item";
+import { AccountInfo, AccountInfoItem, Profile } from "@/components/setting/account-info-item";
 import { Container, Stack, Table, TableBody, TableHead } from "@mui/material";
 
 export default function Setting() {
@@ -6,7 +6,7 @@ export default function Setting() {
         <Container component={Stack} spacing={8}>
             <AccountInfo />
 
-            <Profil />
+            <Profile />
         </Container>
     );
 }
