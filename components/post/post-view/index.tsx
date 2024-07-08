@@ -43,7 +43,7 @@ export default function PostView(props: PostViewProps) {
                 }
                 title={
                     <Stack spacing={0.4}>
-                        <p><MuiLink component={Link} href={`/category/${props.category?.toLowerCase()}`}>{props.category}</MuiLink> • {props.addedDate as any}</p>
+                        <p><MuiLink component={Link} href={`/categories/${props.category?.toLowerCase()}`}>{props.category}</MuiLink> • {props.addedDate as any}</p>
                         <MuiLink color={isOwnerOfPost ? orange[400] : undefined} component={Link} style={{}} href={`/users/${props.username}`}>{isOwnerOfPost ? "You" : props.username}</MuiLink>
                     </Stack>
                 }
