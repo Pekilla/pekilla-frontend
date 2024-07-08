@@ -3,6 +3,10 @@
 import { Button, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import CheckIcon from '@mui/icons-material/Check';
+import ClearIcon from '@mui/icons-material/Clear';
+import UploadIcon from '@mui/icons-material/Upload';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const IMAGE1 = "https://media.discordapp.net/attachments/1108234697932283945/1259673387996020826/image.png?ex=668c89c3&is=668b3843&hm=3eb55a24e45b798831b8429299f56e3e6aae3c7b9c618e2ae08da0e009359ec5&=&format=webp&quality=lossless&width=843&height=623";
 const DFT_IMAGE = "https://media.discordapp.net/attachments/1108234697932283945/1259719103216619520/image.png?ex=668cb456&is=668b62d6&hm=f65bee9bda1e2efc9d0474b297a724eff919fd643c757af6bef11d0c8be8d3cd&=&format=webp&quality=lossless&width=258&height=192";
@@ -103,12 +107,12 @@ export function ProfileIcon(props: { src?: string }) {
                         {image?.file ?
                             (
                                 <>
-                                    <Button color="success">Save</Button>
-                                    <Button color="error" onClick={removeImage}>Cancel</Button>
+                                    <Button color="success" startIcon={<CheckIcon />}>Save</Button>
+                                    <Button color="error" onClick={removeImage} startIcon={<ClearIcon />}>Cancel</Button>
                                 </>
                             ) : (
                                 <>
-                                    <Button component="label">
+                                    <Button component="label" startIcon={<UploadIcon />}>
                                         Upload
 
                                         <input
@@ -119,7 +123,7 @@ export function ProfileIcon(props: { src?: string }) {
                                         />
                                     </Button>
 
-                                    <Button color="error" disabled={props.src == undefined}>Delete</Button>
+                                    <Button color="error" disabled={props.src == undefined} startIcon={<DeleteIcon />}>Delete</Button>
                                 </>
                             )
 
