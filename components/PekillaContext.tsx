@@ -1,9 +1,8 @@
 "use client";
 
-import '@fontsource/montserrat/300.css';
-import '@fontsource/montserrat/400.css';
-import '@fontsource/montserrat/500.css';
-import '@fontsource/montserrat/700.css';
+import "@fontsource/space-grotesk"; // Defaults to weight 400
+import "@fontsource/space-grotesk/400.css"; // Specify weight
+
 
 import config from "@/config.json";
 import { CssBaseline, ThemeProvider, useMediaQuery } from "@mui/material";
@@ -30,7 +29,7 @@ export function PekillaContextProvider(props: { children: any }) {
     const theme = createTheme({
         typography: {
             fontFamily: [
-                'montserrat'
+                'Space Grotesk'
             ].join(','),
         },
         palette: {
