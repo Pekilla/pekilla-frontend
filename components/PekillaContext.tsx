@@ -100,6 +100,21 @@ export function PekillaContextProvider(props: { children: any }) {
                     }
                 }
             },
+            MuiSelect : {
+                defaultProps : {
+                    MenuProps: {
+                        slotProps: {
+                            paper: {
+                                elevation : 0,
+                                variant : "outlined",
+                                sx: {
+                                    borderRadius : "12px"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     });
 
