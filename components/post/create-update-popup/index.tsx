@@ -1,7 +1,6 @@
 import { usePekillaContext } from "@components/PekillaContext";
 import { PostDTO } from "@models/dto/PostDTO";
 import { PostViewDTO } from "@models/dto/PostViewDTO";
-import { Category } from "@models/enums/Category";
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Stack } from "@mui/material";
 import Divider from '@mui/material/Divider';
 import { equals } from "@utils/utils";

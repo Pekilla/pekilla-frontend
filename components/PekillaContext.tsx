@@ -114,6 +114,14 @@ export function PekillaContextProvider(props: { children: any }) {
                         }
                     }
                 }
+            },
+            MuiDialog : {
+                defaultProps : {
+                    PaperProps : {
+                        elevation : 0,
+                        variant : "outlined"
+                    }
+                }
             }
         }
     });
