@@ -1,12 +1,16 @@
-import { AccountInfo, AccountInfoItem, Profile } from "@/components/setting/account-info-item";
-import { Container, Stack, Table, TableBody, TableHead } from "@mui/material";
+import { AccountInfo, Profile } from "@/components/setting/account-info-item";
+import data from "@/config.json";
+import { getUserSetting } from "@/services/UserService";
+import { Container, Stack } from "@mui/material";
 
-export default function Setting() {
+export default async function Setting() {
+    const userSetting = (await getUserSetting(data.id)).data;
+
     return (
         <Container component={Stack} spacing={8}>
-            <AccountInfo />
+            <AccountInfo email={userSetting.email} />
 
-            <Profile />
+            <Profile {...userSetting} />
         </Container>
     );
 }

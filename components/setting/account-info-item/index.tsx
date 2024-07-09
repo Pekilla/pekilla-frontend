@@ -59,12 +59,12 @@ export function SettingSection(props: { title: string, children: any }) {
     );
 }
 
-export function AccountInfo() {
+export function AccountInfo(props: {email: string}) {
     return (
         <SettingSection title="Account info">
             <TableBody>
-                <AccountInfoItem label="Email" value="ip@nothankyou.com" />
-                <AccountInfoItem label="Password" value="ip@nothankyou.com" />
+                <AccountInfoItem label="Email" value={props.email} />
+                <AccountInfoItem label="Password" value="************" />
             </TableBody>
         </SettingSection>
     )
@@ -135,12 +135,12 @@ export function ProfileIcon(props: { src?: string }) {
     );
 }
 
-export function Profile() {
+export function Profile(props: {username: string, icon?: string, banner?: string}) {
     return (
         <SettingSection title="Profile">
             <TableBody>
-                <AccountInfoItem label="Username" value="Jackson" />
-                <ProfileIcon />
+                <AccountInfoItem label="Username" value={props.username} />
+                <ProfileIcon src={props.icon} />
             </TableBody>
         </SettingSection>
     )
