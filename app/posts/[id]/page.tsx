@@ -8,7 +8,7 @@ import { Container, List } from "@mui/material";
 const SpecificPostPage = async ({params} : any) => {
     const post = (await getPostById(params.id)).data;
     const comments = (await getAllComments(params.id)).data;
-
+    
     return (
         <Container>
             <PostView {...post}/>

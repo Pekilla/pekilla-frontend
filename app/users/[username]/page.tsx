@@ -1,5 +1,5 @@
 import { Avatar, Box, Button, Card, Container, Divider, Stack, Typography } from "@mui/material";
-import GroupAddIcon from '@mui/icons-material/GroupAdd';
+import AddReactionRoundedIcon from '@mui/icons-material/AddReactionRounded';
 import { getAllPostsByUserName } from "@/services/PostService";
 import PostView from "@/components/post/post-view";
 import { createRandomKey } from "@/utils/RandomKeys";
@@ -40,7 +40,7 @@ export default async function UserPage({params} : any) {
                                 <Typography>Friends   0</Typography>
                             </Stack>
                         </Stack>
-                        <Button endIcon={<GroupAddIcon/>}>Follow</Button>
+                        <Button endIcon={<AddReactionRoundedIcon/>}>Follow</Button>
                     </Stack>
                 </Stack>
             </Card>

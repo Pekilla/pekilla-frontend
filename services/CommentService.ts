@@ -1,6 +1,7 @@
 import { AxiosError } from "axios";
 import http from "../http";
 import { CommentDTO } from "@models/dto/CommentDTO";
+import { CommentViewDTO } from "@/models/dto/CommentViewDTO";
 
 const REQUEST_MAPPING: string = "/api/comments";
 
