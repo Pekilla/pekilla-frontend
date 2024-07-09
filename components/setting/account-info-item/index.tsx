@@ -1,12 +1,14 @@
 "use client";
 
-import { Button, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import { Button, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, CircularProgress } from "@mui/material";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import CheckIcon from '@mui/icons-material/Check';
 import ClearIcon from '@mui/icons-material/Clear';
 import UploadIcon from '@mui/icons-material/Upload';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { changeIcon } from "@/services/UserService";
+import { useRouter } from "next/navigation";
 
 const IMAGE1 = "https://media.discordapp.net/attachments/1108234697932283945/1259673387996020826/image.png?ex=668c89c3&is=668b3843&hm=3eb55a24e45b798831b8429299f56e3e6aae3c7b9c618e2ae08da0e009359ec5&=&format=webp&quality=lossless&width=843&height=623";
 const DFT_IMAGE = "https://media.discordapp.net/attachments/1108234697932283945/1259719103216619520/image.png?ex=668cb456&is=668b62d6&hm=f65bee9bda1e2efc9d0474b297a724eff919fd643c757af6bef11d0c8be8d3cd&=&format=webp&quality=lossless&width=258&height=192";
@@ -59,7 +61,7 @@ export function SettingSection(props: { title: string, children: any }) {
     );
 }
 
-export function AccountInfo(props: {email: string}) {
+export function AccountInfo(props: { email: string }) {
     return (
         <SettingSection title="Account info">
             <TableBody>
@@ -70,25 +72,44 @@ export function AccountInfo(props: {email: string}) {
     )
 }
 
-export function ProfileIcon(props: { src?: string }) {
-    const [image, setImage] = useState<{file?: File | null, path?: string}>();
+export function ProfileIcon(props: { src?: string, userId: number }) {
+    const router = useRouter();
+    const [image, setImage] = useState<{ file?: File | null, path?: string }>();
+    const [isLoading, setIsLoading] = useState(false);
+
+    useEffect(() => {
+        if (isLoading) setIsLoading(false);
+    }, [props.src])
 
     useEffect(() => {
         return () => {
-            if(image?.path) URL.revokeObjectURL(image.path);
+            if (image?.path) URL.revokeObjectURL(image.path);
         }
     }, []);
 
     const addImage = (file?: File | null) => {
-        if(file) {
-            setImage({file, path : URL.createObjectURL(file)});
+        if (file) {
+            setImage({ file, path: URL.createObjectURL(file) });
         }
     };
 
     const removeImage = () => {
-        if(image?.path) URL.revokeObjectURL(image.path);
+        if (image?.path) URL.revokeObjectURL(image.path);
         setImage({});
-    }
+    };
+
+    const deleteImageBackend = async () => {
+        await changeIcon(props.userId, true);
+        router.refresh();
+    };
+
+    const saveImageBackend = async () => {
+        await changeIcon(props.userId, false, image?.file!);
+        router.refresh();
+        setIsLoading(true);
+        removeImage();
+    };
+
 
     return (
         <TableRow>
@@ -101,13 +122,13 @@ export function ProfileIcon(props: { src?: string }) {
 
             <TableCell align="right">
                 <Stack direction="column" alignItems="end" spacing={2}>
-                    <Image src={image?.path ? image.path : (props.src ?? DFT_IMAGE)} alt="g" width="191" height="169" />
+                    <Image src={isLoading ? "/loadingAnim.svg" : image?.path ? image.path : (props.src ?? DFT_IMAGE)} alt="g" width="191" height="169" />
 
                     <Stack direction="row" spacing={1}>
                         {image?.file ?
                             (
                                 <>
-                                    <Button color="success" startIcon={<CheckIcon />}>Save</Button>
+                                    <Button color="success" startIcon={<CheckIcon />} onClick={saveImageBackend}>Save</Button>
                                     <Button color="error" onClick={removeImage} startIcon={<ClearIcon />}>Cancel</Button>
                                 </>
                             ) : (
@@ -123,7 +144,7 @@ export function ProfileIcon(props: { src?: string }) {
                                         />
                                     </Button>
 
-                                    <Button color="error" disabled={props.src == undefined} startIcon={<DeleteIcon />}>Delete</Button>
+                                    <Button color="error" disabled={props.src == undefined} startIcon={<DeleteIcon />} onClick={deleteImageBackend}>Delete</Button>
                                 </>
                             )
 
@@ -135,12 +156,12 @@ export function ProfileIcon(props: { src?: string }) {
     );
 }
 
-export function Profile(props: {username: string, icon?: string, banner?: string}) {
+export function Profile(props: { username: string, userId: number, icon?: string, banner?: string }) {
     return (
         <SettingSection title="Profile">
             <TableBody>
                 <AccountInfoItem label="Username" value={props.username} />
-                <ProfileIcon src={props.icon} />
+                <ProfileIcon src={props.icon} userId={props.userId} />
             </TableBody>
         </SettingSection>
     )
