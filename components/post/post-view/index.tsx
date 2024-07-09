@@ -11,6 +11,7 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { Avatar, Card, CardContent, CardHeader, Chip, IconButton, Menu, Link as MuiLink, Stack, Typography } from "@mui/material";
 import { deletePost } from '@services/PostService';
 import { createRandomKey } from "@utils/RandomKeys";
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from "react";
 
@@ -79,7 +80,7 @@ export default function PostView(props: PostViewProps) {
             <CardContent>
                 <Stack spacing={4}>
                     <Stack spacing={1}>
-                        <MuiLink href={`/posts/${props.id}`} underline='none'>
+                        <MuiLink component={Link} href={`/posts/${props.id}`} underline='none'>
                             <Typography fontSize={30} fontWeight={700}>
                                 {props.title}
                             </Typography>
