@@ -27,7 +27,7 @@ export default async function CategoryPage({params} : any) {
             <Container >
                 <Stack direction="row" alignItems="end"  my={5}>
                     <Avatar sx={avatarStyle}>
-                        
+                        {params.name.charAt(0)}
                     </Avatar>
                     <Typography ml={2} variant="h2" fontWeight={700}>
                         {params.name}
