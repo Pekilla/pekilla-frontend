@@ -23,7 +23,7 @@ export default function RootLayout({
 				<body className={grotesk.className}>
 					<nav style={{ padding: "15px" }}>
 						<Container>
-							<Stack direction="row" justifyContent="space-between" p={2} flexWrap="wrap">
+							<Stack direction="row" justifyContent="space-between" py={2} flexWrap="wrap">
 								<Stack spacing={2} direction="row">
 									<MuiLink href="/" component={Link}>Home</MuiLink>
 									<MuiLink href="/posts/search" component={Link}>Trend</MuiLink>

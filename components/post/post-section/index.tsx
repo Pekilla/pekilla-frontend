@@ -7,7 +7,6 @@ import { Button, Stack, Typography } from "@mui/material";
 import { createRandomKey } from "@utils/RandomKeys";
 import { useState } from "react";
 import AddIcon from '@mui/icons-material/Add';
-import SearchIcon from '@mui/icons-material/Search';
 
 export function PostSection(props: { postArray: PostViewDTO[] }) {
     const [popupState, setPopupState] = useState<{ open: boolean, postViewDto?: PostViewDTO }>({ open: false });
