@@ -10,8 +10,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { changeIcon } from "@/services/UserService";
 import { useRouter } from "next/navigation";
 
-const IMAGE1 = "https://media.discordapp.net/attachments/1108234697932283945/1259673387996020826/image.png?ex=668c89c3&is=668b3843&hm=3eb55a24e45b798831b8429299f56e3e6aae3c7b9c618e2ae08da0e009359ec5&=&format=webp&quality=lossless&width=843&height=623";
-const DFT_IMAGE = "https://media.discordapp.net/attachments/1108234697932283945/1259719103216619520/image.png?ex=668cb456&is=668b62d6&hm=f65bee9bda1e2efc9d0474b297a724eff919fd643c757af6bef11d0c8be8d3cd&=&format=webp&quality=lossless&width=258&height=192";
+const DFT_IMAGE = "https://media.discordapp.net/attachments/1260011315632537680/1260103346971349043/c19oeWJyaWQ.png?ex=668e1a31&is=668cc8b1&hm=ea987aa5592b4a0731cfb807e40b3e0b7a5a783bbeeacdebff72a45b1618695d&=&format=webp&quality=lossless&width=281&height=281";
 
 
 export function SettingLabel(props: { label: string }) {
