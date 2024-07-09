@@ -24,7 +24,7 @@ export const PekillaContext = createContext({
 
 export function PekillaContextProvider(props: { children: any }) {
     // It is a listener, when the browser change, the site change.
-    const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+    const prefersDarkMode = useMediaQuery('(prefers-color-scheme: light)');
 
     const theme = createTheme({
         typography: {
