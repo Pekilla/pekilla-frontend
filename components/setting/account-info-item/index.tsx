@@ -127,8 +127,8 @@ export function ProfileIcon(props: { src?: string, userId: number }) {
                         {image?.file ?
                             (
                                 <>
-                                    <Button color="success" startIcon={<CheckIcon />} onClick={saveImageBackend}>Save</Button>
                                     <Button color="error" onClick={removeImage} startIcon={<ClearIcon />}>Cancel</Button>
+                                    <Button color="success" onClick={saveImageBackend}>Update</Button>
                                 </>
                             ) : (
                                 <>
