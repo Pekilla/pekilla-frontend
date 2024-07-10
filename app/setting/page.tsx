@@ -1,4 +1,4 @@
-import { AccountInfo, Profile } from "@/components/setting/account-info-item";
+import { AccountInfo, Profile } from "@/components/setting";
 import data from "@/config.json";
 import { getUserSetting } from "@/services/UserService";
 import { Container, Stack } from "@mui/material";

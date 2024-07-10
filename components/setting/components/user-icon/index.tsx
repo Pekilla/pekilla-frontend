@@ -5,76 +5,15 @@ import { changeBanner, changeIcon } from "@/services/UserService";
 import ClearIcon from '@mui/icons-material/Clear';
 import DeleteIcon from '@mui/icons-material/Delete';
 import UploadIcon from '@mui/icons-material/Upload';
-import { Avatar, Button, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import { Avatar, Button, Stack, TableCell, TableRow, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-
-const DFT_IMAGE = "https://media.discordapp.net/attachments/1260011315632537680/1260103346971349043/c19oeWJyaWQ.png?ex=668e1a31&is=668cc8b1&hm=ea987aa5592b4a0731cfb807e40b3e0b7a5a783bbeeacdebff72a45b1618695d&=&format=webp&quality=lossless&width=281&height=281";
-
-
-export function SettingLabel(props: { label: string }) {
-    return (
-        <Typography variant="subtitle1">{props.label}</Typography>
-    );
-}
-
-export function AccountInfoItem(props: { label: string, value: string }) {
-    return (
-        <TableRow
-            // CSS of MUI, that make the last row without a bottom line.
-            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-        >
-            <TableCell>
-                <SettingLabel {...props} />
-            </TableCell>
-
-            <TableCell>
-                <Typography variant="subtitle1">{props.value}</Typography>
-            </TableCell>
-
-            <TableCell align="right">
-                <Button>Update {props.label}</Button>
-            </TableCell>
-        </TableRow>
-    );
-}
-
-export function SettingSection(props: { title: string, children: any }) {
-    return (
-        <TableContainer component={Paper}>
-            <Table>
-                <TableHead>
-                    <TableRow>
-                        <TableCell>
-                            <Typography variant="h5">{props.title}</Typography>
-                        </TableCell>
-
-                        <TableCell /><TableCell />
-                    </TableRow>
-                </TableHead>
-
-                {props.children}
-            </Table>
-        </TableContainer>
-    );
-}
-
-export function AccountInfo(props: { email: string, username: string }) {
-    return (
-        <SettingSection title="Account info">
-            <TableBody>
-                <AccountInfoItem label="Email" value={props.email} />
-                <AccountInfoItem label="Password" value="************" />
-                <AccountInfoItem label="Username" value={props.username} />
-            </TableBody>
-        </SettingSection>
-    )
-}
+import { SettingLabel } from "../setting-label";
 
 /**
  * Component to change the image of a user for the banner or the icon.
  */
-export function UserIcon(props: { userId: number, src?: string, isBanner?: boolean, username?: string }) {
+export default function UserIcon(props: { userId: number, src?: string, isBanner?: boolean, username?: string }) {
     const router = useRouter();
     const [image, setImage] = useState<{ file?: File | null, path?: string }>();
     const [isLoading, setIsLoading] = useState(false);
@@ -168,15 +107,4 @@ export function UserIcon(props: { userId: number, src?: string, isBanner?: boole
             </TableCell >
         </TableRow >
     );
-}
-
-export function Profile(props: { username: string, userId: number, icon?: string, banner?: string }) {
-    return (
-        <SettingSection title="Profile">
-            <TableBody>
-                <UserIcon src={props.icon} userId={props.userId} username={props.username} />
-                <UserIcon src={props.banner} userId={props.userId} username={props.username} isBanner />
-            </TableBody>
-        </SettingSection>
-    )
 }
