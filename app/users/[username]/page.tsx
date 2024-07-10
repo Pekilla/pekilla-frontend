@@ -5,8 +5,6 @@ import PostView from "@/components/post/post-view";
 import { createRandomKey } from "@/utils/RandomKeys";
 import { getUserInfoByUserName } from "@/services/UserService";
 
-
-
 export default async function UserPage({params} : any) {
 
     const userPosts = (await getAllPostsByUserName(params.username)).data;
@@ -14,7 +12,7 @@ export default async function UserPage({params} : any) {
 
     const bannerStyle = {
         height: 150,
-        backgroundImage: `url(${userInfo.banner})`,
+        backgroundImage: `url(${userInfo.banner ?? "https://images.placeholders.dev/?width=1055&height=100&text=%20&bgColor=%23757575&textColor=%757575"})`,
         backgroundPosition: "center",
         backgroundSize: "cover"
     }
