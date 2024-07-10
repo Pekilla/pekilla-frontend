@@ -98,8 +98,10 @@ export function ProfileIcon(props: { src?: string, userId: number }) {
     };
 
     const deleteImageBackend = async () => {
-        await changeIcon(props.userId, true);
-        router.refresh();
+        if(confirm("Are you sure to delete your icon.")) {
+            await changeIcon(props.userId, true);
+            router.refresh();
+        }
     };
 
     const saveImageBackend = async () => {
