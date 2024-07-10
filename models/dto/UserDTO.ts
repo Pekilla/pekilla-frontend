@@ -1,3 +1,5 @@
 export interface UserDTO {
-    username : string;
+    username: string;
+    icon?: string;
+    banner?: string;
 }

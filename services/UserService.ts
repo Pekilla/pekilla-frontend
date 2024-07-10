@@ -1,10 +1,15 @@
 import http from "@/http";
+import { UserDTO } from "@/models/dto/UserDTO";
 import { UserSettingDTO } from "@/models/dto/UserSettingDTO";
 
 const REQUEST_MAPPING = "/api/users"
 
 export function getUserSetting(userId: number) {
     return http.get<UserSettingDTO>(REQUEST_MAPPING + "/setting", {params : {userId}});
+}
+
+export const getUserInfoByUserName = (username : string) => {
+    return http.get<UserDTO>(`${REQUEST_MAPPING}/${username}`);
 }
 
 function getFormDataFromSettingAction(userId: number, multipartFile?: File, isDelete?: boolean) {

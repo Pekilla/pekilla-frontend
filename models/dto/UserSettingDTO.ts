@@ -1,6 +1,5 @@
-export interface UserSettingDTO {
+import { UserDTO } from "./UserDTO";
+
+export interface UserSettingDTO extends UserDTO {
     email: string;
-    username: string;
-    icon?: string;
-    banner?: string;
 }
