@@ -8,7 +8,7 @@ export default async function Setting() {
 
     return (
         <Container component={Stack} spacing={8}>
-            <AccountInfo email={userSetting.email} />
+            <AccountInfo email={userSetting.email} username={userSetting.username} />
 
             <Profile {...userSetting} userId={data.id} />
         </Container>

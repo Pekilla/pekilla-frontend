@@ -1,14 +1,13 @@
 "use client";
 
-import { Button, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, CircularProgress } from "@mui/material";
-import Image from "next/image";
-import { useEffect, useState } from "react";
-import CheckIcon from '@mui/icons-material/Check';
+import { avatarStyle } from "@/app/categories/[name]/page";
+import { changeBanner, changeIcon } from "@/services/UserService";
 import ClearIcon from '@mui/icons-material/Clear';
-import UploadIcon from '@mui/icons-material/Upload';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { changeIcon } from "@/services/UserService";
+import UploadIcon from '@mui/icons-material/Upload';
+import { Avatar, Button, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const DFT_IMAGE = "https://media.discordapp.net/attachments/1260011315632537680/1260103346971349043/c19oeWJyaWQ.png?ex=668e1a31&is=668cc8b1&hm=ea987aa5592b4a0731cfb807e40b3e0b7a5a783bbeeacdebff72a45b1618695d&=&format=webp&quality=lossless&width=281&height=281";
 
@@ -60,18 +59,22 @@ export function SettingSection(props: { title: string, children: any }) {
     );
 }
 
-export function AccountInfo(props: { email: string }) {
+export function AccountInfo(props: { email: string, username: string }) {
     return (
         <SettingSection title="Account info">
             <TableBody>
                 <AccountInfoItem label="Email" value={props.email} />
                 <AccountInfoItem label="Password" value="************" />
+                <AccountInfoItem label="Username" value={props.username} />
             </TableBody>
         </SettingSection>
     )
 }
 
-export function ProfileIcon(props: { src?: string, userId: number }) {
+/**
+ * Component to change the image of a user for the banner or the icon.
+ */
+export function UserIcon(props: { userId: number, src?: string, isBanner?: boolean, username?: string }) {
     const router = useRouter();
     const [image, setImage] = useState<{ file?: File | null, path?: string }>();
     const [isLoading, setIsLoading] = useState(false);
@@ -98,32 +101,43 @@ export function ProfileIcon(props: { src?: string, userId: number }) {
     };
 
     const deleteImageBackend = async () => {
-        if(confirm("Are you sure to delete your icon.")) {
-            await changeIcon(props.userId, true);
+        if (confirm("Are you sure to delete your icon.")) {
+            if (props.isBanner) {
+                await changeBanner(props.userId, true);
+            } else {
+                await changeIcon(props.userId, true);
+            }
+
             router.refresh();
         }
     };
 
     const saveImageBackend = async () => {
-        await changeIcon(props.userId, false, image?.file!);
+        if (props.isBanner) {
+            await changeBanner(props.userId, false, image?.file!);
+        } else {
+            await changeIcon(props.userId, false, image?.file!);
+        }
+
         router.refresh();
         setIsLoading(true);
         removeImage();
     };
 
+    const imageSrc: string | undefined = isLoading ? "/loadingAnim.svg" : image?.path ? image.path : props.src;
 
     return (
         <TableRow>
             <TableCell>
-                <SettingLabel label="Profile icon" />
-                <Typography variant="body2">An icon that everyone can see.</Typography>
+                <SettingLabel label={props.isBanner ? "Banner icon" : "Profile icon"} />
+                <Typography variant="body2">{props.isBanner ? "Your profile banner." : "An icon that everyone can see."}</Typography>
             </TableCell>
 
             <TableCell />
 
             <TableCell align="right">
                 <Stack direction="column" alignItems="end" spacing={2}>
-                    <Image src={isLoading ? "/loadingAnim.svg" : image?.path ? image.path : (props.src ?? DFT_IMAGE)} alt="g" width="191" height="169" />
+                    <Avatar sx={props.isBanner ? {width: 550, height: 150, borderRadius: 2} : avatarStyle} src={imageSrc}>{imageSrc ? null : props.username?.at(0)}</Avatar>
 
                     <Stack direction="row" spacing={1}>
                         {image?.file ?
@@ -148,7 +162,6 @@ export function ProfileIcon(props: { src?: string, userId: number }) {
                                     <Button color="error" disabled={props.src == undefined} startIcon={<DeleteIcon />} onClick={deleteImageBackend}>Delete</Button>
                                 </>
                             )
-
                         }
                     </Stack>
                 </Stack>
@@ -161,8 +174,8 @@ export function Profile(props: { username: string, userId: number, icon?: string
     return (
         <SettingSection title="Profile">
             <TableBody>
-                <AccountInfoItem label="Username" value={props.username} />
-                <ProfileIcon src={props.icon} userId={props.userId} />
+                <UserIcon src={props.icon} userId={props.userId} username={props.username} />
+                <UserIcon src={props.banner} userId={props.userId} username={props.username} isBanner />
             </TableBody>
         </SettingSection>
     )
