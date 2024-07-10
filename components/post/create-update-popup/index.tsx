@@ -33,97 +33,100 @@ export default function CreatePopup(props: CreatePopupProps) {
 
     return (
         <>
-            <Dialog
-                open={props.open}
-                onClose={props.reset}
-                maxWidth={false}
-                fullScreen
-                title="Update"
-            >
-                <DialogTitle variant="h5" sx={{ fontWeight: "bold" }}>
-                    {isUpdate ? "Update" : "Create"} post
-                </DialogTitle>
-                <Divider />
-
-                <DialogContent>
-                    <Formik
-                        initialValues={initialValues}
-                        validationSchema={
-                            object(
-                                {
-                                    title: string()
-                                        .required("Title is required.")
-                                        .max(80, "Title cannot be more than 80 characters.")
-                                        .min(10, "Title cannot be less than 10 characters.")
-                                    ,
-                                    description: string()
-                                        .required("Description is required.")
-                                        .max(5000, "Description cannot be more than 80 characters.")
-                                        .min(10, "Description cannot be less than 10 characters.")
-                                    ,
-                                    category: string()
-                                        .required("Category is required."),
-                                    tags: array()
-                                        .min(3, "Tags cannot be less than 3.")
-                                }
-                            )
+            <Formik
+                initialValues={initialValues}
+                validationSchema={
+                    object(
+                        {
+                            title: string()
+                                .required("Title is required.")
+                                .max(80, "Title cannot be more than 80 characters.")
+                                .min(10, "Title cannot be less than 10 characters.")
+                            ,
+                            description: string()
+                                .required("Description is required.")
+                                .max(5000, "Description cannot be more than 80 characters.")
+                                .min(10, "Description cannot be less than 10 characters.")
+                            ,
+                            category: string()
+                                .required("Category is required."),
+                            tags: array()
+                                .min(3, "Tags cannot be less than 3.")
                         }
-                        onSubmit={async (values) => {
-                            // Add userId
-                            (values as any)["userId"] = userId;
+                    )
+                }
+                onSubmit={async (values) => {
+                    // Add userId
+                    (values as any)["userId"] = userId;
 
-                            // Create
-                            if (!isUpdate) {
-                                await createPost(values as PostDTO);
-                                router.refresh();
-                            }
+                    // Create
+                    if (!isUpdate) {
+                        await createPost(values as PostDTO);
+                        router.refresh();
+                    }
 
-                            // Update
-                            else if (!equals(initialValues, values)) {
-                                await updatePost(values as PostDTO);
-                                router.refresh();
-                            }
+                    // Update
+                    else if (!equals(initialValues, values)) {
+                        await updatePost(values as PostDTO);
+                        router.refresh();
+                    }
 
-                            props.reset();
-                        }}
+                    props.reset();
+                }}
+            >
+                {({ isValid }) => (
+
+                    <Dialog
+                        open={props.open}
+                        onClose={props.reset}
+                        maxWidth={false}
+                        fullScreen
+                        title="Update"
                     >
-                        <Form id="create-update-post">
-                            <Stack spacing={3}>
-                                <Field
-                                    name="title"
-                                    label="Title"
-                                    component={CreateInput}
-                                />
+                        <DialogTitle variant="h5" sx={{ fontWeight: "bold" }}>
+                            {isUpdate ? "Update" : "Create"} post
+                        </DialogTitle>
+                        <Divider />
 
-                                <Field
-                                    name="description"
-                                    label="Description"
-                                    component={CreateInput}
-                                    isTextArea
-                                />
+                        <DialogContent>
+                            <Form id="create-update-post">
+                                <Stack spacing={3}>
+                                    <Field
+                                        name="title"
+                                        label="Title"
+                                        component={CreateInput}
+                                    />
 
-                                {/* Hide Category if it is update */}
-                                {isUpdate ?
-                                    (<></>) : (
-                                        <Field
-                                            name="category"
-                                            component={CategorySelector}
-                                        />
-                                    )
-                                }
+                                    <Field
+                                        name="description"
+                                        label="Description"
+                                        component={CreateInput}
+                                        isTextArea
+                                    />
 
-                                <Field name="tags" component={Tags} />
-                            </Stack>
-                        </Form>
-                    </Formik>
-                </DialogContent>
+                                    {/* Hide Category if it is update */}
+                                    {isUpdate ?
+                                        (<></>) : (
+                                            <Field
+                                                name="category"
+                                                component={CategorySelector}
+                                            />
+                                        )
+                                    }
 
-                <Divider />
-                <DialogActions>
-                    <Button variant="text" onClick={props.reset}>Cancel</Button>
-                    <Button type="submit" form="create-update-post">{isUpdate ? "Update" : "Create"}</Button>
-                </DialogActions>
-            </Dialog>
+                                    <Field name="tags" component={Tags} />
+                                </Stack>
+                            </Form>
+                        </DialogContent>
+
+                        <Divider />
+                        <DialogActions>
+                            <Button variant="text" onClick={props.reset}>Cancel</Button>
+                            <Button disabled={!isValid} type="submit" form="create-update-post">{isUpdate ? "Update" : "Create"}</Button>
+                        </DialogActions>
+                    </Dialog>
+                )}
+            </Formik>
         </>
     );
 }
