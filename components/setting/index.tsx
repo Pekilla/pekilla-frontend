@@ -25,10 +25,10 @@ export function SettingSection(props: { title: string, children: any }) {
     );
 }
 
-export function AccountInfo(props: { email: string, username: string }) {
+export function AccountInfo(props: { email: string, username: string, userId: number }) {
     return (
         <>
-            <AccountInfoDialog open onClose={() => console.log("")} />
+            <AccountInfoDialog userId={props.userId} open onClose={() => console.log("")} />
 
             <SettingSection title="Account info">
                 <TableBody>

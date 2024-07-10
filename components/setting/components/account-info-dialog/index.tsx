@@ -1,14 +1,17 @@
 "use client";
 
 import { CreateInput } from "@/components/post/create-update-popup/components/create-input";
+import { isPasswordValid } from "@/services/UserService";
 import { passwordSchema } from "@/utils/ErrorSchema";
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Stack } from "@mui/material";
 import { Field, Form, Formik } from "formik";
+import { resolve } from "path";
 import { object, ref, string } from "yup";
 
 type AccountInfoDialogProps = {
     open: boolean;
     onClose(): void;
+    userId: number;
 }
 
 export default function AccountInfoDialog(props: AccountInfoDialogProps) {
@@ -22,7 +25,7 @@ export default function AccountInfoDialog(props: AccountInfoDialogProps) {
             <Divider />
 
             <DialogContent>
-                <PasswordForm />
+                <PasswordForm userId={props.userId} />
             </DialogContent>
 
             <Divider />
@@ -65,9 +68,7 @@ function EmailForm() {
     )
 }
 
-function PasswordForm() {
-    const originalPassword = "12345";
-
+function PasswordForm(props: {userId: number}) {
     return (
         <Formik
             initialValues={{
@@ -79,12 +80,16 @@ function PasswordForm() {
                 currentPassword: string()
                     .required("CurrentPassword is required.")
                     .max(255, "CurrentPassword should be less than 255 characters.")
-                    .equals([originalPassword], "CurrentPassword is invalid."),
+                    .test("passwordVerif", "Current password is invalid.", (password) => {
+                        return new Promise(async (resolve) => {
+                            resolve((await isPasswordValid(props.userId, password)).data)
+                        });
+                    }),
                 password: passwordSchema("New password"),
                 confirm: passwordSchema("Confirm password").equals([ref("password")], "Confirm password should equals new password"),
             })}
             onSubmit={(values) => {
-
+                // Si l'ancien password est equals on nouveau, on fait pas la requête.
             }}
         >
             <Form>
