@@ -8,7 +8,7 @@ import UploadIcon from '@mui/icons-material/Upload';
 import { Avatar, Button, Stack, TableCell, TableRow, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { SettingLabel } from "../setting-label";
+import SettingLabel from "../setting-label";
 
 /**
  * Component to change the image of a user for the banner or the icon.
@@ -104,7 +104,7 @@ export default function UserIcon(props: { userId: number, src?: string, isBanner
                         }
                     </Stack>
                 </Stack>
-            </TableCell >
-        </TableRow >
+            </TableCell>
+        </TableRow>
     );
 }

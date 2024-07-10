@@ -1,6 +1,9 @@
+"use client";
+
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
-import { AccountInfoItem } from "./components/account-info-item";
+import AccountInfoItem from "./components/account-info-item";
 import UserIcon from "./components/user-icon";
+import AccountInfoDialog from "./components/account-info-dialog";
 
 export function SettingSection(props: { title: string, children: any }) {
     return (
@@ -24,13 +27,17 @@ export function SettingSection(props: { title: string, children: any }) {
 
 export function AccountInfo(props: { email: string, username: string }) {
     return (
-        <SettingSection title="Account info">
-            <TableBody>
-                <AccountInfoItem label="Email" value={props.email} />
-                <AccountInfoItem label="Password" value="************" />
-                <AccountInfoItem label="Username" value={props.username} />
-            </TableBody>
-        </SettingSection>
+        <>
+            <AccountInfoDialog open onClose={() => console.log("")} />
+
+            <SettingSection title="Account info">
+                <TableBody>
+                    <AccountInfoItem label="Email" value={props.email} />
+                    <AccountInfoItem label="Password" value="************" />
+                    <AccountInfoItem label="Username" value={props.username} />
+                </TableBody>
+            </SettingSection>
+        </>
     );
 }
 

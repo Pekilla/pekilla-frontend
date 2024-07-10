@@ -1,9 +1,9 @@
 "use client";
 
 import { Button, TableCell, TableRow, Typography } from "@mui/material";
-import { SettingLabel } from "../setting-label";
+import SettingLabel from "../setting-label";
 
-export function AccountInfoItem(props: { label: string, value: string }) {
+export default function AccountInfoItem(props: { label: string, value: string }) {
     return (
         <TableRow
             // CSS of MUI, that make the last row without a bottom line.
