@@ -5,46 +5,54 @@ import { changeUsername, isPasswordValid } from "@/services/UserService";
 import { notEmptyWithMaxAndMinLength, passwordSchema } from "@/utils/ErrorSchema";
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Stack } from "@mui/material";
 import { AxiosError } from "axios";
-import { Field, Form, Formik } from "formik";
-import { useState } from "react";
-import { object, ref, string } from "yup";
+import { Field, Form, Formik, FormikHelpers, FormikValues } from "formik";
+import { ReactNode, useState } from "react";
+import { object, ObjectSchema, ref, string } from "yup";
 
 type AccountInfoDialogProps = {
-    open: boolean;
-    onClose(): void;
-    userId: number;
-    username: string;
-}
+    label: string;
+    onSubmit(values: any, formikHelpers: FormikHelpers<FormikValues>): void | Promise<any>;
+    initialValues: any;
+    validationSchema: ObjectSchema<any, any>;
+    children: ReactNode;
+};
 
-export default function AccountInfoDialog(props: AccountInfoDialogProps) {
+export function AccountInfoDialog(props: AccountInfoDialogProps) {
     return (
-        <Dialog
-            open={props.open}
-            onClose={props.onClose}
-            fullWidth
+        <Formik
+            initialValues={props.initialValues}
+            validationSchema={props.validationSchema}
+            onSubmit={props.onSubmit}
         >
-            <DialogTitle>Update email</DialogTitle>
-            <Divider />
+            {({ isValid }) => (
+                <Dialog open={true} onClose={() => console.log("closed")} fullWidth>
+                    <DialogTitle>Update {props.label}</DialogTitle>
+                    <Divider />
 
-            <DialogContent>
-            </DialogContent>
+                    <DialogContent>
+                        <Form id="dialog-form">
+                            <Stack spacing={2}>
+                                {props.children}
+                            </Stack>
+                        </Form>
+                    </DialogContent>
 
-            <Divider />
-            <DialogActions>
-                <Button variant="text" onClick={props.onClose}>Cancel</Button>
-                <Button type="submit" form="dialog-form">Update</Button>
-            </DialogActions>
-        </Dialog>
+                    <Divider />
+                    <DialogActions>
+                        <Button variant="text">Cancel</Button>
+                        <Button type="submit" form="dialog-form" disabled={!isValid}>Update</Button>
+                    </DialogActions>
+                </Dialog>
+            )}
+        </Formik>
     );
 }
 
-function EmailForm() {
+export function EmailDialog() {
     return (
-        <Formik
-            initialValues={{
-                email: "",
-                confirmEmail: ""
-            }}
+        <AccountInfoDialog
+            label="Email"
+            initialValues={{ email: "", confirmEmail: "" }}
             validationSchema={object({
                 email: string()
                     .required("New email is required")
@@ -58,19 +66,16 @@ function EmailForm() {
 
             }}
         >
-            <Form>
-                <Stack spacing={2}>
-                    <Field name="email" component={CreateInput} label="New email" />
-                    <Field name="confirmEmail" component={CreateInput} label="Confirm new email" />
-                </Stack>
-            </Form>
-        </Formik>
+            <Field name="email" component={CreateInput} label="New email" />
+            <Field name="confirmEmail" component={CreateInput} label="Confirm new email" />
+        </AccountInfoDialog>
     )
 }
 
-function PasswordForm(props: { userId: number }) {
+export function PasswordDialog(props: { userId: number }) {
     return (
-        <Formik
+        <AccountInfoDialog
+            label="Password"
             initialValues={{
                 currentPassword: "",
                 password: "",
@@ -92,14 +97,10 @@ function PasswordForm(props: { userId: number }) {
                 // Si l'ancien password est equals on nouveau, on fait pas la requête.
             }}
         >
-            <Form>
-                <Stack spacing={2}>
-                    <Field name="currentPassword" component={CreateInput} label="Current Password" type="password" />
-                    <Field name="password" component={CreateInput} label="New password" type="password" />
-                    <Field name="confirm" component={CreateInput} label="Confirm password" type="password" />
-                </Stack>
-            </Form>
-        </Formik>
+            <Field name="currentPassword" component={CreateInput} label="Current Password" type="password" />
+            <Field name="password" component={CreateInput} label="New password" type="password" />
+            <Field name="confirm" component={CreateInput} label="Confirm password" type="password" />
+        </AccountInfoDialog>
     )
 }
 
@@ -109,10 +110,9 @@ export function UsernameDialog(props: { userId: number, username: string }) {
     const [existingUsername, setExistingUsername] = useState<string[]>([]);
 
     return (
-        <Formik
-            initialValues={{
-                username: ""
-            }}
+        <AccountInfoDialog
+            label="Username"
+            initialValues={{ username: "" }}
             validationSchema={object({
                 username: notEmptyWithMaxAndMinLength(30, 2, "Username")
                     .test("currentUsername", "Username is the same as the current one.", (value) => (
@@ -130,28 +130,8 @@ export function UsernameDialog(props: { userId: number, username: string }) {
                         }
                     });
             }}
-            validateOnChange={false}
         >
-            {({ isValid }) => (
-                <Dialog open={true} onClose={() => console.log("closed")} fullWidth>
-                    <DialogTitle>Update username</DialogTitle>
-                    <Divider />
-
-                    <DialogContent>
-                        <Form id="dialog-form">
-                            <Stack spacing={2}>
-                                <Field name="username" component={CreateInput} label="New username" />
-                            </Stack>
-                        </Form>
-                    </DialogContent>
-
-                    <Divider />
-                    <DialogActions>
-                        <Button variant="text">Cancel</Button>
-                        <Button type="submit" form="dialog-form" disabled={!isValid}>Update</Button>
-                    </DialogActions>
-                </Dialog>
-            )}
-        </Formik>
+            <Field name="username" component={CreateInput} label="New username" />
+        </AccountInfoDialog>
     )
 }

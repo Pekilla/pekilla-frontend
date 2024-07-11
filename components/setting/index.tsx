@@ -1,9 +1,9 @@
 "use client";
 
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import { UsernameDialog } from "./components/account-info-dialog";
 import AccountInfoItem from "./components/account-info-item";
 import UserIcon from "./components/user-icon";
-import AccountInfoDialog, { UsernameDialog } from "./components/account-info-dialog";
 
 export function SettingSection(props: { title: string, children: any }) {
     return (
