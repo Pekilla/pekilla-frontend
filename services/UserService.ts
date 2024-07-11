@@ -32,3 +32,7 @@ export function changeIcon(userId: number, isDelete?: boolean, multipartFile?: F
 export function isPasswordValid(userId: number, password: string) {
     return http.get(REQUEST_MAPPING + `/${userId}/verify-password`, { params: { password } });
 }
+
+export function changeUsername(userId: number, username: string) {
+    return http.patch(REQUEST_MAPPING + `/${userId}/username/${username}`);
+}

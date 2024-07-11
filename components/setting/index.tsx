@@ -3,7 +3,7 @@
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import AccountInfoItem from "./components/account-info-item";
 import UserIcon from "./components/user-icon";
-import AccountInfoDialog from "./components/account-info-dialog";
+import AccountInfoDialog, { UsernameDialog } from "./components/account-info-dialog";
 
 export function SettingSection(props: { title: string, children: any }) {
     return (
@@ -28,7 +28,7 @@ export function SettingSection(props: { title: string, children: any }) {
 export function AccountInfo(props: { email: string, username: string, userId: number }) {
     return (
         <>
-            {/* <AccountInfoDialog userId={props.userId} open onClose={() => console.log("")} /> */}
+            <UsernameDialog userId={props.userId} username={props.username} />
 
             <SettingSection title="Account info">
                 <TableBody>
