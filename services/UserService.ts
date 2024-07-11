@@ -22,11 +22,11 @@ function getFormDataFromSettingAction(userId: number, multipartFile?: File, isDe
 }
 
 export function changeBanner(userId: number, isDelete?: boolean, multipartFile?: File) {
-    return http.post(REQUEST_MAPPING + "/banner", getFormDataFromSettingAction(userId, multipartFile, isDelete));
+    return http.patch(REQUEST_MAPPING + "/banner", getFormDataFromSettingAction(userId, multipartFile, isDelete));
 }
 
 export function changeIcon(userId: number, isDelete?: boolean, multipartFile?: File) {
-    return http.post(REQUEST_MAPPING + "/icon", getFormDataFromSettingAction(userId, multipartFile, isDelete));
+    return http.patch(REQUEST_MAPPING + "/icon", getFormDataFromSettingAction(userId, multipartFile, isDelete));
 }
 
 export function isPasswordValid(userId: number, password: string) {
