@@ -2,21 +2,21 @@
 
 import { equals, filterFunc } from "@/utils/utils";
 import CategorySelector from "@components/shared/selector/CategorySelector";
-import { Button, Stack, Typography } from "@mui/material";
-import { Field, Form, Formik, useFormikContext } from "formik";
-import { ReadonlyURLSearchParams, usePathname, useRouter, useSearchParams } from "next/navigation";
+import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
+import ClearIcon from '@mui/icons-material/Clear';
+import { Button, Stack } from "@mui/material";
+import { Field, Form, FormikProvider, useFormik } from "formik";
+import { useRouter, useSearchParams } from "next/navigation";
 import qs from "qs";
 import { useEffect, useState } from "react";
 import { CreateInput } from "../create-update-popup/components/create-input";
 import { Tags } from "../create-update-popup/components/tags";
-import ClearIcon from '@mui/icons-material/Clear';
-import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 
 const searchParamDefaults = {
-    content : "",
-    category : "",
-    sortedBy : "",
-    tags : []
+    content: "",
+    category: "",
+    sortedBy: "",
+    tags: []
 };
 
 function getParams(params: URLSearchParams) {
@@ -30,64 +30,55 @@ function getParams(params: URLSearchParams) {
 
 export default function SearchForm() {
     const params = useSearchParams();
-
-    return (
-        <Formik
-            initialValues={getParams(params)}
-            onSubmit={(values) => {
-                console.log(values);
-            }}
-        >
-            <Form>
-                <SearchFilters params={params} />
-            </Form>
-        </Formik>
-    );
-}
-
-function SearchFilters(props: { params: ReadonlyURLSearchParams }) {
     const router = useRouter();
-    const formikContext = useFormikContext<any>();
-    const [lastValues, setLastValues] = useState(formikContext.values);
 
-    useEffect(() => {
-        formikContext.setValues(getParams(new URLSearchParams(props.params)));
-    }, [props.params]);
+    const formik = useFormik({
+        initialValues: getParams(params),
+        onSubmit: (values) => {
+            let query = qs.stringify(formik.values, { arrayFormat: "repeat", filter: filterFunc });
 
+            if (query.length == 0) router.push("?content=");
+            else router.push(`?${query}`);
+
+            setLastValues(formik.values);
+        }
+    });
+
+    const [lastValues, setLastValues] = useState(formik.values);
+    
     const reset = () => {
         router.push("?content=");
         setLastValues(searchParamDefaults);
-        formikContext.setValues(searchParamDefaults);
+        formik.setValues(searchParamDefaults);
     };
 
-    const submit = () => {
-        let query = qs.stringify(formikContext.values, { arrayFormat: "repeat", filter : filterFunc});
-        
-        if(query.length == 0) router.push("?content=");
-        else router.push(`?${query}`);
-
-        setLastValues(formikContext.values);
-    };
+    useEffect(() => {
+        formik.setValues(getParams(new URLSearchParams(params)));
+    }, [params]);
 
     return (
-        <Stack spacing={2}>
-            <h1>
-                Filters 
-                <AutoAwesomeIcon color="primary"/>
-            </h1>
+        <FormikProvider value={formik}>
+            <Form>
+                <Stack spacing={2}>
+                    <h1>
+                        Filters
+                        <AutoAwesomeIcon color="primary" />
+                    </h1>
 
-            <Stack direction="row" spacing={2}>
-                <Field name="content" component={CreateInput} label="Content" />
-                <Field name="category" component={CategorySelector} isFilter />
-                {/* <Field name="sortedBy" component={SortedSelector} /> */}
-            </Stack>
+                    <Stack direction="row" spacing={2}>
+                        <Field name="content" component={CreateInput} label="Content" />
+                        <Field name="category" component={CategorySelector} isFilter />
+                        {/* <Field name="sortedBy" component={SortedSelector} /> */}
+                    </Stack>
 
-            <Field name="tags" component={Tags} label="Tags" />
+                    <Field name="tags" component={Tags} label="Tags" />
 
-            <Stack direction="row" justifyContent="space-between">
-                <Button disabled={(props.params.size == 0 || props.params.get("content") == "") && equals(searchParamDefaults, formikContext.values)} onClick={() => { reset(); }} endIcon={<ClearIcon/>}>Clear filter</Button>
-                <Button disabled={equals(lastValues, formikContext.values) || (equals(searchParamDefaults, formikContext.values) && formikContext.values.category == lastValues.category)} onClick={submit}>Apply filter</Button>
-            </Stack>
-        </Stack>
+                    <Stack direction="row" justifyContent="space-between">
+                        <Button disabled={(params.size == 0 || params.get("content") == "") && equals(searchParamDefaults, formik.values)} onClick={() => { reset(); }} endIcon={<ClearIcon />}>Clear filter</Button>
+                        <Button type="submit" disabled={equals(lastValues, formik.values) || (equals(searchParamDefaults, formik.values) && formik.values.category == lastValues.category)}>Apply filter</Button>
+                    </Stack>
+                </Stack>
+            </Form>
+        </FormikProvider>
     );
 }
