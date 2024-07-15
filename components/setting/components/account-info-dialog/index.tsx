@@ -1,13 +1,19 @@
 "use client";
 
 import { CreateInput } from "@/components/post/create-update-popup/components/create-input";
-import { changeUsername, isPasswordValid } from "@/services/UserService";
+import { changeEmail, changePassword, changeUsername, isPasswordValid } from "@/services/UserService";
 import { notEmptyWithMaxAndMinLength, passwordSchema } from "@/utils/ErrorSchema";
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Stack } from "@mui/material";
 import { AxiosError } from "axios";
 import { Field, Form, Formik, FormikHelpers, FormikValues } from "formik";
+import { useRouter } from "next/navigation";
 import { ReactNode, useState } from "react";
 import { object, ObjectSchema, ref, string } from "yup";
+
+type DialogProps = {
+    onClose(): void;
+    open: boolean;
+}
 
 type AccountInfoDialogProps = {
     label: string;
@@ -15,7 +21,7 @@ type AccountInfoDialogProps = {
     initialValues: any;
     validationSchema: ObjectSchema<any, any>;
     children: ReactNode;
-};
+} & DialogProps;
 
 export function AccountInfoDialog(props: AccountInfoDialogProps) {
     return (
@@ -24,8 +30,8 @@ export function AccountInfoDialog(props: AccountInfoDialogProps) {
             validationSchema={props.validationSchema}
             onSubmit={props.onSubmit}
         >
-            {({ isValid }) => (
-                <Dialog open={true} onClose={() => console.log("closed")} fullWidth>
+            {({ isValid, isSubmitting }) => (
+                <Dialog open={props.open} onClose={props.onClose} fullWidth>
                     <DialogTitle>Update {props.label}</DialogTitle>
                     <Divider />
 
@@ -39,8 +45,8 @@ export function AccountInfoDialog(props: AccountInfoDialogProps) {
 
                     <Divider />
                     <DialogActions>
-                        <Button variant="text">Cancel</Button>
-                        <Button type="submit" form="dialog-form" disabled={!isValid}>Update</Button>
+                        <Button variant="text" onClick={props.onClose}>Cancel</Button>
+                        <Button type="submit" form="dialog-form" disabled={!isValid || isSubmitting}>Update</Button>
                     </DialogActions>
                 </Dialog>
             )}
@@ -48,9 +54,12 @@ export function AccountInfoDialog(props: AccountInfoDialogProps) {
     );
 }
 
-export function EmailDialog() {
+export function EmailDialog(props: { userId: number, email: string } & DialogProps) {
+    const router = useRouter();
+
     return (
         <AccountInfoDialog
+            {...props}
             label="Email"
             initialValues={{ email: "", confirmEmail: "" }}
             validationSchema={object({
@@ -62,8 +71,13 @@ export function EmailDialog() {
                     .email("Invalid email format.")
                     .equals([ref("email")], "Confirm email should equals email")
             })}
-            onSubmit={(values) => {
+            onSubmit={async (values) => {
+                if (props.email != values.email) {
+                    await changeEmail(props.userId, values.email);
+                }
 
+                props.onClose();
+                router.refresh();
             }}
         >
             <Field name="email" component={CreateInput} label="New email" />
@@ -72,9 +86,12 @@ export function EmailDialog() {
     )
 }
 
-export function PasswordDialog(props: { userId: number }) {
+export function PasswordDialog(props: { userId: number } & DialogProps) {
+    const router = useRouter();
+
     return (
         <AccountInfoDialog
+            {...props}
             label="Password"
             initialValues={{
                 currentPassword: "",
@@ -93,8 +110,12 @@ export function PasswordDialog(props: { userId: number }) {
                 password: passwordSchema("New password"),
                 confirm: passwordSchema("Confirm password").equals([ref("password")], "Confirm password should equals new password"),
             })}
-            onSubmit={(values) => {
-                // Si l'ancien password est equals on nouveau, on fait pas la requête.
+            onSubmit={async (values) => {
+                // Si l'ancien password est equals au nouveau, on fait pas la requête.
+                await changePassword(props.userId, values.password);
+
+                props.onClose();
+                router.refresh();
             }}
         >
             <Field name="currentPassword" component={CreateInput} label="Current Password" type="password" />
@@ -106,11 +127,13 @@ export function PasswordDialog(props: { userId: number }) {
 
 const USERNAME_ALREADY_EXISTS = "Username already exists";
 
-export function UsernameDialog(props: { userId: number, username: string }) {
+export function UsernameDialog(props: { userId: number, username: string } & DialogProps) {
     const [existingUsername, setExistingUsername] = useState<string[]>([]);
+    const router = useRouter();
 
     return (
         <AccountInfoDialog
+            {...props}
             label="Username"
             initialValues={{ username: "" }}
             validationSchema={object({
@@ -121,17 +144,51 @@ export function UsernameDialog(props: { userId: number, username: string }) {
                     .notOneOf(existingUsername, USERNAME_ALREADY_EXISTS),
             })}
             onSubmit={async (values, formikHelpers) => {
-                changeUsername(props.userId, values.username)
-                    .then(res => console.log(res.status))
-                    .catch((error: AxiosError) => {
-                        if (error.response?.status == 409) {
-                            setExistingUsername([...existingUsername, values.username]);
-                            formikHelpers.setFieldError("username", USERNAME_ALREADY_EXISTS);
-                        }
-                    });
+                if (props.username != values.username) {
+                    await changeUsername(props.userId, values.username)
+                        .then(() => {
+                            props.onClose();
+                            router.refresh();
+                        })
+                        .catch((error: AxiosError) => {
+                            if (error.response?.status == 409) {
+                                setExistingUsername([...existingUsername, values.username]);
+                                formikHelpers.setFieldError("username", USERNAME_ALREADY_EXISTS);
+                            }
+                        });
+                } else {
+                    router.refresh();
+                    props.onClose();
+                }
             }}
         >
             <Field name="username" component={CreateInput} label="New username" />
         </AccountInfoDialog>
     )
+}
+
+export type SettingDialog = "EMAIL" | "USERNAME" | "PASSWORD";
+
+export function CurrentSettingDialog(props: { onClose(): void, userId: number, username: string, email: string, currentDialog?: SettingDialog }) {
+    return (
+        <>
+            {props.currentDialog ?
+                (
+                    props.currentDialog == "USERNAME" ?
+                        (
+                            <UsernameDialog open={true} {...props} />
+                        ) : (
+                            props.currentDialog == "EMAIL" ?
+                                (
+                                    <EmailDialog open={true} {...props} />
+                                ) : (
+                                    <PasswordDialog open={true} {...props} />
+                                )
+                        )
+                ) : (
+                    <></>
+                )
+            }
+        </>
+    );
 }

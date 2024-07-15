@@ -34,5 +34,13 @@ export function isPasswordValid(userId: number, password: string) {
 }
 
 export function changeUsername(userId: number, username: string) {
-    return http.patch(REQUEST_MAPPING + `/${userId}/username/${username}`);
+    return http.patch(REQUEST_MAPPING + `/${userId}/username`, undefined, { params: { username } });
+}
+
+export function changePassword(userId: number, password: string) {
+    return http.patch(`${REQUEST_MAPPING}/${userId}/password`, undefined, { params: { password } });
+}
+
+export function changeEmail(userId: number, email: string) {
+    return http.patch(`${REQUEST_MAPPING}/${userId}/email`, undefined, { params: { email } });
 }

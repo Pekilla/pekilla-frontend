@@ -3,7 +3,7 @@
 import { Button, TableCell, TableRow, Typography } from "@mui/material";
 import SettingLabel from "../setting-label";
 
-export default function AccountInfoItem(props: { label: string, value: string }) {
+export default function AccountInfoItem(props: { label: string, value: string, openPopup(): void }) {
     return (
         <TableRow
             // CSS of MUI, that make the last row without a bottom line.
@@ -18,7 +18,7 @@ export default function AccountInfoItem(props: { label: string, value: string })
             </TableCell>
 
             <TableCell align="right">
-                <Button>Update {props.label}</Button>
+                <Button onClick={props.openPopup}>Update {props.label}</Button>
             </TableCell>
         </TableRow>
     );

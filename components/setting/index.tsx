@@ -1,9 +1,10 @@
 "use client";
 
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
-import { UsernameDialog } from "./components/account-info-dialog";
+import { CurrentSettingDialog, EmailDialog, PasswordDialog, SettingDialog, UsernameDialog } from "./components/account-info-dialog";
 import AccountInfoItem from "./components/account-info-item";
 import UserIcon from "./components/user-icon";
+import { useState } from "react";
 
 export function SettingSection(props: { title: string, children: any }) {
     return (
@@ -26,15 +27,23 @@ export function SettingSection(props: { title: string, children: any }) {
 }
 
 export function AccountInfo(props: { email: string, username: string, userId: number }) {
+    const [currentDialog, setCurrentDialog] = useState<SettingDialog | undefined>();
+
+    const handleClose = () => {
+        setCurrentDialog(undefined);
+    };
+
+    console.log(currentDialog);
+
     return (
         <>
-            <UsernameDialog userId={props.userId} username={props.username} />
+            <CurrentSettingDialog {...props} onClose={() => setCurrentDialog(undefined)} currentDialog={currentDialog} />
 
             <SettingSection title="Account info">
                 <TableBody>
-                    <AccountInfoItem label="Email" value={props.email} />
-                    <AccountInfoItem label="Password" value="************" />
-                    <AccountInfoItem label="Username" value={props.username} />
+                    <AccountInfoItem label="Email" value={props.email} openPopup={() => setCurrentDialog("EMAIL")} />
+                    <AccountInfoItem label="Password" value="************" openPopup={() => setCurrentDialog("PASSWORD")} />
+                    <AccountInfoItem label="Username" value={props.username} openPopup={() => setCurrentDialog("USERNAME")} />
                 </TableBody>
             </SettingSection>
         </>
