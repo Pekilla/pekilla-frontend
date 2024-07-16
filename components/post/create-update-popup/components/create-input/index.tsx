@@ -6,7 +6,6 @@ import { HTMLInputTypeAttribute } from "react";
 interface CreateInputProps extends FieldProps {
     label: string;
     isTextArea?: boolean;
-    type?: HTMLInputTypeAttribute;
     required?: boolean;
 }
 
@@ -21,7 +20,6 @@ export function CreateInput(props: CreateInputProps) {
             error={!!errors[name] && touched[name] as boolean}
             multiline={props.isTextArea}
             rows={props.isTextArea ? 5 : undefined}
-            type={props.type ?? "text"}
             helperText={<ErrorMessage name={name} />}
             {...props.field}
         />
