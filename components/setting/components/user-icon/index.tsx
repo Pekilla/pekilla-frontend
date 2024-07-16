@@ -1,6 +1,6 @@
 "use client";
 
-import { SingleImageInput, SingleImageInputProps } from "@/components/shared/single-image-input";
+import { SingleImageInput, SingleImageInputProps} from "@/components/shared/single-image-input";
 import { TableCell, TableRow, Typography } from "@mui/material";
 import SettingLabel from "../setting-label";
 

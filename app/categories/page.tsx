@@ -1,4 +1,4 @@
-import CategoryView from "@/components/category/category-view";
+import CategoryView from "@/components/categories/category-view";
 import { getAllCategories } from "@/services/CategoryService";
 import { createRandomKey } from "@/utils/RandomKeys";
 import { Container, Stack, Typography } from "@mui/material";

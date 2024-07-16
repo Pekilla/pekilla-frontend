@@ -11,16 +11,10 @@ import { useEffect, useState } from "react";
 export const BANNER_SIZE = { width: 550, height: 150, borderRadius: 2 };
 export const AVATAR_SIZE = { width: 150, height: 150, borderRadius: 2 };
 
-export interface SingleImageInputProps {
-    // The id of the entity you are trying to update.
-    id: number;
-
-    // The path of the stored image.
-    path?: string;
-
-    // Function that will handle the update and the delete of the image.
-    saveQuery(userId: number, isDelete?: boolean, file?: File): void;
-
+/**
+ * Shared with the FormikSingleImage.
+ */
+export interface SingleImageProps {
     /**
      * The text inside of the avatar that will be shown to the user when `path` is undefined.
      */
@@ -30,10 +24,23 @@ export interface SingleImageInputProps {
     avatarSize: SxProps<Theme>;
 }
 
+export interface SingleImageInputProps extends SingleImageProps {
+    // The id of the entity you are trying to update.
+    id: number;
+
+    // The path of the stored image.
+    path?: string;
+
+    // Function that will handle the update and the delete of the image.
+    saveQuery(userId: number, isDelete?: boolean, file?: File): void;
+}
+
 /**
  * A component that handle the upload of a single file.
  * This component can delete and update the image in the backend using the
  * `saveQuery` function in the props.
+ * 
+ * This component use is when you want to handle the image separatly from other field and without Formik.
  */
 export function SingleImageInput(props: SingleImageInputProps) {
     const router = useRouter();
