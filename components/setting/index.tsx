@@ -1,10 +1,13 @@
 "use client";
 
+import { changeBanner, changeIcon } from "@/services/UserService";
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
-import { CurrentSettingDialog, EmailDialog, PasswordDialog, SettingDialog, UsernameDialog } from "./components/account-info-dialog";
+import { useState } from "react";
+import { CurrentSettingDialog, SettingDialog } from "./components/account-info-dialog";
 import AccountInfoItem from "./components/account-info-item";
 import UserIcon from "./components/user-icon";
-import { useState } from "react";
+import { AVATAR_SIZE, BANNER_SIZE } from "../shared/single-image-input";
+import { getFirstChar } from "@/utils/utils";
 
 export function SettingSection(props: { title: string, children: any }) {
     return (
@@ -29,12 +32,6 @@ export function SettingSection(props: { title: string, children: any }) {
 export function AccountInfo(props: { email: string, username: string, userId: number }) {
     const [currentDialog, setCurrentDialog] = useState<SettingDialog | undefined>();
 
-    const handleClose = () => {
-        setCurrentDialog(undefined);
-    };
-
-    console.log(currentDialog);
-
     return (
         <>
             <CurrentSettingDialog {...props} onClose={() => setCurrentDialog(undefined)} currentDialog={currentDialog} />
@@ -54,8 +51,22 @@ export function Profile(props: { username: string, userId: number, icon?: string
     return (
         <SettingSection title="Profile">
             <TableBody>
-                <UserIcon src={props.icon} userId={props.userId} username={props.username} />
-                <UserIcon src={props.banner} userId={props.userId} username={props.username} isBanner />
+                <UserIcon
+                    avatarSize={AVATAR_SIZE} 
+                    saveQuery={changeIcon} 
+                    path={props.icon} 
+                    id={props.userId} 
+                    avatarText={getFirstChar(props.username)} 
+                />
+
+                <UserIcon
+                    avatarSize={BANNER_SIZE} 
+                    saveQuery={changeBanner} 
+                    path={props.banner} 
+                    id={props.userId} 
+                    avatarText={getFirstChar(props.username)}
+                    isBanner
+                />
             </TableBody>
         </SettingSection>
     );
