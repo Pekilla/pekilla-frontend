@@ -11,3 +11,11 @@ export function filterFunc(prefix: any, value: any) {
     if (value == "") { return undefined; }
     else return value;
 }
+
+
+/**
+ * Function to get the first charachter of a string.
+ */
+export function getFirstChar(value?: string) {
+    return value?.at(0);
+}
