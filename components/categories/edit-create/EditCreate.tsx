@@ -3,8 +3,11 @@
 import { CreateInput } from "@/components/post/create-update-popup/components/create-input";
 import { FormikSingleImageInput } from "@/components/shared/formik/FormikSingleImageInput";
 import { AVATAR_SIZE, BANNER_SIZE } from "@/components/shared/single-image-input";
+import { EditCreateCategoryDTO } from "@/models/dto/EditCreateCategoryDTO";
+import { createCategory } from "@/services/CategoryService";
 import { Button, Card, CardActions, CardContent, CardHeader, Container, Divider, Stack } from "@mui/material";
 import { Field, Form, Formik } from "formik";
+import config from "@/config.json";
 
 export default function EditCreateCategoryForm(props: { category?: EditCreateCategoryDTO }) {
     const isEdit = props.category != undefined;
@@ -12,15 +15,17 @@ export default function EditCreateCategoryForm(props: { category?: EditCreateCat
     return (
         <Container>
             <Formik
-                e
                 initialValues={{
                     name: props.category?.name ?? "",
                     description: props.category?.description ?? "",
                     banner: props.category?.banner ?? null,
                     icon: props.category?.icon ?? null
                 }}
-                onSubmit={(values) => {
-                    console.log(values);
+                onSubmit={async (values) => {
+                    let icon: File = (values.icon as any) instanceof File ? values.icon as any : undefined;
+                    let banner: File = (values.banner as any) instanceof File ? values.banner as any : undefined;
+
+                    await createCategory({ name: values.name, description: values.description, creatorId: config.id } as EditCreateCategoryDTO, banner, icon)
                 }}
             >
                 <Form>
@@ -40,7 +45,7 @@ export default function EditCreateCategoryForm(props: { category?: EditCreateCat
 
                         <CardActions sx={{ float: "right" }}>
                             {isEdit ? <Button variant="outlined">Cancel</Button> : <></>}
-                            <Button>{isEdit ? "Save" : "Create Post"}</Button>
+                            <Button type="submit">{isEdit ? "Save" : "Create Category"}</Button>
                         </CardActions>
                     </Card>
                 </Form>

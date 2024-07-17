@@ -6,7 +6,8 @@ export default function EditCategory({ params }: any) {
             name: "Jackson",
             description: "This is the streets.",
             banner: "http://localhost:2500/categories/banner/road.jpg",
-            icon: "http://localhost:2500/categories/icon/blocks.png"
+            icon: "http://localhost:2500/categories/icon/blocks.png",
+            creatorId : 0
         }} />
     );
 }
