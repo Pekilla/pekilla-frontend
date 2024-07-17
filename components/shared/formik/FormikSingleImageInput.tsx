@@ -2,7 +2,7 @@
 
 import DeleteIcon from '@mui/icons-material/Delete';
 import UploadIcon from '@mui/icons-material/Upload';
-import { Avatar, Button, Stack } from "@mui/material";
+import { Avatar, Button, Stack, Typography } from "@mui/material";
 import { FieldProps } from "formik";
 import { useEffect, useState } from "react";
 import { SingleImageProps } from "../single-image-input";
@@ -13,7 +13,7 @@ export const AVATAR_SIZE = { width: 150, height: 150, borderRadius: 2 };
 /**
  * A component that handle the upload of a single file when using Formik.
  */
-export function FormikSingleImageInput(props: SingleImageProps & FieldProps) {
+export function FormikSingleImageInput(props: { label: string } & SingleImageProps & FieldProps) {
     const [objectUrl, setObjectUrl] = useState<string | undefined>();
 
     useEffect(() => {
@@ -25,7 +25,7 @@ export function FormikSingleImageInput(props: SingleImageProps & FieldProps) {
 
     const addImage = (file?: File | null) => {
         if (file) {
-            if(objectUrl) URL.revokeObjectURL(objectUrl);
+            if (objectUrl) URL.revokeObjectURL(objectUrl);
             setObjectUrl(URL.createObjectURL(file));
         }
     };
@@ -43,6 +43,7 @@ export function FormikSingleImageInput(props: SingleImageProps & FieldProps) {
 
     return (
         <Stack spacing={2}>
+            <Typography variant="h6">{props.label}</Typography>
             <Avatar sx={props.avatarSize} src={imageSrc}>{imageSrc ? null : props.avatarText}</Avatar>
 
             <Stack direction="row" spacing={1}>
