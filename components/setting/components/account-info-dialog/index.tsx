@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 import { ReactNode, useState } from "react";
 import { object, ObjectSchema, ref, string } from "yup";
 
-type DialogProps = {
+interface DialogProps {
     onClose(): void;
     open: boolean;
 }

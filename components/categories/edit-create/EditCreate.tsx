@@ -8,6 +8,8 @@ import { createCategory } from "@/services/CategoryService";
 import { Button, Card, CardActions, CardContent, CardHeader, Container, Divider, Stack } from "@mui/material";
 import { Field, Form, Formik } from "formik";
 import config from "@/config.json";
+import { object } from "yup";
+import { notEmptyWithMaxAndMinLength } from "@/utils/ErrorSchema";
 
 export default function EditCreateCategoryForm(props: { category?: EditCreateCategoryDTO }) {
     const isEdit = props.category != undefined;
@@ -21,6 +23,10 @@ export default function EditCreateCategoryForm(props: { category?: EditCreateCat
                     banner: props.category?.banner ?? null,
                     icon: props.category?.icon ?? null
                 }}
+                validationSchema={object({
+                    name: notEmptyWithMaxAndMinLength(50, 5, "name"),
+                    description: notEmptyWithMaxAndMinLength(5000, 10, "description")
+                })}
                 onSubmit={async (values) => {
                     let icon: File = (values.icon as any) instanceof File ? values.icon as any : undefined;
                     let banner: File = (values.banner as any) instanceof File ? values.banner as any : undefined;
