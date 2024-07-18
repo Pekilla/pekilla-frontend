@@ -1,9 +1,9 @@
 import { Avatar, Box, Button, Card, Container, Divider, Stack, Typography } from "@mui/material";
-import AddReactionRoundedIcon from '@mui/icons-material/AddReactionRounded';
 import { getAllPostsByUserName } from "@/services/PostService";
 import PostView from "@/components/post/post-view";
 import { createRandomKey } from "@/utils/RandomKeys";
 import { getUserInfoByUserName } from "@/services/UserService";
+import FollowButton from "@/components/shared/FollowButton";
 
 export default async function UserPage({params} : any) {
 
@@ -41,7 +41,7 @@ export default async function UserPage({params} : any) {
                                 <Typography>Friends   0</Typography>
                             </Stack>
                         </Stack>
-                        <Button endIcon={<AddReactionRoundedIcon/>}>Follow</Button>
+                        <FollowButton/>
                     </Stack>
                 </Stack>
             </Card>
