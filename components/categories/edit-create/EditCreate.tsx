@@ -4,15 +4,22 @@ import { CreateInput } from "@/components/post/create-update-popup/components/cr
 import { FormikSingleImageInput } from "@/components/shared/formik/FormikSingleImageInput";
 import { AVATAR_SIZE, BANNER_SIZE } from "@/components/shared/single-image-input";
 import { EditCreateCategoryDTO } from "@/models/dto/EditCreateCategoryDTO";
-import { createCategory } from "@/services/CategoryService";
+import { createCategory, isExists, updateCategory } from "@/services/CategoryService";
 import { Button, Card, CardActions, CardContent, CardHeader, Container, Divider, Stack } from "@mui/material";
 import { Field, Form, Formik } from "formik";
 import config from "@/config.json";
 import { object } from "yup";
 import { notEmptyWithMaxAndMinLength } from "@/utils/ErrorSchema";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+
+const CATEGORY_ALREADY_EXISTS = "Category name already exists.";
 
 export default function EditCreateCategoryForm(props: { category?: EditCreateCategoryDTO }) {
     const isEdit = props.category != undefined;
+    const router = useRouter();
+    const [usedCategoriesName, setUsedCategoriesName] = useState<string[]>([]);
+    console.log(usedCategoriesName);
 
     return (
         <Container>
@@ -20,18 +27,35 @@ export default function EditCreateCategoryForm(props: { category?: EditCreateCat
                 initialValues={{
                     name: props.category?.name ?? "",
                     description: props.category?.description ?? "",
-                    banner: props.category?.banner ?? null,
-                    icon: props.category?.icon ?? null
+                    banner: props.category?.banner,
+                    icon: props.category?.icon
                 }}
                 validationSchema={object({
-                    name: notEmptyWithMaxAndMinLength(50, 5, "name"),
+                    name: notEmptyWithMaxAndMinLength(50, 5, "name").notOneOf(usedCategoriesName, "Category name already exists."),
                     description: notEmptyWithMaxAndMinLength(5000, 10, "description")
                 })}
-                onSubmit={async (values) => {
-                    let icon: File = (values.icon as any) instanceof File ? values.icon as any : undefined;
-                    let banner: File = (values.banner as any) instanceof File ? values.banner as any : undefined;
+                onSubmit={async (values, formikHelpers) => {
+                    // To verify that the name does not already exists if it is create.
+                    if (!isEdit && (await isExists(values.name)).data) {
+                        setUsedCategoriesName([...usedCategoriesName, values.name]);
+                        formikHelpers.setFieldError("name", CATEGORY_ALREADY_EXISTS);
+                        return;
+                    }
 
-                    await createCategory({ name: values.name, description: values.description, creatorId: config.id } as EditCreateCategoryDTO, banner, icon)
+                    
+                    console.log(values.banner);
+                    console.log(values.icon);
+
+                    // Add the creatorId
+                    (values as any)["creatorId"] = config.id;
+
+                    if (isEdit) {
+                        await updateCategory(values);
+                    }
+
+                    else await createCategory(values)
+                    router.push(`/categories/${encodeURIComponent(values.name)}`);
+                    router.refresh();
                 }}
             >
                 <Form>
@@ -50,7 +74,7 @@ export default function EditCreateCategoryForm(props: { category?: EditCreateCat
                         <Divider />
 
                         <CardActions sx={{ float: "right" }}>
-                            {isEdit ? <Button variant="outlined">Cancel</Button> : <></>}
+                            {isEdit ? <Button variant="outlined" onClick={() => router.push("/categories")}>Cancel</Button> : <></>}
                             <Button type="submit">{isEdit ? "Save" : "Create Category"}</Button>
                         </CardActions>
                     </Card>

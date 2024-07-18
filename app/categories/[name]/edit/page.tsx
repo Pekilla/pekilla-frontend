@@ -1,13 +1,20 @@
 import EditCreateCategoryForm from "@/components/categories/edit-create/EditCreate";
+import { getEditCategory } from "@/services/CategoryService";
 
-export default function EditCategory({ params }: any) {
+export default async function EditCategory({ params }: any) {
+    const category: any = (await getEditCategory(decodeURIComponent(params.name))).data;
+
     return (
-        <EditCreateCategoryForm category={{
-            name: "Jackson",
-            description: "This is the streets.",
-            banner: "http://localhost:2500/categories/banner/road.jpg",
-            icon: "http://localhost:2500/categories/icon/blocks.png",
-            creatorId : 0
-        }} />
+        category == 403 ?
+            (
+                <p>You do not have access to this category.</p>
+            ) : (
+                category == 404 ?
+                    (
+                        <p>Category not found.</p>
+                    ) : (
+                        <EditCreateCategoryForm category={category} />
+                    )
+            )
     );
 }

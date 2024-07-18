@@ -55,7 +55,7 @@ export function FormikSingleImageInput(props: { label: string } & SingleImagePro
                         onBlur={props.field.onBlur}
                         onChange={(e) => {
                             addImage(e.currentTarget.files?.item(0));
-                            props.field.onChange(e);
+                            props.form.setFieldValue(props.field.name, e.currentTarget.files?.item(0) as File)
                         }}
                         type="file"
                         accept="image/png"
