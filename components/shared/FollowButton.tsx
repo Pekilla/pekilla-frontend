@@ -16,12 +16,9 @@ export default function FollowButton() {
     }
 
     return (
-        <Button 
-            onClick={handleClick}
-            endIcon={(!isFollowed) ? <PersonAddIcon/>  : <PersonRemoveIcon/>}
-            >
+        <Button onClick={handleClick} endIcon={!isFollowed ? <PersonAddIcon/> : <PersonRemoveIcon/>}>
             {
-                (!isFollowed) ? <Typography>Follow</Typography> : <Typography>Unfollow</Typography>
+                !isFollowed ? <Typography>Follow</Typography> : <Typography>Unfollow</Typography>
             }
         </Button>
     )
