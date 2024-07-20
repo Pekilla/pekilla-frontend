@@ -10,11 +10,3 @@ export const getUserInfoByUserName = (username: string) => {
 export const getAllUsernames = () => {
     return http.get(REQUEST_MAPPING + "/usernames")
 }
-
-export const existsUsername = (username: string) => {
-    return http.get(`${REQUEST_MAPPING}/exists/username`, { params: { username } });
-}
-
-export const existsEmail = (email: string) => {
-    return http.get(`${REQUEST_MAPPING}/exists/email`, { params: { email } });
-}

@@ -3,7 +3,7 @@
 import FormikInput from "@components/post/create-update-popup/components/create-input";
 import { Button, Container, Stack, Typography } from "@mui/material";
 import { login, signUp } from "@services/AuthService";
-import { existsEmail, existsUsername } from "@services/UserService";
+import { existsEmail, existsUsername } from "@services/AuthService";
 import { Field, Form, Formik } from "formik";
 import Cookies from "js-cookie";
 import Link from "next/link";

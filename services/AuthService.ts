@@ -17,3 +17,11 @@ export async function login(username: string, password: string): Promise<any> {
 export function validateToken(token: string) {
     return http.post(`${REQUEST_MAPPING}/validate-token`, undefined, { params: { token } });
 }
+
+export const existsUsername = (username: string) => {
+    return http.get(`${REQUEST_MAPPING}/exists/username`, { params: { username } });
+}
+
+export const existsEmail = (email: string) => {
+    return http.get(`${REQUEST_MAPPING}/exists/email`, { params: { email } });
+}
