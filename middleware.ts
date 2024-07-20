@@ -3,7 +3,7 @@ import { validateToken } from "./services/AuthService";
 
 function redirectLogin(pathname: string, req: NextRequest): NextResponse {
     var response;
-    
+
     if(pathname.startsWith("/login") || pathname.startsWith("/sign-up")) {
         response = NextResponse.next();
     } else {
@@ -40,6 +40,7 @@ export const config = {
         "/login",
         "/sign-up",
         "/setting",
-        "/create/:path*"
+        "/create/:path*",
+        "/categories/:name/edit"
     ]
 }
