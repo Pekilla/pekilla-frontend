@@ -1,13 +1,12 @@
 "use client";
 
-import { CreateInput } from "@/components/post/create-update-popup/components/create-input";
+import CreateInput from "@/components/post/create-update-popup/components/create-input";
 import { FormikSingleImageInput } from "@/components/shared/formik/FormikSingleImageInput";
 import { AVATAR_SIZE, BANNER_SIZE } from "@/components/shared/single-image-input";
 import { EditCreateCategoryDTO } from "@/models/dto/EditCreateCategoryDTO";
 import { createCategory, isExists, updateCategory } from "@/services/CategoryService";
 import { Button, Card, CardActions, CardContent, CardHeader, Container, Divider, Stack } from "@mui/material";
 import { Field, Form, Formik } from "formik";
-import config from "@/config.json";
 import { object } from "yup";
 import { notEmptyWithMaxAndMinLength } from "@/utils/ErrorSchema";
 import { useRouter } from "next/navigation";
@@ -47,8 +46,6 @@ export default function EditCreateCategoryForm(props: { category?: EditCreateCat
                     console.log(values.icon);
 
                     // Add the creatorId
-                    (values as any)["creatorId"] = config.id;
-
                     if (isEdit) {
                         await updateCategory(values);
                     }

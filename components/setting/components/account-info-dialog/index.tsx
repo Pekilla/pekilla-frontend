@@ -1,7 +1,7 @@
 "use client";
 
-import { CreateInput } from "@/components/post/create-update-popup/components/create-input";
-import { changeEmail, changePassword, changeUsername, isPasswordValid } from "@/services/UserService";
+import CreateInput from "@/components/post/create-update-popup/components/create-input";
+import { changeEmail, changePassword, changeUsername, isPasswordValid } from "@/services/SettingService";
 import { notEmptyWithMaxAndMinLength, passwordSchema } from "@/utils/ErrorSchema";
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Stack } from "@mui/material";
 import { AxiosError } from "axios";
@@ -73,7 +73,7 @@ export function EmailDialog(props: { userId: number, email: string } & DialogPro
             })}
             onSubmit={async (values) => {
                 if (props.email != values.email) {
-                    await changeEmail(props.userId, values.email);
+                    await changeEmail(values.email);
                 }
 
                 props.onClose();
@@ -104,7 +104,7 @@ export function PasswordDialog(props: { userId: number } & DialogProps) {
                     .max(255, "CurrentPassword should be less than 255 characters.")
                     .test("passwordVerif", "Current password is invalid.", (password) => {
                         return new Promise(async (resolve) => {
-                            resolve((await isPasswordValid(props.userId, password)).data)
+                            resolve((await isPasswordValid(password)).data)
                         });
                     }),
                 password: passwordSchema("New password"),
@@ -112,7 +112,7 @@ export function PasswordDialog(props: { userId: number } & DialogProps) {
             })}
             onSubmit={async (values) => {
                 // Si l'ancien password est equals au nouveau, on fait pas la requête.
-                await changePassword(props.userId, values.password);
+                await changePassword(values.password);
 
                 props.onClose();
                 router.refresh();
@@ -145,7 +145,7 @@ export function UsernameDialog(props: { userId: number, username: string } & Dia
             })}
             onSubmit={async (values, formikHelpers) => {
                 if (props.username != values.username) {
-                    await changeUsername(props.userId, values.username)
+                    await changeUsername(values.username)
                         .then(() => {
                             props.onClose();
                             router.refresh();

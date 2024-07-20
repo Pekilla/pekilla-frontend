@@ -1,7 +1,7 @@
 "use client";
 
 import { usePekillaContext } from "@/components/PekillaContext";
-import { CreateInput } from "@/components/post/create-update-popup/components/create-input";
+import CreateInput from "@/components/post/create-update-popup/components/create-input";
 import { CommentDTO } from "@/models/dto/CommentDTO";
 import { Button, Stack, Typography } from "@mui/material";
 import { createComment } from "@services/CommentService";

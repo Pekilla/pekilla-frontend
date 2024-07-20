@@ -10,9 +10,11 @@
   },
   "dependencies": {
     "@fontsource/space-grotesk": "^5.0.18",
+    "@types/js-cookie": "^3.0.6",
     "@types/qs": "^6.9.15",
     "axios": "^1.7.2",
     "formik": "^2.4.6",
+    "js-cookie": "^3.0.5",
     "next": "14.2.5",
     "qs": "^6.12.3",
     "react": "^18.3.1",

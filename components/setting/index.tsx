@@ -1,6 +1,6 @@
 "use client";
 
-import { changeBanner, changeIcon } from "@/services/UserService";
+import { changeBanner, changeIcon } from "@services/SettingService";
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import { useState } from "react";
 import { CurrentSettingDialog, SettingDialog } from "./components/account-info-dialog";
@@ -52,18 +52,18 @@ export function Profile(props: { username: string, userId: number, icon?: string
         <SettingSection title="Profile">
             <TableBody>
                 <UserIcon
-                    avatarSize={AVATAR_SIZE} 
-                    saveQuery={changeIcon} 
-                    path={props.icon} 
-                    id={props.userId} 
-                    avatarText={getFirstChar(props.username)} 
+                    avatarSize={AVATAR_SIZE}
+                    saveQuery={changeIcon}
+                    path={props.icon}
+                    id={props.userId}
+                    avatarText={getFirstChar(props.username)}
                 />
 
                 <UserIcon
-                    avatarSize={BANNER_SIZE} 
-                    saveQuery={changeBanner} 
-                    path={props.banner} 
-                    id={props.userId} 
+                    avatarSize={BANNER_SIZE}
+                    saveQuery={changeBanner}
+                    path={props.banner}
+                    id={props.userId}
                     avatarText={getFirstChar(props.username)}
                     isBanner
                 />

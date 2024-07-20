@@ -9,7 +9,7 @@ import { Field, Form, FormikProvider, useFormik } from "formik";
 import { useRouter, useSearchParams } from "next/navigation";
 import qs from "qs";
 import { useEffect, useState } from "react";
-import { CreateInput } from "../create-update-popup/components/create-input";
+import CreateInput from "../create-update-popup/components/create-input";
 import { Tags } from "../create-update-popup/components/tags";
 
 const searchParamDefaults = {

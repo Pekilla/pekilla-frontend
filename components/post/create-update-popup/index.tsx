@@ -9,7 +9,7 @@ import { Field, Form, Formik } from "formik";
 import { useRouter } from "next/navigation";
 import { array, object, string } from 'yup';
 import { createPost, updatePost } from "../../../services/PostService";
-import { CreateInput } from "./components/create-input";
+import CreateInput from "./components/create-input";
 import { Tags } from "./components/tags";
 
 export interface CreatePopupProps {

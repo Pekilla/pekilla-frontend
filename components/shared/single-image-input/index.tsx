@@ -32,7 +32,7 @@ export interface SingleImageInputProps extends SingleImageProps {
     path?: string;
 
     // Function that will handle the update and the delete of the image.
-    saveQuery(userId: number, isDelete?: boolean, file?: File): void;
+    saveQuery(isDelete?: boolean, file?: File): void;
 }
 
 /**
@@ -71,13 +71,13 @@ export function SingleImageInput(props: SingleImageInputProps) {
 
     const deleteImageBackend = async () => {
         if (confirm("Are you sure to delete your icon.")) {
-            props.saveQuery(props.id, true);
+            props.saveQuery(true);
             router.refresh();
         }
     };
 
     const saveImageBackend = async () => {
-        props.saveQuery(props.id, false, image?.file!);
+        props.saveQuery(false, image?.file!);
         router.refresh();
         setIsLoading(true);
         removeImage();
