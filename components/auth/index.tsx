@@ -82,7 +82,7 @@ export default function Auth(props: { isLogin?: boolean }) {
                     <Stack sx={{ height: "80vh" }} alignItems="center" justifyContent="center" flexWrap="wrap" direction="row" spacing={2} useFlexGap>
                         <Stack width={450} spacing={2} useFlexGap flexWrap="wrap">
                             <Typography variant="h3">{props.isLogin ? "Login" : "Sign up"}</Typography>
-                            <Typography variant="subtitle1">{props.isLogin ? "Welcome back! Nice to see you again!" : "The place where the dreams become projects."}</Typography>
+                            <Typography variant="subtitle1">{props.isLogin ? "Welcome back! Nice to see you again!" : "The place where everyone has the right to ask questions."}</Typography>
                             {!props.isLogin ? <Field name="email" component={FormikInput} label="Email" type="email" /> : <></>}
                             <Field name="username" component={FormikInput} label="Username" />
                             <Field name="password" component={FormikInput} label="Password" type="password" />

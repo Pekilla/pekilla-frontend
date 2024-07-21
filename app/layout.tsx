@@ -19,11 +19,11 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<PekillaContextProvider>				
+			<PekillaContextProvider>
 				<body className={grotesk.className}>
 					<nav style={{ padding: "15px" }}>
 						<Container>
-							<Stack direction="row" justifyContent="space-between" py={2} flexWrap="wrap">
+							<Stack direction="row" justifyContent="space-between" py={2} flexWrap="wrap" useFlexGap>
 								<Stack spacing={2} direction="row">
 									<MuiLink href="/" component={Link}>Home</MuiLink>
 									<MuiLink href="/posts/search" component={Link}>Trend</MuiLink>
@@ -31,8 +31,8 @@ export default function RootLayout({
 								</Stack>
 
 								<Stack spacing={2} direction="row">
-									<Button variant="outlined">Sign up</Button>
-									<Button>Get Started</Button>
+									<Button variant="outlined" LinkComponent={Link} href="/login">Sign up</Button>
+									<Button LinkComponent={Link} href="/sign-up">Get Started</Button>
 								</Stack>
 							</Stack>
 						</Container>
