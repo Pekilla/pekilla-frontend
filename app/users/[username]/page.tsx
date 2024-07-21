@@ -1,14 +1,13 @@
-import { Avatar, Box, Button, Card, Container, Divider, Stack, Typography } from "@mui/material";
-import { getAllPostsByUserName } from "@/services/PostService";
 import PostView from "@/components/post/post-view";
-import { createRandomKey } from "@/utils/RandomKeys";
-import { getUserInfoByUserName } from "@/services/UserService";
 import FollowButton from "@/components/shared/FollowButton";
+import { UserProfileDTO } from "@/models/dto/UserProfileDTO";
+import { getUserProfile } from "@/services/UserService";
+import { createRandomKey } from "@/utils/RandomKeys";
+import { Avatar, Box, Card, Container, Divider, Stack, Typography } from "@mui/material";
 
-export default async function UserPage({params} : any) {
-
-    const userPosts = (await getAllPostsByUserName(params.username)).data;
-    const userInfo = (await getUserInfoByUserName(params.username)).data;
+export default async function UserPage({ params }: any) {
+    const userInfo: UserProfileDTO = (await getUserProfile(params.username)).data;
+    const posts = userInfo.posts;
 
     const bannerStyle = {
         height: 150,
@@ -16,9 +15,9 @@ export default async function UserPage({params} : any) {
         backgroundPosition: "center",
         backgroundSize: "cover"
     }
-    
+
     const avatarStyle = {
-        width: 150, 
+        width: 150,
         height: 150,
         borderRadius: 2
     }
@@ -26,34 +25,34 @@ export default async function UserPage({params} : any) {
     return (
         <Container>
             <Card
-                sx={{borderRadius: 3}}
+                sx={{ borderRadius: 3 }}
                 variant="outlined">
-                <Box sx={bannerStyle}/>
+                <Box sx={bannerStyle} />
                 <Stack direction="row" p={3}>
-                    <Avatar src={`${userInfo.icon}`} sx={avatarStyle} alt={`${userInfo.username.charAt(0)}`}/>
-                    <Box  style={{borderRadius: 30}}/>
+                    <Avatar src={userInfo.icon} sx={avatarStyle} alt={`${userInfo.username.charAt(0)}`} />
+                    <Box style={{ borderRadius: 30 }} />
                     <Stack gap={6} mx={2}>
                         <Stack>
                             <Typography variant="h4" fontWeight={700}>{userInfo.username}</Typography>
                             <Stack direction="row" justifyContent="center" gap={3}>
-                                <Typography>Posts     0</Typography>
-                                <Typography>Comments  0</Typography>
-                                <Typography>Friends   0</Typography>
+                                <Typography>Posts {posts?.length}</Typography>
+                                <Typography>Comments  {userInfo.commentsNumber}</Typography>
+                                <Typography>Friends 0</Typography>
                             </Stack>
                         </Stack>
-                        <FollowButton/>
+                        <FollowButton />
                     </Stack>
                 </Stack>
             </Card>
 
-            <Divider sx={{my: 5}} />
+            <Divider sx={{ my: 5 }} />
             <Typography variant="h4" my={3} fontWeight={700}>All threads published by {userInfo.username}</Typography>
             <Stack gap={2}>
                 {
-                    userPosts.map(post => 
-                        <PostView 
+                    posts.map(post =>
+                        <PostView
                             key={createRandomKey()}
-                            {...post}/>
+                            {...post} />
                     )
                 }
             </Stack>

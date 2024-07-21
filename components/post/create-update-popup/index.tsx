@@ -56,9 +56,6 @@ export default function CreatePopup(props: CreatePopupProps) {
                     )
                 }
                 onSubmit={async (values) => {
-                    // Add userId
-                    (values as any)["userId"] = userId;
-
                     // Create
                     if (!isUpdate) {
                         await createPost(values as PostDTO);

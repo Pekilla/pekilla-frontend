@@ -1,10 +1,10 @@
 import http from "@/http";
-import { UserDTO } from "@/models/dto/UserDTO";
+import { UserProfileDTO } from "@/models/dto/UserProfileDTO";
 
 const REQUEST_MAPPING = "/api/users";
 
-export const getUserInfoByUserName = (username: string) => {
-    return http.get<UserDTO>(`${REQUEST_MAPPING}/${username}`);
+export const getUserProfile = (username: string) => {
+    return http.get<UserProfileDTO>(`${REQUEST_MAPPING}/${username}/profile`);
 }
 
 export const getAllUsernames = () => {
