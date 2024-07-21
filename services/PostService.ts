@@ -2,15 +2,10 @@ import { PostDTO } from "@models/dto/PostDTO";
 import { PostViewDTO } from "@models/dto/PostViewDTO";
 import { AxiosError, AxiosResponse } from "axios";
 import http from "../http";
-import { CommentViewDTO } from "@/models/dto/CommentViewDTO";
-import { UserDTO } from "@/models/dto/UserDTO";
 import { getAuthorization } from "./Service";
+import { PostFullViewDTO } from "@/models/dto/PostFullViewDTO";
 
 const REQUEST_MAPPING: string = "/api/posts";
-
-export const getPostById = async (postId: number) => {
-    return http.get<PostViewDTO>(`${REQUEST_MAPPING}/${postId}`)
-}
 
 export const deletePost = async (postId: number) => {
     return http.delete(`${REQUEST_MAPPING}/${postId}`);
@@ -38,6 +33,6 @@ export async function getAllPost() {
     return searchPosts();
 }
 
-export const getAllComments = async (postId: number) => {
-    return await http.get<CommentViewDTO[]>(`${REQUEST_MAPPING}/${postId}/comments`);
+export async function getPostFullView(postId: number) {
+    return http.get<PostFullViewDTO>(`${REQUEST_MAPPING}/${postId}/full-view`, { params: { postId } });
 }
