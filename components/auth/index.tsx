@@ -4,12 +4,14 @@ import FormikInput from "@components/post/create-update-popup/components/create-
 import { Button, Container, Stack, Typography } from "@mui/material";
 import { login, signUp } from "@services/AuthService";
 import { existsEmail, existsUsername } from "@services/AuthService";
+import { HttpStatusCode } from "axios";
 import { Field, Form, Formik } from "formik";
-import Cookies from "js-cookie";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { object, string } from "yup";
+import { AuthError } from "next-auth";
+import { signIn } from "next-auth/react";
 
 const USERNAME_EXISTS = "username already exists.";
 const EMAIL_EXISTS = "email already exists.";
@@ -32,8 +34,32 @@ export default function Auth(props: { isLogin?: boolean }) {
                         let response = (await login(values.username, values.password));
 
                         if (response?.data) {
-                            Cookies.set("token", response.data?.token);
-                            router.push("/");
+                            let formData = new FormData();
+                            formData.append("username", values.username);
+                            formData.append("password", values.password);
+                            await signIn("credentials", {
+                                username: values.username,
+                                password: values.password,
+                                callbackUrl : "/",
+                            }).catch((error: any) => {
+                                if (error instanceof AuthError) {
+                                    formikHelpers.resetForm({ errors: { username: "invalid username or password." }, touched: { username: true } });
+                                }
+
+                                throw error;
+                            })
+
+
+                            // let response = (await login(values.username, values.password));
+
+                            // if (response?.data) {
+                            //     Cookies.set("token", response.data?.token);
+                            //     router.push("/");
+                            // }
+
+                            // else if (response?.status == 400) {
+                            //     formikHelpers.resetForm({ errors: { username: "invalid username or password." }, touched: { username: true } });
+                            // }
                         }
 
                         else if (response?.status == 400) {
@@ -55,8 +81,12 @@ export default function Auth(props: { isLogin?: boolean }) {
                             return;
                         }
 
-                        Cookies.set("token", (await signUp(values.email, values.username, values.password)).data.token)
-                        router.push("/");
+                        await signUp(values.email, values.username, values.password)
+                            .then(res => {
+                                if (res.status == HttpStatusCode.Ok) {
+                                    router.push("/login");
+                                }
+                            });
                     }
                 }}
                 validationSchema={object({

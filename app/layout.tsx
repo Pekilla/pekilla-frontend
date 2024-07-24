@@ -1,5 +1,6 @@
+import NavProfile from "@/components/navbar/NavProfile";
 import { PekillaContextProvider } from "@components/PekillaContext";
-import { Button, Card, Container, Link as MuiLink, Stack, Typography } from "@mui/material";
+import { Container, Link as MuiLink, Stack } from "@mui/material";
 import type { Metadata } from "next";
 import { Space_Grotesk } from "next/font/google";
 import Link from "next/link";
@@ -12,7 +13,7 @@ export const metadata: Metadata = {
 	description: "Forum in construction",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
 	children,
 }: Readonly<{
 	children: React.ReactNode;
@@ -30,10 +31,7 @@ export default function RootLayout({
 									<MuiLink href="/categories" component={Link}>Explore</MuiLink>
 								</Stack>
 
-								<Stack spacing={2} direction="row">
-									<Button variant="outlined" LinkComponent={Link} href="/login">Sign up</Button>
-									<Button LinkComponent={Link} href="/sign-up">Get Started</Button>
-								</Stack>
+								<NavProfile />
 							</Stack>
 						</Container>
 					</nav>

@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { validateToken } from "./services/AuthService";
+import { auth } from "./auth";
+import { signOut } from "@/auth";
 
 function redirectLogin(pathname: string, req: NextRequest): NextResponse {
     var response;
@@ -10,7 +12,9 @@ function redirectLogin(pathname: string, req: NextRequest): NextResponse {
         response = NextResponse.redirect(new URL("/login", req.url));
     }
 
-    response.cookies.delete("token");
+    response.cookies.delete("authjs.callback-url");
+    response.cookies.delete("authjs.csrf-token");
+    response.cookies.delete("authjs.session-token");
     return response;
 }
 
@@ -18,8 +22,8 @@ function redirectHome(req: NextRequest): NextResponse {
     return NextResponse.redirect(new URL("/", req.url));
 }
 
-export default async function middleware(req: NextRequest) {
-    let token = req.cookies.get("token")?.value;
+export default auth(async (req) => {
+    let token = (await auth())?.user?.token;
     let pathname = req.nextUrl.pathname;
 
     // if token exists and is valid.
@@ -33,7 +37,7 @@ export default async function middleware(req: NextRequest) {
     } else {
         return redirectLogin(pathname, req);
     }
-}
+});
 
 export const config = {
     matcher: [

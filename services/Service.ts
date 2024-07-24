@@ -1,7 +1,8 @@
 "use server";
 
-import { cookies } from "next/headers";
+import { auth, signOut } from "@/auth";
 
 export async function getAuthorization(): Promise<{ Authorization: string }> {
-    return new Promise((resolve) => resolve({ Authorization: "Bearer " + cookies().get("token")?.value }));
+    let token = (await auth())?.user?.token;
+    return new Promise((resolve) => resolve({ Authorization: "Bearer " + token }));
 }
