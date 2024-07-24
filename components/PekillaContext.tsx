@@ -8,6 +8,8 @@ import config from "@/config.json";
 import { CssBaseline, ThemeProvider, useMediaQuery } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 import { createContext, useContext } from "react";
+import { SessionProvider } from "next-auth/react";
+import { Session } from "next-auth";
 
 export const PekillaContext = createContext({
     userId: config.id
@@ -58,15 +60,15 @@ export function PekillaContextProvider(props: { children: any }) {
                     variant: "outlined"
                 }
             },
-            MuiLink : {
-                defaultProps : {
+            MuiLink: {
+                defaultProps: {
                     color: "inherit",
-                    underline : "hover"
+                    underline: "hover"
                 }
             },
-            MuiButton : {
-                defaultProps : {
-                    variant : "contained",
+            MuiButton: {
+                defaultProps: {
+                    variant: "contained",
                     sx: {
                         fontWeight: 700,
                         textTransform: "none",
@@ -75,58 +77,58 @@ export function PekillaContextProvider(props: { children: any }) {
                 }
             },
             MuiButtonBase: {
-                defaultProps : {
+                defaultProps: {
                     disableRipple: true
                 }
             },
-            MuiAvatar : {
-                defaultProps : {
-                    sx : {
-                        borderRadius : 2
+            MuiAvatar: {
+                defaultProps: {
+                    sx: {
+                        borderRadius: 2
                     },
                     variant: "square"
                 }
             },
-            MuiCard : {
-                defaultProps : {
+            MuiCard: {
+                defaultProps: {
                     variant: "outlined",
                     sx: {
                         borderRadius: 4
                     }
                 }
             },
-            MuiSelect : {
-                defaultProps : {
+            MuiSelect: {
+                defaultProps: {
                     MenuProps: {
                         slotProps: {
                             paper: {
-                                elevation : 0,
-                                variant : "outlined",
+                                elevation: 0,
+                                variant: "outlined",
                                 sx: {
-                                    borderRadius : "12px"
+                                    borderRadius: "12px"
                                 }
                             }
                         }
                     }
                 }
             },
-            MuiChip : {
-                defaultProps : {
-                    sx : {
+            MuiChip: {
+                defaultProps: {
+                    sx: {
                         fontWeight: 500,
                     }
                 }
             },
-            MuiDialog : {
-                defaultProps : {
-                    PaperProps : {
-                        elevation : 0,
-                        variant : "outlined"
+            MuiDialog: {
+                defaultProps: {
+                    PaperProps: {
+                        elevation: 0,
+                        variant: "outlined"
                     }
                 }
             },
-            MuiCircularProgress : {
-                defaultProps : {
+            MuiCircularProgress: {
+                defaultProps: {
                     color: 'primary'
                 }
             }
@@ -134,12 +136,14 @@ export function PekillaContextProvider(props: { children: any }) {
     });
 
     return (
-        <PekillaContext.Provider value={{ userId: config.id }}>
-            <ThemeProvider theme={theme}>
-                <CssBaseline enableColorScheme />
-                {props.children}
-            </ThemeProvider>
-        </PekillaContext.Provider>
+        <SessionProvider>
+            <PekillaContext.Provider value={{ userId: config.id }}>
+                <ThemeProvider theme={theme}>
+                    <CssBaseline enableColorScheme />
+                    {props.children}
+                </ThemeProvider>
+            </PekillaContext.Provider>
+        </SessionProvider>
     )
 }
 

@@ -1,9 +1,13 @@
 import { PekillaContextProvider } from "@components/PekillaContext";
-import { Button, Card, Container, Link as MuiLink, Stack, Typography } from "@mui/material";
+import { Button, Container, Link as MuiLink, Stack } from "@mui/material";
 import type { Metadata } from "next";
 import { Space_Grotesk } from "next/font/google";
 import Link from "next/link";
 import "./globals.css";
+import { getSession, SessionProvider, signOut } from "next-auth/react";
+import { getServerSession, Session } from "next-auth";
+import { Profile } from "@/components/setting";
+import NavProfile from "@/components/navbar/profile";
 
 const grotesk = Space_Grotesk({ subsets: ["latin"] });
 
@@ -12,11 +16,14 @@ export const metadata: Metadata = {
 	description: "Forum in construction",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
 	children,
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
+
+	const session = await getServerSession();
+
 	return (
 		<html lang="en">
 			<PekillaContextProvider>
@@ -30,10 +37,7 @@ export default function RootLayout({
 									<MuiLink href="/categories" component={Link}>Explore</MuiLink>
 								</Stack>
 
-								<Stack spacing={2} direction="row">
-									<Button variant="outlined" LinkComponent={Link} href="/login">Sign up</Button>
-									<Button LinkComponent={Link} href="/sign-up">Get Started</Button>
-								</Stack>
+								<NavProfile />
 							</Stack>
 						</Container>
 					</nav>
