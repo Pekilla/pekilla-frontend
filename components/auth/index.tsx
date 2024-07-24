@@ -4,10 +4,8 @@ import FormikInput from "@components/post/create-update-popup/components/create-
 import { Button, Container, Stack, Typography } from "@mui/material";
 import { login, signUp } from "@services/AuthService";
 import { existsEmail, existsUsername } from "@services/AuthService";
-import { HttpStatusCode } from "axios";
 import { Field, Form, Formik } from "formik";
 import Cookies from "js-cookie";
-import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -31,22 +29,16 @@ export default function Auth(props: { isLogin?: boolean }) {
                 }}
                 onSubmit={async (values, formikHelpers) => {
                     if (props.isLogin) {
-                        signIn("credentials", {
-                            username: values.username,
-                            password: values.password,
-                            redirect: true,
-                            callbackUrl: "/"
-                        })
-                        // let response = (await login(values.username, values.password));
+                        let response = (await login(values.username, values.password));
 
-                        // if (response?.data) {
-                        //     Cookies.set("token", response.data?.token);
-                        //     router.push("/");
-                        // }
+                        if (response?.data) {
+                            Cookies.set("token", response.data?.token);
+                            router.push("/");
+                        }
 
-                        // else if (response?.status == 400) {
-                        //     formikHelpers.resetForm({ errors: { username: "invalid username or password." }, touched: { username: true } });
-                        // }
+                        else if (response?.status == 400) {
+                            formikHelpers.resetForm({ errors: { username: "invalid username or password." }, touched: { username: true } });
+                        }
                     }
 
                     else {
@@ -63,12 +55,8 @@ export default function Auth(props: { isLogin?: boolean }) {
                             return;
                         }
 
-                        await signUp(values.email, values.username, values.password)
-                            .then(res => {
-                                if (res.status == HttpStatusCode.Ok) {
-                                    router.push("/login");
-                                }
-                            });
+                        Cookies.set("token", (await signUp(values.email, values.username, values.password)).data.token)
+                        router.push("/");
                     }
                 }}
                 validationSchema={object({

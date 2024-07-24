@@ -11,7 +11,7 @@ export default function HomeSearchBar() {
 		router.push(`/posts/search?content=${encodeURIComponent(new FormData(e.currentTarget).get("search") as string)}`);
 	}
 
-	return (
+	return(
 		<form onSubmit={handleNavigate}>
 			<TextField name="search" placeholder="Search something" fullWidth />
 		</form>
