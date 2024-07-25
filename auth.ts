@@ -4,7 +4,8 @@ import { login } from "./services/AuthService";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
     pages: {
-        signIn: "/login"
+        signIn: "/login",
+        signOut : "/logout"
     },
     secret: process.env?.AUTH_SECRET,
     providers: [

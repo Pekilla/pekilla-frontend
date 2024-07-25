@@ -8,7 +8,7 @@ import { Avatar, Button, Divider, MenuItem, Stack, Typography } from "@mui/mater
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { MuiMenu, MuiMenuItem } from "../shared/MuiMenu";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 
 const DROPDOWN_MENU = [
     {
@@ -52,7 +52,7 @@ export default function NavProfile() {
 
                     <MuiMenuItem
                         icon={<LogoutIcon />}
-                        action={() => signOut()}
+                        action={() => router.push("/logout")}
                         label="Logout"
                     />
                 </MuiMenu> : (
