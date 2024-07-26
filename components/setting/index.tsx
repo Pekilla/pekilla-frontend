@@ -8,6 +8,7 @@ import AccountInfoItem from "./components/account-info-item";
 import UserIcon from "./components/user-icon";
 import { AVATAR_SIZE, BANNER_SIZE } from "../shared/single-image-input";
 import { getFirstChar } from "@/utils/utils";
+import { useSession } from "next-auth/react";
 
 export function SettingSection(props: { title: string, children: any }) {
     return (
@@ -19,7 +20,8 @@ export function SettingSection(props: { title: string, children: any }) {
                             <Typography variant="h5">{props.title}</Typography>
                         </TableCell>
 
-                        <TableCell /><TableCell />
+                        <TableCell />
+                        <TableCell />
                     </TableRow>
                 </TableHead>
 
@@ -48,12 +50,19 @@ export function AccountInfo(props: { email: string, username: string, userId: nu
 }
 
 export function Profile(props: { username: string, userId: number, icon?: string, banner?: string }) {
+    const { data: session, update } = useSession();
+
     return (
         <SettingSection title="Profile">
             <TableBody>
                 <UserIcon
                     avatarSize={AVATAR_SIZE}
-                    saveQuery={changeIcon}
+                    saveQuery={
+                        async (isDelete, file) => {
+                            let url = (await changeIcon(isDelete, file)).data;
+                            await update({ ...session, user: { ...session?.user, icon: url } });
+                        }
+                    }
                     path={props.icon}
                     id={props.userId}
                     avatarText={getFirstChar(props.username)}

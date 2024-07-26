@@ -6,6 +6,7 @@ import { notEmptyWithMaxAndMinLength, passwordSchema } from "@/utils/ErrorSchema
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Stack } from "@mui/material";
 import { AxiosError } from "axios";
 import { Field, Form, Formik, FormikHelpers, FormikValues } from "formik";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { ReactNode, useState } from "react";
 import { object, ObjectSchema, ref, string } from "yup";
@@ -130,6 +131,7 @@ const USERNAME_ALREADY_EXISTS = "Username already exists";
 export function UsernameDialog(props: { userId: number, username: string } & DialogProps) {
     const [existingUsername, setExistingUsername] = useState<string[]>([]);
     const router = useRouter();
+    const { data: session, update } = useSession();
 
     return (
         <AccountInfoDialog
@@ -146,9 +148,12 @@ export function UsernameDialog(props: { userId: number, username: string } & Dia
             onSubmit={async (values, formikHelpers) => {
                 if (props.username != values.username) {
                     await changeUsername(values.username)
-                        .then(() => {
-                            props.onClose();
-                            router.refresh();
+                        .then(async (res) => {
+                            if (res.status == 200) {
+                                await update({ ...session, user: { ...session?.user, token: res.data, username: values.username } })
+                                props.onClose();
+                                router.refresh();
+                            }
                         })
                         .catch((error: AxiosError) => {
                             if (error.response?.status == 409) {

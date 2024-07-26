@@ -5,28 +5,28 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import PersonIcon from "@mui/icons-material/Person";
 import SettingsIcon from '@mui/icons-material/Settings';
 import { Avatar, Button, Divider, MenuItem, Stack, Typography } from "@mui/material";
-import { signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { MuiMenu, MuiMenuItem } from "../shared/MuiMenu";
-import { redirect, useRouter } from "next/navigation";
-
-const DROPDOWN_MENU = [
-    {
-        path: "/setting",
-        label: "My profil",
-        icon: <PersonIcon />
-    },
-    {
-        path: "/setting",
-        label: "Settings",
-        icon: <SettingsIcon />
-    }
-];
 
 export default function NavProfile() {
     const session = useSession();
     const user = session?.data?.user;
     const router = useRouter();
+
+    const DROPDOWN_MENU = [
+        {
+            path: `/users/${encodeURIComponent(user?.username!)}`,
+            label: "My profil",
+            icon: <PersonIcon />
+        },
+        {
+            path: "/setting",
+            label: "Settings",
+            icon: <SettingsIcon />
+        }
+    ];
 
     return (
         <Stack spacing={2} direction="row">

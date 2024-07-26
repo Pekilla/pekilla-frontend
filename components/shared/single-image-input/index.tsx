@@ -5,6 +5,7 @@ import ClearIcon from '@mui/icons-material/Clear';
 import DeleteIcon from '@mui/icons-material/Delete';
 import UploadIcon from '@mui/icons-material/Upload';
 import { Avatar, Button, Stack, SxProps } from "@mui/material";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -43,6 +44,7 @@ export interface SingleImageInputProps extends SingleImageProps {
  * This component use is when you want to handle the image separatly from other field and without Formik.
  */
 export function SingleImageInput(props: SingleImageInputProps) {
+    const { data: session, update } = useSession();
     const router = useRouter();
     const [image, setImage] = useState<{ file?: File | null, path?: string }>();
     const [isLoading, setIsLoading] = useState(false);
