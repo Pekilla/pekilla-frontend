@@ -43,3 +43,7 @@ export async function getEditCategory(name: string): Promise<any> {
         return new Promise((resolve) => resolve({ data: error.response?.status }));
     });
 }
+
+export async function getCategory(name: string) {
+    return http.get<CategoryViewDTO>(`${REQUEST_MAPPING}/${encodeURIComponent(name)}`);
+}
