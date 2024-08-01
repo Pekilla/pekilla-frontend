@@ -4,6 +4,7 @@ import { AxiosError, AxiosResponse } from "axios";
 import http from "../http";
 import { getAuthorization } from "./Service";
 import { PostFullViewDTO } from "@/models/dto/PostFullViewDTO";
+import Page from "@/models/dto/Page";
 
 const REQUEST_MAPPING: string = "/api/posts";
 
@@ -25,8 +26,8 @@ export async function updatePost(postDTO: PostDTO): Promise<void | AxiosResponse
         });
 }
 
-export async function searchPosts(content?: string, category?: string, tags?: string[]) {
-    return http.get<PostViewDTO[]>(REQUEST_MAPPING + `/search`, { params: { content, category, tags }, paramsSerializer: { indexes: null } });
+export async function searchPosts(content?: string, category?: string, tags?: string[], page?: number) {
+    return http.get<Page<PostViewDTO>>(REQUEST_MAPPING + `/search`, { params: { content, category, tags, page }, paramsSerializer: { indexes: null } });
 }
 
 export async function getAllPost() {

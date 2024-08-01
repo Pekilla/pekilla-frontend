@@ -20,6 +20,8 @@ export default async function RootLayout({
 }>) {
 	return (
 		<html lang="en">
+			<head>
+			</head>
 			<PekillaContextProvider>
 				<body className={grotesk.className}>
 					<nav style={{ padding: "15px" }}>

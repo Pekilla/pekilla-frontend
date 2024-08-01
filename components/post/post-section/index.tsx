@@ -8,7 +8,7 @@ import { createRandomKey } from "@utils/RandomKeys";
 import { useState } from "react";
 import AddIcon from '@mui/icons-material/Add';
 
-export function PostSection(props: { postArray: PostViewDTO[] }) {
+export function PostSection(props: { postArray: PostViewDTO[], totalPosts: number }) {
     const [popupState, setPopupState] = useState<{ open: boolean, postViewDto?: PostViewDTO }>({ open: false });
 
     return (
@@ -22,8 +22,8 @@ export function PostSection(props: { postArray: PostViewDTO[] }) {
 
             <Stack spacing={2}>
                 <Stack direction="row" justifyContent="space-between">
-                    <h1>Search Results : {props.postArray.length} </h1>
-                    <Button onClick={() => setPopupState({ open: true })}  endIcon={<AddIcon/>}>Create </Button>
+                    <h1>Search Results : {props.totalPosts ?? 0}</h1>
+                    <Button onClick={() => setPopupState({ open: true })} endIcon={<AddIcon />}>Create </Button>
                 </Stack>
 
                 {

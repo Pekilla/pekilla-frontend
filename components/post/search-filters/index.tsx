@@ -35,7 +35,7 @@ export default function SearchForm() {
     const formik = useFormik({
         initialValues: getParams(params),
         onSubmit: (values) => {
-            let query = qs.stringify(formik.values, { arrayFormat: "repeat", filter: filterFunc });
+            let query = qs.stringify({ ...formik.values, page: 1 }, { arrayFormat: "repeat", filter: filterFunc });
 
             if (query.length == 0) router.push("?content=");
             else router.push(`?${query}`);
@@ -45,9 +45,9 @@ export default function SearchForm() {
     });
 
     const [lastValues, setLastValues] = useState(formik.values);
-    
+
     const reset = () => {
-        router.push("?content=");
+        router.push(`?content=&page=${1}`);
         setLastValues(searchParamDefaults);
         formik.setValues(searchParamDefaults);
     };
