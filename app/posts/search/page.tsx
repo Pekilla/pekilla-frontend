@@ -29,11 +29,11 @@ export default async function PostSearch({ searchParams }: PostSearchProps) {
                     (
                         <Typography variant="h4" textAlign="center">Invalid page number</Typography>
                     ) : (
-                        <PostSection postArray={postViewDtos.content} totalPosts={postViewDtos.page.totalElements} />
+                        <PostSection page={postViewDtos} />
                     )
                 }
 
-                <SearchPagination totalPages={postViewDtos.page.totalPages} />
+                <SearchPagination totalPages={postViewDtos?.page?.totalPages} />
             </Suspense>
         </Container>
     );

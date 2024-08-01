@@ -7,8 +7,9 @@ import { Button, Stack, Typography } from "@mui/material";
 import { createRandomKey } from "@utils/RandomKeys";
 import { useState } from "react";
 import AddIcon from '@mui/icons-material/Add';
+import Page, { getResultOf } from "@/models/dto/Page";
 
-export function PostSection(props: { postArray: PostViewDTO[], totalPosts: number }) {
+export function PostSection(props: { page: Page<PostViewDTO> }) {
     const [popupState, setPopupState] = useState<{ open: boolean, postViewDto?: PostViewDTO }>({ open: false });
 
     return (
@@ -22,17 +23,17 @@ export function PostSection(props: { postArray: PostViewDTO[], totalPosts: numbe
 
             <Stack spacing={2}>
                 <Stack direction="row" justifyContent="space-between">
-                    <h1>Search Results : {props.totalPosts ?? 0}</h1>
+                    <h1>{getResultOf(props.page)}</h1>
                     <Button onClick={() => setPopupState({ open: true })} endIcon={<AddIcon />}>Create </Button>
                 </Stack>
 
                 {
-                    props.postArray.length == 0 ?
+                    props.page?.content?.length == 0 ?
                         (
                             <Typography textAlign="center" variant="h5">No post were found</Typography>
                         ) : (
                             <>
-                                {props.postArray?.map(post => (
+                                {props.page.content?.map(post => (
                                     <PostView
                                         {...post}
                                         key={createRandomKey()}
