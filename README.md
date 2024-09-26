@@ -2,7 +2,7 @@
 
 Pekilla is a project we made during the summer of 2024.
 
-![Home](./src/main/resources/markdown-images/main.png)
+![Home](./public/markdown-images/main.png)
 
 ## Authors
 
@@ -136,19 +136,19 @@ bun start
 ```
 
 ## Login
-![Login](./src/main/resources/markdown-images/login.png)
+![Login](./public/markdown-images/login.png)
 
 ## Trend
-![Trend](./src/main/resources/markdown-images/trend.png)
+![Trend](./public/markdown-images/trend.png)
 
 ## Communities
-![Communities](./src/main/resources/markdown-images/communities.png)
+![Communities](./public/markdown-images/communities.png)
 
 ## Category
-![Category View](./src/main/resources/markdown-images/category_view.png)
+![Category View](./public/markdown-images/category_view.png)
 
 ## Edit Profile
-![Setting](./src/main/resources/markdown-images/setting.png)
+![Setting](./public/markdown-images/setting.png)
 
 ## User Profile
-![My Profile](./src/main/resources/markdown-images/my_profile.png)
+![My Profile](./public/markdown-images/my_profile.png)
